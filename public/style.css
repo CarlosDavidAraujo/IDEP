@@ -1,0 +1,51 @@
+
+/*
+  Meu primeiro códico CSS  
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+form {
+  font-family: 'Roboto',sans-serif;
+margin: 0 auto;
+ width: 400px;
+/*Bordas do formulário*/
+padding: 1em; 
+border: 1px solid #CCC; 
+border-radius: 1em; 
+}
+
+form div + div { 
+margin-top: 1em; 
+}
+
+label {
+	display: inline-block; 
+	width: 90px; 
+	text-align: right;
+ }
+
+input, textarea {
+	font: 1em 'Roboto'; 
+/* Para dar o mesmo tamanho a todos os campo de texto */ 
+	width: 300px; 
+	-moz-box-sizing: border-box; 
+	box-sizing: border-box; 
+/* Para harmonizar o look & feel das bordas nos campos de texto*/ 
+	border: 1px solid #999; 
+}
+
+	input:focus, textarea:focus { 
+		border-color: #000;
+	}
+
+	textarea {
+			vertical-align: top; 
+			height: 5em;
+	 		resize: vertical; 
+	}
+
+	button {
+    font: 1em 'Roboto'; 
+		margin-left: .5em;
+	 }
