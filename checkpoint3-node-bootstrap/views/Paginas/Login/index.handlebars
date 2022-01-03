@@ -1,0 +1,35 @@
+<form action="/login" method="post">
+  <br />
+  <br />
+  <br />
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-md-auto">
+        <div>
+          <input type="email" class="form-crontrol" id="email" name="email" style="width: 100%" placeholder="Email"
+            required>
+        </div>
+        <div>
+          <input type="password" class="form-crontrol" id="senha" name="senha" style="width: 100%" placeholder="Senha"
+            required>
+          {{#if mensagemDeErro}}
+          <div class="alert alert-danger" role="alert">
+            {{mensagemDeErro}}
+          </div>
+          {{/if}}
+        </div>
+        <div class="d-flex justify-content-between">
+          <div>
+            <a class="nav-link active" href="/login/reautenticacao">Recuperar senha</a>
+          </div>
+          <div>
+            <input type="submit" class="btn btn-success" value="Entrar">
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+
+</form>
