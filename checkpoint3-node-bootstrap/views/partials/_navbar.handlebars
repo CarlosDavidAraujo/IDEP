@@ -23,8 +23,8 @@
           <a class="nav-link active" href="#">Onde estamos</a>
         </li>
       </ul>
-      {{#if isOn}}
-      <div class="btn-group">  
+      {{#if online}}
+      <div class="btn-group">
         <a class="btn btn-secondary" href="/perfil">Meu perfil</a>
         <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
@@ -38,10 +38,12 @@
       </div>
     </div>
     {{else}}
+    {{#unless mudaBotao}}
     <ul class="navbar-nav me-4 mb-2 mb-lg-0">
       <a class="nav-link active" href="/cadastro">Cadastre-se</a>
-      <a class="btn btn-success" href="/login">Entrar</a>
+      <a class="btn btn-warning" href="/login">Entrar</a>
     </ul>
+    {{/unless}}
     {{/if}}
   </div>
   </div>

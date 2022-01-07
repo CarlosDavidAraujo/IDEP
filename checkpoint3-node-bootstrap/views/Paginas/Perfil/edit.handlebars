@@ -2,111 +2,159 @@
     <div class="container">
         <br />
         <br />
+        {{#if mensagemDeErro}}
+        <div class="alert alert-danger" role="alert">
+            {{mensagemDeErro}}
+        </div>
+        {{/if}}
         <div class="row align-items-start">
             <div class="col">
                 <h5>Informações pessoais </h5>
-                <label for="nomeSocial" class="form-label">Nome Social</label>
-                <input type="text" class="form-control" id="nomeSocial" name="nomeSocial" value="{{dados.NomeSocial}}">
-                <label for="CPF" class="form-label">CPF*</label>
-                <input type="text" class="form-control" id="CPF" name="CPF" value="{{dados.CPF}}" required>
-                <label for="nomeCompleto" class="form-label">Nome de registro*</label>
-                <input type="text" class="form-control" id="nomeCompleto" name="nomeCompleto" value= "{{dados.NomeCompleto}}"required>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <label for="genero" class="form-label">Gênero*</label>
-                        <select name="genero" class="form-control" id="genero" name="genero" value="{{dados.Gênero}}" required>
-                            <option value="0">Selecione uma opção</option>
-                            <option value="masculino">masculino</option>
-                            <option value="feminino">feminino</option>
-                            <option value="outro">outro</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="data" class="form-label">Data de nascimento*</label>
-                        <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" value="{{dados.DataDeNascimento}}" required>
-                    </div>
+                <div class="form-group"><label for="nome_social" class="form-label">Nome Social</label>
+                    <input type="text" class="form-control" id="nome_social" name="nome_social"
+                        value="{{dados_de_cadastro.Nome_social}}">
                 </div>
-                <label for="email" class="form-label">Email*</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{dados.Email}}" required>
-                <div class="d-block">
-                    <label for="telefone" class="form-label">Telefone*</label>
+
+                <div class="form-group"><label for="CPF" class="form-label">CPF*</label>
+                    <input type="text" class="form-control" id="CPF" name="CPF" value="{{dados_de_cadastro.CPF}}"
+                        required>
+                </div>
+
+                <div class="form-group"><label for="nome_completo" class="form-label">Nome de registro*</label>
+                    <input type="text" class="form-control" id="nome_completo" name="nome_completo"
+                        value="{{dados_de_cadastro.Nome_completo}}" required>
+                </div>
+
+                <div class="form-group">
                     <div class="d-flex justify-content-between">
-                        <input type="tel" class="form-control" id="ddd" name="ddd" style="width:80px" pattern="[0-9]{2}" required>
-                        <input type="tel" class="form-control" id="fone" name="fone" style="width:300px" pattern="[0-9]{9}" value="{{dados.Telefone}}" required>
+                        <div>
+                            <label for="genero" class="form-label">Gênero*</label>
+                            <select name="genero" class="form-control" id="genero" name="genero"
+                                value="{{dados_de_cadastro.Gênero}}" required>
+                                <option value="0">Selecione uma opção</option>
+                                <option value="masculino">masculino</option>
+                                <option value="feminino">feminino</option>
+                                <option value="outro">outro</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="data_de_nascimento" class="form-label">Data de nascimento*</label>
+                            <input type="date" class="form-control" id="data_de_nascimento" name="data_de_nascimento"
+                                value="{{dados_de_cadastro.Data_de_nascimento}}" required>
+                        </div>
                     </div>
                 </div>
-                <div class="d-block">
-                    <label for="endereco" class="form-label">Endereço*</label>
+
+                <div class="form-group"><label for="email" class="form-label">Email*</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{dados_de_cadastro.Email}}"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="fone" class="form-label">Telefone*</label>
+                    <input type="tel" class="form-control" id="fone" name="fone" style="width:300px" pattern="[0-9]{9}"
+                        value="{{dados_de_cadastro.Telefone}}" required>
+                </div>
+                <div class="form-group">
+                    <div class="d-block">
+                        <label for="endereco" class="form-label">Endereço*</label>
+                        <div class="d-flex justify-content-between">
+                            <input type="text" class="form-control" id="endereco" name="endereco" style="width:300px"
+                                value="{{dados_de_cadastro.Endereço}}">
+                            <input type="tel" class="form-control" id="n" name="n" style="width:80px"
+                                pattern="[0-9]{4,}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <div class="d-flex justify-content-between">
-                        <input type="text" class="form-control" id="endereco" name="endereco" style="width:300px" value="{{dados.Endereço}}">
-                        <input type="tel" class="form-control" id="n" name="n" style="width:80px" pattern="[0-9]{4,}">
+                        <div>
+                            <label for="municipio" class="form-label">Município*</label>
+                            <select name="municipio" class="form-control" id="municipio" name="municipio"
+                                style="width: 180px;" required>
+                                {{#each municipios}}
+                                <option disabled selected hidden>Selecione uma opção</option>
+                                <option value="{{nome}}">{{nome}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="bairro" class="form-label">Bairro*</label>
+                            <input name="bairro" class="form-control" id="bairro" name="bairro" style="width: 180px;"
+                                value="{{dados_de_cadastro.Bairro}}" required />
+                        </div>
                     </div>
                 </div>
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <label for="municipio" class="form-label">Município*</label>
-                        <select name="municipio" class="form-control" id="municipio" name="municipio" style="width: 180px;" required> 
-                            {{#each municipios}}
-                            <option disabled selected hidden>Selecione uma opção</option>
-                            <option value="{{nome}}">{{nome}}</option>
-                            {{/each}}
-                        </select>
-                    </div>
-                    <div>
-                        <label for="bairro" class="form-label">Bairro*</label>
-                        <input name="bairro" class="form-control" id="bairro" name="bairro" style="width: 180px;" value="{{dados.Bairro}}" required/>
-                    </div>
-                </div>
+
             </div>
             <div class="col">
                 <h5>Informações acadêmicas</h5>
-                <label for="grau" class="form-label">Grau</label>
-                <select name="grau" class="form-control" id="grau" name="grau">
-                    <option value="0">Selecione uma opção</option>
-                    <option value="superior">Superior</option>
-                    <option value="medio">Médio</option>
-                    <option value="fundamental">Fundamental</option>
-                </select>
-                <label for="curso" class="form-label">Curso</label>
-                <input type="text" class="form-control" id="curso" name="curso">
-                <label for="instituicao" class="form-label">Instituição</label>
-                <input type="text" class="form-control" id="instituicao" name="instituicao">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <label for="dataInicialIA" class="form-label">Início*</label>
-                        <input type="date" class="form-control" id="dataInicialIA" name="dataInicialIA">
-                    </div>
-                    <div>
-                        <label for="dataFinalIA" class="form-label">Término*</label>
-                        <input type="date" class="form-control" id="dataFinalIA" name="dataFinalIA">
+                <div class="form-group"><label for="grau" class="form-label">Grau</label>
+                    <select name="grau" class="form-control" id="grau" name="grau">
+                        <option value="0">Selecione uma opção</option>
+                        <option value="superior">Superior</option>
+                        <option value="medio">Médio</option>
+                        <option value="fundamental">Fundamental</option>
+                    </select>
+                </div>
+
+                <div class="form-group"><label for="curso" class="form-label">Curso</label>
+                    <input type="text" class="form-control" id="curso" name="curso">
+                </div>
+
+                <div class="form-group"><label for="instituicao" class="form-label">Instituição</label>
+                    <input type="text" class="form-control" id="instituicao" name="instituicao">
+                </div>
+
+                <div class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <label for="data_inicial_academica" class="form-label">Início*</label>
+                            <input type="date" class="form-control" id="data_inicial_academica" name="data_inicial_academica">
+                        </div>
+                        <div>
+                            <label for="daa_final_academica" class="form-label">Término*</label>
+                            <input type="date" class="form-control" id="daa_final_academica" name="daa_final_academica">
+                        </div>
                     </div>
                 </div>
+
             </div>
             <div class="col">
                 <h5>Experiência profissionais</h5>
-                <label for="modalidade" class="form-label">Modalidade</label>
-                <select name="modalidade" class="form-control" id="modalidade" name="modalidade">
-                    <option value="0">Selecione uma opção</option>
-                </select>
-                <label for="cargo" class="form-label">Cargo</label>
-                <input type="text" class="form-control" id="cargo" name="cargo">
-                <label for="empresa" class="form-label">Empresa</label>
-                <input type="text" class="form-control" id="empresa" name="empresa">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <label for="dataInicialEP" class="form-label">Início*</label>
-                        <input type="date" class="form-control" id="dataInicialEP" name="dataInicialEP">
-                    </div>
-                    <div>
-                        <label for="dataFinalEP" class="form-label">Término*</label>
-                        <input type="date" class="form-control" id="dataFinalEP" name="dataFinalEP">
+                <div class="form-group"><label for="modalidade" class="form-label">Modalidade</label>
+                    <select name="modalidade" class="form-control" id="modalidade" name="modalidade">
+                        <option value="0">Selecione uma opção</option>
+                    </select>
+                </div>
+
+                <div class="form-group"><label for="cargo" class="form-label">Cargo</label>
+                    <input type="text" class="form-control" id="cargo" name="cargo">
+                </div>
+
+                <div class="form-group"><label for="empresa" class="form-label">Empresa</label>
+                    <input type="text" class="form-control" id="empresa" name="empresa">
+                </div>
+
+                <div class="form-group">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <label for="data_inicial_experiencia" class="form-label">Início*</label>
+                            <input type="date" class="form-control" id="data_inicial_experiencia" name="data_inicial_experiencia">
+                        </div>
+                        <div>
+                            <label for="data_final_experiencia" class="form-label">Término*</label>
+                            <input type="date" class="form-control" id="data_final_experiencia" name="data_final_experiencia">
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
         <div class="d-flex justify-content-end">
-            <button class="me-5 btn btn-outline-secondary">Cancelar</button>
-            <input class="btn btn-secondary" type="submit" value="Finalizar cadastro">
+            <a class="me-5 btn btn-outline-dark" href="/">Cancelar</a>
+            <input class="btn btn-warning" type="submit" value="Salvar alterações">
         </div>
     </div>
 </form>

@@ -1,11 +1,10 @@
-import fireapp from '../functions/firebaseInitialize.js';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, } from 'firebase/auth';
-import { getDoc, setDoc, doc, getFirestore, collection, serverTimestamp } from "firebase/firestore";
-import { request, response } from 'express';
-
+import { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, deleteDoc } from "firebase/firestore";
 const auth = getAuth();
 const db = getFirestore();
-const dataDoCadastro = serverTimestamp;
+
+const dataDeCadastro = serverTimestamp;
+
 function verificaErro(errorCode) {
     switch (errorCode) {
         case 'auth/app-deleted':
@@ -184,26 +183,21 @@ function verificaErro(errorCode) {
             return null;
     }
 }
+
 function fazLogin(email, senha) {
-    return signInWithEmailAndPassword(auth, email, senha).then(() => {
-        console.log('Login efetuado com sucesso')
-    })
+    return signInWithEmailAndPassword(auth, email, senha)
 }
 
 function cadastraUsuario(email, senha, dados) {
     return createUserWithEmailAndPassword(auth, email, senha)
         .then((userCredential) => {
-            const userID = auth.currentUser.uid;
-            const userDoc = doc(db, 'Usuários', userID);
-            setDoc(userDoc, dados, { merge: true });
+            const user_id = auth.currentUser.uid;
+            const user_doc = doc(db, 'Usuários', user_id);
+            setDoc(user_doc, dados, { merge: true });
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            let mensagemDeErro = verificaErro(errorCode);
-            console.log(mensagemDeErro)
-        });
 }
 
+//verifica se há um usuario logado
 function statusDoUsuario() {
     const user = auth.currentUser
     if (user) {
@@ -213,32 +207,27 @@ function statusDoUsuario() {
     }
 }
 
+
 function logout() {
     return signOut(auth)
 }
 
 
-function editaDados(emailSubmetido, dados) {
-    const userID = auth.currentUser.uid;
-    updateEmail(auth.currentUser, emailSubmetido).then(() => {
-        const docAtual = doc(db, 'Usuários', userID);
-        setDoc(docAtual, dados, { merge: true })
-        console.log('Dados editados com sucesso')
+function editaPerfil(new_email, dados) {
+    const user_id = auth.currentUser.uid;
+    return updateEmail(auth.currentUser, new_email).then(() => {
+        const user_doc = doc(db, 'Usuários', user_id);
+        setDoc(user_doc, dados, { merge: true })
     })
-        .catch((error) => {
-            const errorCode = error.code;
-            let mensagemDeErro = verificaErro(errorCode);
-            console.log(mensagemDeErro)
-        });
 }
 
 
-async function coletaDados() {
-    const userID = auth.currentUser.uid;
-    const docAtual = doc(db, 'Usuários', userID);
-    const docSnap = await getDoc(docAtual);
-    const dados = docSnap.data();
-    return dados;
+async function consultaDadosDoUsuario() {
+    const user_id = auth.currentUser.uid;
+    const user_doc = doc(db, 'Usuários', user_id);
+    const docSnap = await getDoc(user_doc);
+    const user_data = docSnap.data();
+    return user_data;
 }
 
 
@@ -254,4 +243,28 @@ function resetSenha(email) {
         });
 }
 
-export { fazLogin, cadastraUsuario, statusDoUsuario, logout, editaDados, resetSenha, auth, dataDoCadastro, verificaErro, coletaDados };
+async function candidataUsuarioParaVaga(vaga_id, user_id) {
+    const vaga = doc(db, 'Vagas', vaga_id);
+    const docSnap = await getDoc(vaga);
+    const vaga_data = docSnap.data();
+    const user_candidatura = doc(db, "Usuários", user_id, "Minhas_candidaturas", vaga_id)
+    setDoc(user_candidatura, vaga_data, { merge: true });
+}
+
+async function mostraCandidatura(user_id) {
+    let minhas_candidaturas = {}
+    const colecao_de_candidaturas = query(collection(db, "Usuários", user_id, "Minhas_candidaturas"));
+    const querySnapshot = await getDocs(colecao_de_candidaturas);
+    querySnapshot.forEach((doc) => {
+        minhas_candidaturas[doc.id] = doc.data();;
+    });
+    return minhas_candidaturas;
+}
+
+async function cancelaCandidatura(user_id, vaga_id) {
+    await deleteDoc(doc(db, "Usuários", user_id, "Minhas_candidaturas", vaga_id));
+}
+
+
+export { fazLogin, cadastraUsuario, statusDoUsuario, logout, editaPerfil, resetSenha, auth, dataDeCadastro,
+ verificaErro, consultaDadosDoUsuario, candidataUsuarioParaVaga, mostraCandidatura, cancelaCandidatura };

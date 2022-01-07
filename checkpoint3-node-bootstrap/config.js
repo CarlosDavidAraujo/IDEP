@@ -1,3 +1,4 @@
+import fireapp from "./functions/firebaseInitialize.js"
 import express from "express";
 import {engine} from "express-handlebars";
 import path from "path";
