@@ -12,7 +12,6 @@ async function consultaVagas() {
     return vagas;
 }
 
-
 export default consultaVagas;
 
 

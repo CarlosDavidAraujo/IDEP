@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row justify-content-center" id="loginRow">
     <div class="col-5 bg-secondary px-8 py-5">
-      <form action="/login" method="post">
+      <form action="/user/login" method="post">
       {{#if mensagemDeErro}}
         <div class="alert alert-danger" role="alert">
           {{mensagemDeErro}}
@@ -19,14 +19,14 @@
           <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
         </div>
         <div class="d-flex justify-content-end">
-          <a class="text-dark" href="/login/reautenticacao">Recuperar senha</a>
+          <a class="text-dark" href="/user/reauth">Recuperar senha</a>
         </div>
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input" id="exampleCheck1">
           <label class="form-check-label" for="exampleCheck1">Manter conectado</label>
         </div>
         <div class="d-flex justify-content-between">
-          <a class="text-dark" href="/cadastro">Cadastre-se</a>
+          <a class="text-dark" href="/user/cadastro">Cadastre-se</a>
           <button type="submit" class="btn btn-warning" >Entrar</button>
         </div>
       </form>

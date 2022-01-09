@@ -1,4 +1,4 @@
-<form class="d-flex" action="/perfil/edit" method="post">
+<form class="d-flex" action="/user/perfil/edit" method="post">
     <div class="container">
         <br />
         <br />
@@ -7,30 +7,30 @@
             {{mensagemDeErro}}
         </div>
         {{/if}}
-        <div class="row align-items-start">
+        {{#if mensagem}}
+        <div class="alert alert-success" role="alert">
+            {{mensagem}}
+        </div>
+        {{/if}}
+        <div class="d-flex gap-4">
             <div class="col">
                 <h5>Informações pessoais </h5>
                 <div class="form-group"><label for="nome_social" class="form-label">Nome Social</label>
-                    <input type="text" class="form-control" id="nome_social" name="nome_social"
-                        value="{{dados_de_cadastro.Nome_social}}">
+                    <input type="text" class="form-control" id="nome_social" name="nome_social">
                 </div>
 
                 <div class="form-group"><label for="CPF" class="form-label">CPF*</label>
-                    <input type="text" class="form-control" id="CPF" name="CPF" value="{{dados_de_cadastro.CPF}}"
-                        required>
+                    <input type="text" class="form-control" id="CPF" name="CPF" required>
                 </div>
 
                 <div class="form-group"><label for="nome_completo" class="form-label">Nome de registro*</label>
-                    <input type="text" class="form-control" id="nome_completo" name="nome_completo"
-                        value="{{dados_de_cadastro.Nome_completo}}" required>
+                    <input type="text" class="form-control" id="nome_completo" name="nome_completo" required>
                 </div>
-
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
                         <div>
                             <label for="genero" class="form-label">Gênero*</label>
-                            <select name="genero" class="form-control" id="genero" name="genero"
-                                value="{{dados_de_cadastro.Gênero}}" required>
+                            <select name="genero" class="form-control" id="genero" name="genero" required>
                                 <option value="0">Selecione uma opção</option>
                                 <option value="masculino">masculino</option>
                                 <option value="feminino">feminino</option>
@@ -40,54 +40,46 @@
                         <div>
                             <label for="data_de_nascimento" class="form-label">Data de nascimento*</label>
                             <input type="date" class="form-control" id="data_de_nascimento" name="data_de_nascimento"
-                                value="{{dados_de_cadastro.Data_de_nascimento}}" required>
+                                required>
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group"><label for="email" class="form-label">Email*</label>
-                    <input type="email" class="form-control" id="email" name="email" value="{{dados_de_cadastro.Email}}"
-                        required>
+                    <input type="email" class="form-control" id="email" name="email"  required>
                 </div>
-
                 <div class="form-group">
                     <label for="fone" class="form-label">Telefone*</label>
-                    <input type="tel" class="form-control" id="fone" name="fone" style="width:300px" pattern="[0-9]{9}"
-                        value="{{dados_de_cadastro.Telefone}}" required>
+                    <input type="tel" class="form-control" id="fone" name="fone" pattern="[0-9]{9}" required>
                 </div>
                 <div class="form-group">
                     <div class="d-block">
                         <label for="endereco" class="form-label">Endereço*</label>
                         <div class="d-flex justify-content-between">
-                            <input type="text" class="form-control" id="endereco" name="endereco" style="width:300px"
-                                value="{{dados_de_cadastro.Endereço}}">
+                            <input type="text" class="form-control" id="endereco" name="endereco" style="width:300px">
                             <input type="tel" class="form-control" id="n" name="n" style="width:80px"
                                 pattern="[0-9]{4,}">
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
-                        <div>
+                        <div class="col-md-6">
                             <label for="municipio" class="form-label">Município*</label>
-                            <select name="municipio" class="form-control" id="municipio" name="municipio"
-                                style="width: 180px;" required>
+                            <select name="municipio" class="form-control" id="municipio" name="municipio" required>
                                 {{#each municipios}}
                                 <option disabled selected hidden>Selecione uma opção</option>
                                 <option value="{{nome}}">{{nome}}</option>
                                 {{/each}}
                             </select>
                         </div>
-                        <div>
+                        <div class="col-md-6">
                             <label for="bairro" class="form-label">Bairro*</label>
-                            <input name="bairro" class="form-control" id="bairro" name="bairro" style="width: 180px;"
-                                value="{{dados_de_cadastro.Bairro}}" required />
+                            <input name="bairro" class="form-control" id="bairro" name="bairro" required />
                         </div>
                     </div>
                 </div>
-
             </div>
+            <div class="vr"></div>
             <div class="col">
                 <h5>Informações acadêmicas</h5>
                 <div class="form-group"><label for="grau" class="form-label">Grau</label>
@@ -98,20 +90,18 @@
                         <option value="fundamental">Fundamental</option>
                     </select>
                 </div>
-
                 <div class="form-group"><label for="curso" class="form-label">Curso</label>
                     <input type="text" class="form-control" id="curso" name="curso">
                 </div>
-
                 <div class="form-group"><label for="instituicao" class="form-label">Instituição</label>
                     <input type="text" class="form-control" id="instituicao" name="instituicao">
                 </div>
-
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
                         <div>
                             <label for="data_inicial_academica" class="form-label">Início*</label>
-                            <input type="date" class="form-control" id="data_inicial_academica" name="data_inicial_academica">
+                            <input type="date" class="form-control" id="data_inicial_academica"
+                                name="data_inicial_academica">
                         </div>
                         <div>
                             <label for="daa_final_academica" class="form-label">Término*</label>
@@ -119,8 +109,8 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+            <div class="vr"></div>
             <div class="col">
                 <h5>Experiência profissionais</h5>
                 <div class="form-group"><label for="modalidade" class="form-label">Modalidade</label>
@@ -128,24 +118,23 @@
                         <option value="0">Selecione uma opção</option>
                     </select>
                 </div>
-
                 <div class="form-group"><label for="cargo" class="form-label">Cargo</label>
                     <input type="text" class="form-control" id="cargo" name="cargo">
                 </div>
-
                 <div class="form-group"><label for="empresa" class="form-label">Empresa</label>
                     <input type="text" class="form-control" id="empresa" name="empresa">
                 </div>
-
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
                         <div>
                             <label for="data_inicial_experiencia" class="form-label">Início*</label>
-                            <input type="date" class="form-control" id="data_inicial_experiencia" name="data_inicial_experiencia">
+                            <input type="date" class="form-control" id="data_inicial_experiencia"
+                                name="data_inicial_experiencia">
                         </div>
                         <div>
                             <label for="data_final_experiencia" class="form-label">Término*</label>
-                            <input type="date" class="form-control" id="data_final_experiencia" name="data_final_experiencia">
+                            <input type="date" class="form-control" id="data_final_experiencia"
+                                name="data_final_experiencia">
                         </div>
                     </div>
                 </div>

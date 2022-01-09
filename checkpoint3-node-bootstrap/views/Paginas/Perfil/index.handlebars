@@ -5,7 +5,7 @@
 
 <div class="d-flex px-4 gap-3">
     {{#each candidatura}}
-    <div class="card text-center" style="width: 18rem;">
+    <div class="card text-center bg-primary" style="width: 18rem;">
         <div class="card-body">
             <div class="d-flex justify-content-between">
                 <h6 class="card-title">{{Empresa}}</h6>
@@ -15,7 +15,7 @@
             <h4 class="card-text">{{Cargo}}</h4>
             <br>
         </div>
-        <div class="card-footer border-0 bg-white">
+        <div class="card-footer border-0 bg-primary">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#{{ID}}">
                 Ver detalhes
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="modal-footer border-0">
-                <form method="post" action="/perfil">
+                <form method="post" action="/user/perfil">
                     <input type="hidden" name="vaga_id" value="{{ID}}">
                     <button type="submit" name="action" value="candidatar" class="btn btn-outline-secondary">Cancelar
                         candidatura</button>

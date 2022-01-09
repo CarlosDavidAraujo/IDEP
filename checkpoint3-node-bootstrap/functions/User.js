@@ -197,27 +197,16 @@ function cadastraUsuario(email, senha, dados) {
         })
 }
 
-//verifica se há um usuario logado
-function statusDoUsuario() {
-    const user = auth.currentUser
-    if (user) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 
 function logout() {
     return signOut(auth)
 }
 
-
-function editaPerfil(new_email, dados) {
-    const user_id = auth.currentUser.uid;
+function editaPerfil(new_email, new_dados) {
     return updateEmail(auth.currentUser, new_email).then(() => {
+        const user_id = auth.currentUser.uid;
         const user_doc = doc(db, 'Usuários', user_id);
-        setDoc(user_doc, dados, { merge: true })
+        setDoc(user_doc, new_dados, { merge: true })
     })
 }
 
@@ -266,5 +255,7 @@ async function cancelaCandidatura(user_id, vaga_id) {
 }
 
 
-export { fazLogin, cadastraUsuario, statusDoUsuario, logout, editaPerfil, resetSenha, auth, dataDeCadastro,
- verificaErro, consultaDadosDoUsuario, candidataUsuarioParaVaga, mostraCandidatura, cancelaCandidatura };
+export {
+    fazLogin, cadastraUsuario, logout, editaPerfil, resetSenha, auth, dataDeCadastro,
+    verificaErro, consultaDadosDoUsuario, candidataUsuarioParaVaga, mostraCandidatura, cancelaCandidatura
+};
