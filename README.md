@@ -35,7 +35,7 @@ visualizar essas oportunidades e se inscreverem nas quais mais se identificam.
 | RF0010                                     | Fazer login                                                  | functions/User: fazLogin                  |
 | RF0011                                     | Fazer logout                                                 | functions/User: logout                    |
 | RF0012                                     | Alterar e-mail                                               | functios/User: editaPerfil                |
-| RF0013                                     | Alterar senha                                                | functions/User: resetSenha                |
+| RF0013                                     | Alterar senha                                                | functions/User: resetPassowrd             |
 | RF0014                                     | Candidatar-se à uma vaga                                     | functions/User: candidataUsuarioParaVaga  |
 | RF0015                                     | Cancelar candidatura                                         | functions/User: cancelaCandidatura        |
 | RF0016                                     | Visualizar vagas submetidas no perfil                        | functions/User: mostraCandidatura         |
