@@ -1,11 +1,13 @@
-//importa configurações iniciais 
-import app from "./config.js"
-//importa as rotas
-import home from "./routes/home.js";
-import cadastro from "./routes/cadastro.js";
-import login from "./routes/login.js";
-import perfil from "./routes/perfil.js";
+//consta configurações iniciais 
+const app = require("./config");
+//consta as rotas
+const vagaRoute = require("./routes/vaga-route");
+const userRoute = require("./routes/user-route");
+const adminRoute = require("./routes/admin-route");
+const { changeButton } = require("./middlewares/autenticacao");
 
-//agrupa todas as rotas em uma rota raiz
-app.use('/', home, cadastro, login, perfil);
+app.use(changeButton);
+app.use('/', vagaRoute, adminRoute);
+app.use('/user', userRoute);
+
 

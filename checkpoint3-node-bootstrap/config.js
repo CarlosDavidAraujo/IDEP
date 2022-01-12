@@ -1,14 +1,10 @@
-import express from "express";
-import {engine} from "express-handlebars";
-import path from "path";
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+const fireapp = require("./functions/firebaseInitialize");
+const express = require("express");
+var hbs = require("express-handlebars");
+const path = require("path");
+const fileUpload = require("express-fileupload");
 
-//para reconhecer __dirname em ES module scope.
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 //inicia o express
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -16,14 +12,20 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 
 //cria view engine
-app.engine('handlebars', engine());
-app.set('view engine', 'handlebars');
-app.set("views", "./views");
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+app.engine('hbs', hbs.engine({
+  extname: 'hbs',
+  defaultLayout: 'layout',
+  layoutsDir: __dirname + '/views/layouts/',
+  partialsDir: __dirname + '/views/partials'
+}));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(fileUpload());
 app.listen(PORT, () => {
     console.log("Servidor executando na porta: " + PORT);
   });
 
-  
-export default app;
+module.exports = app;

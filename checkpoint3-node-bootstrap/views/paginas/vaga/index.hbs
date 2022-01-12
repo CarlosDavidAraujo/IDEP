@@ -1,0 +1,37 @@
+<!-- Filtros -->
+<div class="pt-6">
+    <h6 class="align-self-end ps-4">Filtros</h6>
+    <div class="d-flex justify-content-between ps-4 pe-2">
+        <div class="col-md-4">
+            <div class="d-flex justify-content-between gap-4">
+                <select class="form-control" name="filtroArea" id="filtroArea">
+                    <option value="Area">Área</option>
+                </select>
+                <select class="form-control" name="filtroLocalidade" id="filtroLocalidade">
+                    <option value="Localidade">Localidade</option>
+                </select>
+                <select class="form-control" name="filtroEmpresa" id="filtroEmpresa">
+                    <option value="Empresa">Empresa</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4 pe-4">
+            <form action="/user/perfil" method="post">
+                <div class="d-flex">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar vagas" aria-label="Search">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+<!-- Cards -->
+<div class="d-flex flex-wrap gap-4 px-4">
+    {{#each vaga}}
+    {{>cardVaga}}
+    {{/each}}
+</div>
+
+{{>modalVaga}}

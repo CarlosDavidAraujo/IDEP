@@ -1,0 +1,32 @@
+
+body {
+    width:75%;
+    margin:0 auto;
+    background: #E2E2E2;
+    position: relative;
+ }
+
+#loginRow{
+    margin-top: 18%;
+    margin-bottom: 18%;
+}
+
+.bg-img {
+    /* The image used */
+    background-image: url("/img/Img_Container.png");
+      min-height: 380px;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
+    /* Needed to position the navbar */
+    position: static;
+  }
+
+ 
+  .form-check-input:checked {
+    background-color: #F9BA00;
+    border-color:#F9BA00;
+  }

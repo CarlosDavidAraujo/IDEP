@@ -1,0 +1,66 @@
+<div class="btn-group" role="group" aria-label="Basic example">
+    <button type="radio" class="btn btn-outline-primary" id="vagasButton">Vagas</button>
+    <button type="radio" class="btn btn-outline-primary" id="curriculosButton">Curriculos</button>
+    <button type="button" class="btn btn-outline-primary" id="graficosButton">Graficos</button>
+</div>
+
+<div class="d-flex flex-wrap gap-4 pt-5" id="vagasDiv">
+    {{#each vaga}}
+    {{>cardVagaAdmin}}
+    {{/each}}
+</div>
+
+<div id="curriculosDiv">
+    Curriculos
+</div>
+
+<div id="graficosDiv">
+    Graficos
+</div>
+{{>modalVaga}}
+<script>
+    var vagasBtn = document.getElementById('vagasButton');
+    var vagasDiv = document.getElementById('vagasDiv');
+
+    var curriculosBtn = document.getElementById('curriculosButton');
+    var curriculosDiv = document.getElementById('curriculosDiv');
+
+    var graficosBtn = document.getElementById('graficosButton');
+    var graficosDiv = document.getElementById('graficosDiv');
+
+
+    curriculosDiv.style.display = 'none';
+    graficosDiv.style.display = "none";
+
+
+    vagasBtn.onclick = function () {
+        vagasDiv.classList.add('d-flex');
+
+        curriculosDiv.classList.remove('d-flex');
+        curriculosDiv.style.display = 'none';
+
+        graficosDiv.classList.remove('d-flex');
+        graficosDiv.style.display = "none";
+
+    };
+
+    curriculosBtn.onclick = function () {
+        vagasDiv.classList.remove('d-flex');
+        vagasDiv.style.display = 'none';
+
+        curriculosDiv.classList.add('d-flex');
+
+        graficosDiv.classList.remove('d-flex');
+        graficosDiv.style.display = "none";
+    };
+
+    graficosBtn.onclick = function () {
+        vagasDiv.classList.remove('d-flex');
+         vagasDiv.style.display = 'none';
+
+        curriculosDiv.classList.remove('d-flex');
+        curriculosDiv.style.display = 'none';
+
+        graficosDiv.classList.add('d-flex');
+    };
+</script>
