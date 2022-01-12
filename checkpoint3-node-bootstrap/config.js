@@ -1,8 +1,17 @@
+<<<<<<< HEAD
 const fireapp = require("./functions/firebaseInitialize");
 const express = require("express");
 var hbs = require("express-handlebars");
 const path = require("path");
 const fileUpload = require("express-fileupload");
+=======
+import fireapp from "./functions/firebaseInitialize.js"
+import express from "express";
+import {engine} from "express-handlebars";
+import path from "path";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+>>>>>>> 00eef85c7672fd56ab6c45e177e941100399a89e
 
 //inicia o express
 const app = express();

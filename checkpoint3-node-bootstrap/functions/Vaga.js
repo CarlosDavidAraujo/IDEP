@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const { getFirestore, collection, query, getDocs, setDoc, doc, addDoc } = require("firebase/firestore");
 const fireapp = require("./firebaseInitialize");
 const { getStorage, ref, getDownloadURL, uploadBytes } = require('firebase/storage');
@@ -86,3 +87,22 @@ module.exports = {
         });
     }
 }
+=======
+import { getFirestore, collection, query, getDocs} from "firebase/firestore";
+
+const db = getFirestore();
+
+async function consultaVagas() {
+    let vagas = {}
+    const vagas_disponiveis = query(collection(db, "Vagas"));
+    const querySnapshot = await getDocs(vagas_disponiveis);
+    querySnapshot.forEach((doc) => {
+        vagas[doc.id] = doc.data();;
+    });
+    return vagas;
+}
+
+export default consultaVagas;
+
+
+>>>>>>> 00eef85c7672fd56ab6c45e177e941100399a89e
