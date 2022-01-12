@@ -2,7 +2,6 @@
 
 PARTICIPANTES: </br>
 Carlos David Araújo Ventura </br>
-Kevin Lucas Figueredo Gomes  </br>
 Nillia Sousa da Silva </br>
 Victor Emanuel Pegado De Lima </br>
 Vinícius dos Santos Batista </br>
