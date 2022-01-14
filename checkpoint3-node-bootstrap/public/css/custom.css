@@ -11,6 +11,15 @@ body {
     margin-bottom: 18%;
 }
 
+img#parcImg {
+  width: fit-content;
+}
+
+img#icon {
+  width: fit-content;
+  height: fit-content;
+}
+
 .bg-img {
     /* The image used */
     background-image: url("/img/Img_Container.png");
@@ -30,3 +39,35 @@ body {
     background-color: #F9BA00;
     border-color:#F9BA00;
   }
+  .form-control {
+    border: 2px solid #2F8AE6;
+    border-color: #2F8AE6;
+   }
+
+   textarea.form-control{
+     min-height: 178px ;
+   }
+p {
+font-family: 'Montserrat', sans-serif;
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: 29px;
+letter-spacing: 0em;
+text-align: left;
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+width: 230px;
+height: 65px;
+left: 951px;
+top: 40px;
+box-sizing: border-box;
+border:  3px solid #2F8AE6;
+border-radius: 0.25rem;
+display: flex;
+cursor: pointer;
+}

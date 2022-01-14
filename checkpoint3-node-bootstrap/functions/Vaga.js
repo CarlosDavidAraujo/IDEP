@@ -1,10 +1,10 @@
-const { getFirestore, collection, query, getDocs, setDoc, doc, addDoc } = require("firebase/firestore");
+const { getFirestore, collection, query, getDocs, setDoc, doc, addDoc, orderBy, limit } = require("firebase/firestore");
 const fireapp = require("./firebaseInitialize");
 const { getStorage, ref, getDownloadURL, uploadBytes } = require('firebase/storage');
 
 const storage = getStorage(fireapp);
 const db = getFirestore();
-function verificaErro (errorCode) {
+function verificaErro(errorCode) {
     switch (errorCode) {
         case 'storage/unknown':
             return 'An unknown error occurred.';
@@ -44,10 +44,10 @@ function verificaErro (errorCode) {
 };
 
 module.exports = {
-    
-    consultaVagas: async function () {
+
+    consultaTodasVagas: async function () {
         let vagas = {}
-        const vagas_disponiveis = query(collection(db, "Vagas"));
+        const vagas_disponiveis = query(collection(db, "Vagas"), orderBy('Data_de_criação', 'desc'));
         const querySnapshot = await getDocs(vagas_disponiveis);
         querySnapshot.forEach((doc) => {
             vagas[doc.id] = doc.data();;
@@ -55,34 +55,45 @@ module.exports = {
         return vagas;
     },
 
-    /*essa parte ainda está em desenvolvimento, por enquanto so foi implementada uma função que permite o upload de arquivos para o db,
-     neste caso adiciona a logo da empresa ao cabeçalho da vaga*/
+    consultaVagaMaisRecente: async function () {
+        let vaga = {}
+        const collectionRef = collection(db, 'Vagas');
+        const q = query(collectionRef, orderBy("Data_de_criação", "desc"), limit(2));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            vaga[doc.id] = doc.data();
+        })
+        return vaga;
+    },
+
     adicionaVaga: function (file_buffer, file_name, mimetype, dados_vaga) {
-        //const uploadDate = new Date();
-        //const imgName = uploadDate+file_name;
-        const metadata = {
-            contentType: mimetype,
-        };
-        //cria a referencia do local onde a imagem sera salva no banco de dados
-        const imgRef = ref(storage, "images/" + file_name);
-        //faz o upload da imagem
-        uploadBytes(imgRef, file_buffer, metadata).then((snapshot) => {
-            //após o upload extrai a url da imagem
-            getDownloadURL(imgRef)
-                .then((url) => {
-                    //adiciona vaga com o campo que conterá a url da imagem
-                    var docRef = collection(db, "Vagas")
-                    addDoc(docRef, dados_vaga).then((DocumentReference) => {
-                        //após adicionar a vaga acrescenta o campo que conterá o ID da vaga
-                        var docRef = doc(db, "Vagas", DocumentReference.id)
-                        setDoc(docRef, { ID: DocumentReference.id, url_img: url }, { merge: true })
+
+        if (file_buffer == null || file_name == null || mimetype == null) {
+            var docRef = collection(db, "Vagas")
+            addDoc(docRef, dados_vaga).then((DocumentReference) => {
+                //após adicionar a vaga acrescenta o campo que conterá o ID da vaga
+                var docRef = doc(db, "Vagas", DocumentReference.id)
+                setDoc(docRef, { ID: DocumentReference.id, url_img: null }, { merge: true })
+            });
+        } else {
+            const metadata = {
+                contentType: mimetype,
+            };
+            const imgRef = ref(storage, "images/" + file_name);
+            uploadBytes(imgRef, file_buffer, metadata).then((snapshot) => {
+                //após o upload extrai a url da imagem
+                getDownloadURL(imgRef)
+                    .then((url) => {
+
                     })
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    let mensagemDeErro = verificaErro(errorCode);
-                    console.log(mensagemDeErro)
-                });
-        });
+                    .catch((error) => {
+                        const errorCode = error.code;
+                        let mensagemDeErro = verificaErro(errorCode);
+                        console.log(mensagemDeErro)
+                    });
+            });
+        }
     }
 }
+
+

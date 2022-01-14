@@ -1,18 +1,11 @@
-
-<div class="card text-center bg-primary" style="width: 18rem;">
-    <div class="card-body text-white">
-        <div class="d-flex justify-content-between">
+<div class="card text-center align-center bg-primary" style="width: 308px; height: 349px">
+    <div class="card-body align-items-center d-flex justify-content-center text-white">
+            <h4 class="card-text">{{Cargo}}</h4>
             <h6 class="card-title">{{Empresa}}</h6>
-            <h6>{{Modalidade}}</h6>
-        </div>
-        <br>
-        <h4 class="card-text">{{Cargo}}</h4>
-        <br>
-        <!-- Button trigger modal -->
     </div>
-    <div class="card-footer border-0 bg-primary">
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#{{ID}}">
-            Ver detalhes
-        </button>
+    <div class="card-footer border-0 bg-primary justify-content-between">
+        <a type="button" data-bs-toggle="modal" data-bs-target="#{{ID}}">
+            Ver mais detalhes
+        </a>
     </div>
 </div>

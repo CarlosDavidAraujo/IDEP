@@ -16,7 +16,7 @@ module.exports = {
         res.render('paginas/cadastro/index', { municipios });
     },
     postCadastro: async (req, res) => {
-        const dados_de_cadastro = {
+        const dadosPessoais = {
             CPF: req.body.CPF,
             Nome_completo: req.body.nome_completo,
             Nome_social: req.body.nome_social,
@@ -28,7 +28,21 @@ module.exports = {
             Bairro: req.body.bairro,
             Data_de_cadastramento: dataDeCadastro()
         }
-        cadastraUsuario(req.body.email, req.body.senha, dados_de_cadastro).then(() => {
+        const dadosAcademicos ={
+            Grau: req.body.grau,
+            Curso: req.body.curso,
+            Instituição: req.body.instituicao,
+            Data_início: req.body.data_inicial_academica,
+            Data_término: req.body.data_final_academica
+        }
+        const dadosProfissionais = {
+            Cargo: req.body.cargo,
+            Empresa: req.body.empresa,
+            Modalidade: req.body.modalidade,
+            Data_início: req.body.data_inicial_experiencia,
+            Data_término: req.body.data_inicial_experiencia
+        }
+        cadastraUsuario(req.body.email, req.body.senha, dadosPessoais, dadosAcademicos, dadosProfissionais).then(() => {
             res.redirect('/user/perfil');
         })
             .catch((error) => {
@@ -73,7 +87,7 @@ module.exports = {
     getPerfil: (req, res) => {
         const user_id = auth.currentUser.uid
         mostraCandidatura(user_id).then((candidatura) => {
-            res.render('paginas/perfil/index', { candidatura })
+            res.render('paginas/perfil/index', {candidatura})
         })
     },
     postPerfil: (req, res) => {

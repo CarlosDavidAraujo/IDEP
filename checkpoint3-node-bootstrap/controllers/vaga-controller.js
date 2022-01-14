@@ -1,17 +1,16 @@
 const { candidataUsuarioParaVaga, auth } = require('../functions/User');
-const { consultaVagas } = require('../functions/Vaga');
+const { consultaVagaMaisRecente, consultaTodasVagas } = require('../functions/Vaga');
 
 module.exports = {
     getVagas: (req, res) => {
-        consultaVagas().then((vaga) => {
+        consultaTodasVagas().then((vaga) => {
             res.render('paginas/vaga/index', { vaga });
         })
     },
 
     getHomeVagas: (req, res) => {
-        const backgroundImg = "bg-img"
-        consultaVagas().then((vaga) => {
-            res.render('paginas/home/index', { vaga, backgroundImg });
+        consultaVagaMaisRecente().then((vaga) => {
+            res.render('paginas/home/index', { vaga });
         })
     },
 

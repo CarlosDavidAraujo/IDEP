@@ -1,9 +1,9 @@
-const { adicionaVaga, consultaVagas } = require('../functions/Vaga');
-
+const { adicionaVaga, consultaTodasVagas } = require('../functions/Vaga');
+const { serverTimestamp } = require('firebase/firestore')
 module.exports = {
     getAdminVaga: (req, res) => {
-        consultaVagas().then((vaga) => {
-            res.render('paginas/admin/index', { vaga });
+        consultaTodasVagas().then((vaga) => {
+        res.render('paginas/admin/index', {vaga});
         })
     },
 
@@ -12,6 +12,8 @@ module.exports = {
             Modalidade: req.body.modalidade,
             Cargo: req.body.cargo,
             Empresa: req.body.empresa,
+            Etapa: req.body.etapa,
+            Data_de_criação: serverTimestamp(),
             Detalhes: {
                 Sobre_a_empresa: req.body.sobre_empresa,
                 Sobre_a_vaga: req.body.sobre_vaga,
@@ -21,6 +23,10 @@ module.exports = {
                 Remuneração_e_CH: req.body.remuneracao
             }
         }
-        adicionaVaga(req.files.imgLogo.data, req.files.imgLogo.name, req.files.imgLogo.mimetype, dados_vaga)
+        if (req.files) {
+            adicionaVaga(req.files.imgLogo.data, req.files.imgLogo.name, req.files.imgLogo.mimetype, dados_vaga)
+        } else {
+            adicionaVaga(null, null, null, dados_vaga)
+        }
     }
 }

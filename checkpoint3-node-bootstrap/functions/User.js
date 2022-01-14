@@ -1,5 +1,5 @@
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, } = require('firebase/auth');
-const { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, deleteDoc } = require("firebase/firestore");
+const { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, addDoc, where, collectionGroup, arrayUnion, arrayRemove } = require("firebase/firestore");
 
 
 const auth = getAuth();
@@ -193,12 +193,17 @@ module.exports = {
         return signInWithEmailAndPassword(auth, email, senha)
     },
 
-    cadastraUsuario: function (email, senha, dados) {
+    cadastraUsuario: function (email, senha, dadosPessoais, dadosAcademicos, dadosProfissionais) {
         return createUserWithEmailAndPassword(auth, email, senha)
             .then((userCredential) => {
                 const user_id = auth.currentUser.uid;
                 const user_doc = doc(db, 'Usuários', user_id);
-                setDoc(user_doc, dados, { merge: true });
+                setDoc(user_doc, dadosPessoais, { merge: true }).then(() => {
+                    const formacaoDoc = collection(db, 'Usuários', user_id, 'Formações')
+                    const expDoc = collection(db, 'Usuários', user_id, 'Experiências')
+                    addDoc(formacaoDoc, dadosAcademicos);
+                    addDoc(expDoc, dadosProfissionais);
+                })
             })
     },
 
@@ -236,24 +241,24 @@ module.exports = {
     },
 
     candidataUsuarioParaVaga: async function (vaga_id, user_id) {
-        const vaga = doc(db, 'Vagas', vaga_id);
-        const docSnap = await getDoc(vaga);
-        const vaga_data = docSnap.data();
-        const user_candidatura = doc(db, "Usuários", user_id, "Minhas_candidaturas", vaga_id)
-        setDoc(user_candidatura, vaga_data, { merge: true });
+        const vagaRef = doc(db, "Vagas", vaga_id)
+        return setDoc(vagaRef, { Candidatos: arrayUnion(user_id) }, { merge: true });
     },
 
     mostraCandidatura: async function (user_id) {
-        let minhas_candidaturas = {}
-        const colecao_de_candidaturas = query(collection(db, "Usuários", user_id, "Minhas_candidaturas"));
-        const querySnapshot = await getDocs(colecao_de_candidaturas);
+        let candidaturas = {}
+        const vagaRef = query(collectionGroup(db, 'Vagas'), where('Candidatos', 'array-contains', user_id));
+        const querySnapshot = await getDocs(vagaRef);
         querySnapshot.forEach((doc) => {
-            minhas_candidaturas[doc.id] = doc.data();;
+            candidaturas[doc.id] = doc.data();
         });
-        return minhas_candidaturas;
+        return candidaturas
     },
 
     cancelaCandidatura: async function (user_id, vaga_id) {
-        await deleteDoc(doc(db, "Usuários", user_id, "Minhas_candidaturas", vaga_id));
+        const vagaRef = doc(db, "Vagas", vaga_id)
+        return setDoc(vagaRef, { Candidatos: arrayRemove(user_id) }, { merge: true });
     }
 }
+
+

@@ -1,10 +1,11 @@
+<img src="/img/imgContainer.svg">
 <div class="container py-4">
     <div>
         <H2 class="text-center">Vagas</H2>
     </div>
     <div class="d-flex px-11 py-4 justify-content-center gap-4">
         {{#each vaga}}
-        {{>cardVaga}}
+        {{>cardVagaHome}}
         {{/each}}
     </div>
 </div>
@@ -12,3 +13,7 @@
     <a class="btn btn-warning" href="/vaga">Ver mais vagas</a>
 </div>
 {{>modalVaga}}
+{{>parceiros}}
+{{>quemSomos}}
+{{>modalidades}}
+{{>mapa}}
