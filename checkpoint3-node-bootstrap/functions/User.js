@@ -189,6 +189,17 @@ module.exports = {
         }
     },
 
+    consultaTodosUsuarios:  async function () {
+        let users = {}
+        const collectionRef = collection(db, "Usuários");
+        const q = query(collectionRef)
+        const querySnapshot =  await getDocs(q);
+        querySnapshot.forEach((doc)=>{
+            users[doc.id] = doc.data();
+        })
+        return users;
+    },
+
     fazLogin: function (email, senha) {
         return signInWithEmailAndPassword(auth, email, senha)
     },

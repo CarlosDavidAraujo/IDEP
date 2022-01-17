@@ -1,37 +1,69 @@
 <!-- Filtros -->
 <div class="pt-6">
-    <h6 class="align-self-end ps-4">Filtros</h6>
+    <div class="align-self-end ps-4">Filtros</div>
     <div class="d-flex justify-content-between ps-4 pe-2">
         <div class="col-md-4">
-            <div class="d-flex justify-content-between gap-4">
-                <select class="form-control" name="filtroArea" id="filtroArea">
-                    <option value="Area">Área</option>
+            <form action="/vaga" method="post" class="d-flex justify-content-between gap-4">
+                <select class="form-control" name="filtroModalidade" id="filtroModalidade"
+                    onchange="filtraVagas('filtroModalidade', 'h6')">
+                    <option value="" disabled selected hidden>Modalidade</option>
+                    <option value="Jovem Aprendiz">Jovem Aprendiz</option>
+                    <option value="Estágio">Estágio</option>
+                    <option value="CLT">CLT</option>
                 </select>
-                <select class="form-control" name="filtroLocalidade" id="filtroLocalidade">
-                    <option value="Localidade">Localidade</option>
+                <select class="form-control" name="filtroLocalidade" id="filtroLocalidade" onchange="filtraVagas()">
+                    <option value="" disabled selected hidden>Localidade</option>
                 </select>
-                <select class="form-control" name="filtroEmpresa" id="filtroEmpresa">
-                    <option value="Empresa">Empresa</option>
+                <select class="form-control" name="filtroEmpresa" id="filtroEmpresa"
+                    onchange="filtraVagas('filtroEmpresa','h5')">
+                    <option value="" disabled selected hidden>Empresa</option>
+                    <option value="GlobalSYS">GlobalSYS</option>
+                    <option value="Assaí">Assaí</option>
+                    <option value="Delfa">Delfa</option>
                 </select>
-            </div>
+            </form>
         </div>
         <div class="col-md-4 pe-4">
-            <form action="/user/perfil" method="post">
-                <div class="d-flex">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Pesquisar vagas" aria-label="Search">
-                </div>
-            </form>
+            <div class="d-flex">
+                <input id="pesquisa" class="form-control mr-sm-2" type="search" placeholder="Pesquisar vagas"
+                    aria-label="Search" onkeyup="filtraVagas(pesquisa)">
+            </div>
         </div>
     </div>
 </div>
+
 <br>
 <br>
 
 <!-- Cards -->
-<div class="d-flex flex-wrap gap-4 px-4">
+<div class="d-flex flex-wrap gap-4 px-4" id="meusCards">
     {{#each vaga}}
     {{>cardVaga}}
     {{/each}}
 </div>
-
+<form action="/vaga" method="post">
+    <input type="submit" value="Next">
+</form>
+<!-- Modals -->
+{{#each vaga}}
 {{>modalVaga}}
+{{/each}}
+
+<script>
+    function filtraVagas(filtro, hTag) {
+        var input, filter, cards, h, i;
+        input = document.getElementById(filtro);
+        filter = input.value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        cards = document.getElementById("meusCards");
+        h = cards.getElementsByTagName(hTag);
+        console.log(h)
+        for (i = 0; i < h.length; i++) {
+            console.log(h[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter))
+            if (h[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter) > -1) {
+                h[i].parentElement.parentElement.parentElement.style.display = "";
+            } else {
+                h[i].parentElement.parentElement.parentElement.style.display = "none";
+            }
+        }
+    }
+</script>

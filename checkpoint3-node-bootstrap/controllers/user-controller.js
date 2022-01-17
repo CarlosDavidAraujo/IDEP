@@ -16,19 +16,24 @@ module.exports = {
         res.render('paginas/cadastro/index', { municipios });
     },
     postCadastro: async (req, res) => {
+        const anoAtual =  new Date().getFullYear();
+        const nascimento = req.body.data_de_nascimento.substr(0,4)
+        const nascInt = parseInt(nascimento);
+        const idade = anoAtual - nascInt;
         const dadosPessoais = {
             CPF: req.body.CPF,
             Nome_completo: req.body.nome_completo,
             Nome_social: req.body.nome_social,
             Gênero: req.body.genero,
             Data_de_nascimento: req.body.data_de_nascimento,
+            Idade: idade,
             Email: req.body.email,
             Telefone: req.body.fone,
             Município: req.body.municipio,
             Bairro: req.body.bairro,
             Data_de_cadastramento: dataDeCadastro()
         }
-        const dadosAcademicos ={
+        const dadosAcademicos = {
             Grau: req.body.grau,
             Curso: req.body.curso,
             Instituição: req.body.instituicao,
@@ -87,7 +92,7 @@ module.exports = {
     getPerfil: (req, res) => {
         const user_id = auth.currentUser.uid
         mostraCandidatura(user_id).then((candidatura) => {
-            res.render('paginas/perfil/index', {candidatura})
+            res.render('paginas/perfil/index', { candidatura })
         })
     },
     postPerfil: (req, res) => {

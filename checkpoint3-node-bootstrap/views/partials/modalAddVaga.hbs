@@ -1,4 +1,4 @@
-<form method="post" action="/admin">
+<form method="post" action="/admin/addVaga">
     <div class="modal fade" id="modalAddVaga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content text-primary">
@@ -6,36 +6,38 @@
                 <div class="modal-header">
                     <div class="d-flex gap-4">
                         <div class="form-group">
-                            <label class="form-label" for="cargo">Nome da vaga</label>
-                            <input class="form-control" type="text" id="cargo" name="cargo">
+                            <label class="form-label" for="cargo">Nome da vaga*</label>
+                            <input class="form-control" type="text" id="cargo" name="cargo" required>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="modalidade">Modalidade</label>
-                            <select class="form-control" name="modalidade" id="modalidade">
+                            <label class="form-label" for="modalidade">Modalidade*</label>
+                            <select class="form-control" name="modalidade" id="modalidade" required>
+                                <option value="" disabled selected hidden>Selecione uma opção</option>
                                 <option value="Jovem Aprendiz">Jovem Aprendiz</option>
-                                <option value="Estagiário">Estagiário</option>
+                                <option value="Estágio">Estágio</option>
                                 <option value="CLT">CLT</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="etapa">Etapa</label>
-                            <select class="form-control" name="etapa" id="etapa">
+                            <label class="form-label" for="etapa">Etapa*</label>
+                            <select class="form-control" name="etapa" id="etapa" required>
+                                <option value="" disabled selected hidden>Selecione uma opção</option>
                                 <option value="Envio de currículos">Envio de currículos</option>
-                                <option value="Entrevista">Entravista</option>
+                                <option value="Entrevista">Entrevista</option>
                                 <option value="Finalizado">Finalizado</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="empresa">Empresa</label>
-                            <input class="form-control" type="text" id="empresa" name="empresa">
+                            <label class="form-label" for="empresa">Empresa*</label>
+                            <input class="form-control" type="text" id="empresa" name="empresa" required>
                         </div>
-                        <div class="form-group align-self-end">
-                            <label for="file-upload"
+                        <div class="form-group align-self-end">             
+                              <label for="file-uploadAddVaga"
                                 class="custom-file-upload align-items-center justify-content-around">
                                 <img id="icon" src="/img/icons/imgUpload.svg">
                                 Logotipo da empresa
                             </label>
-                            <input id="file-upload" type="file" name="imgLogo" />
+                            <input id="file-uploadAddVaga" type="file" name="imgLogo" />
                         </div>
                     </div>
                     <button type="button" class="btn-close align-self-start" data-bs-dismiss="modal"
@@ -100,3 +102,13 @@
         </div>
     </div>
 </form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#file-uploadAddVaga').change(function () {
+            var i = $(this).prev('label').clone();
+            var file = $('#file-uploadAddVaga')[0].files[0].name;
+            $(this).prev('label').text(file);
+        });
+    });
+</script>

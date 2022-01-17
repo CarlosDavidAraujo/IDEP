@@ -1,0 +1,57 @@
+<div id="curriculosDiv" class="">
+    <!-- Filtros -->
+    <div class="d-flex align-items-center justify-content-between ps-4">
+        <div class="col">
+            <h5>Nome do candidato</h5>
+        </div>
+        <div class="d-flex justify-content-between gap-4">
+            <div class="form-group">
+                <label for="idade" class="form-label">Idade</label>
+                <div class="d-flex gap-2">
+                    <input id="idade" type="number" name="min" placeholder="Min" class="form-control"
+                        style="width: 79px;">
+                    <img src="img/icons/linha-sm.svg">
+                    <input type="number" placeholder="Max" name="max" class="form-control" style="width: 79px;">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="bairro">Bairro</label>
+                <select class="form-control" name="bairro" id="bairro" style="width: 169px">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="municipios">Município</label>
+                <select class="form-control" name="municipio" id="municipio" style="width: 169px">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="genero">Gênero</label>
+                <select class="form-control" name="genero" id="genero" style="width: 169px">
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vaga">Vaga</label>
+                <select class="form-control" name="vaga" id="vaga" style="width: 169px">
+                </select>
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- Candidatos -->
+    {{#each users}}
+    <div class="d-flex justify-content-between align-items-center rect-lg pe-11 ps-4 my-4">
+        <div class="col-md-2">
+            <h5>{{Nome_completo}}</h5>
+        </div>
+        <div class="col-md-7">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>{{Idade}}</h5>
+                <h5>{{Bairro}}</h5>
+                <h5>{{Município}}</h5>
+                <h5>{{Gênero}}</h5>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>

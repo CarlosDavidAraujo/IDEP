@@ -1,8 +1,10 @@
 
+
+
 body {
     width:75%;
     margin:0 auto;
-    background: #E2E2E2;
+    background: #FCFCFC;
     position: relative;
  }
 
@@ -20,39 +22,35 @@ img#icon {
   height: fit-content;
 }
 
-.bg-img {
-    /* The image used */
-    background-image: url("/img/Img_Container.png");
-      min-height: 380px;
-  
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  
-    /* Needed to position the navbar */
-    position: static;
-  }
+.txtRect {
+  background: #EEEA87;
+  border-radius: 17px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: fit-content;
+}
 
- 
-  .form-check-input:checked {
+
+.form-check-input:checked {
     background-color: #F9BA00;
     border-color:#F9BA00;
   }
   .form-control {
     border: 2px solid #2F8AE6;
     border-color: #2F8AE6;
+    background: #F4F4F4;;
    }
 
    textarea.form-control{
      min-height: 178px ;
    }
+
 p {
-font-family: 'Montserrat', sans-serif;
+font-family: 'Montserrat';
 font-size: 20px;
 font-style: normal;
 font-weight: 400;
-line-height: 29px;
+line-height: normal;
 letter-spacing: 0em;
 text-align: left;
 }
@@ -60,14 +58,209 @@ text-align: left;
 input[type="file"] {
   display: none;
 }
-.custom-file-upload {
-width: 230px;
-height: 65px;
-left: 951px;
-top: 40px;
+
+.custom-file-upload{
+  width: 230px;
+  height: 65px;
+  background: #f7f7f7; 
+  padding: 8px;
+  border:  3px solid #2F8AE6;
+  border-radius: 0.25rem;
+  display: flex;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.foto-upload {
+  cursor: pointer;
+}
+.form-label {
+  margin-bottom: 0rem;
+}
+
+legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0rem;
+  font-size: calc(1.275rem + 0.3vw);
+  line-height: inherit;
+  }
+
+.accordion-item {
+  background-color: #fff;
+  border: 0px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: white;
+    border: 0px;
+}
+.accordion-button:focus {
+  z-index: 3;
+  border-color: #97c5f3;
+  outline: 0;
+  box-shadow: none;
+}
+
+.vr{
+ width: 2px; 
+}
+
+.card {
+  width: 308px;
+height: 349px;
+}
+
+.rect-lg {
+width: 100%;
+height: 60px;
+left: 50px;
+top: 374px;
+background: #F4F4F4;
+border: 2px solid #2F8AE6;
 box-sizing: border-box;
-border:  3px solid #2F8AE6;
-border-radius: 0.25rem;
-display: flex;
-cursor: pointer;
+border-radius: 2px;
+}
+
+.container#homeMainImg {
+  position: relative;
+}
+
+div#homeMainImgTxt{
+position: absolute;
+width: 863px;
+height: 96px;
+left: 146px;
+top: 175px;
+}
+
+div#homeMainImgTxt h1{
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: 48px;
+  color: #FCFCFC;
+}
+
+div#homeMainImgTxt h3{
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height: normal;
+color: #FFFFFF;
+}
+
+.cardVagaHome {
+margin-top:-13%;
+width: 308px;
+height: 318px;
+max-height: 318;
+background: #2F8AE6;
+box-shadow: 0px 14px 24px rgba(14, 31, 53, 0.16);
+border-radius: 2px;
+}
+
+h6 {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 400;
+font-size: 13px;
+line-height: normal;
+}
+
+h6.strong {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+}
+
+h5 {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: normal;
+}
+
+h4 {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 600;
+font-size: 24px;
+line-height:normal;
+}
+h3 {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height:normal;
+  }
+
+h1.display-2 {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 72px;
+}
+
+.btn  {
+font-family: 'Montserrat';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: normal;
+padding-top: 10px;
+padding-bottom: 10px;
+}
+
+.largeBox {
+width: 424px;
+height: 533px;
+left: 508px;
+top: 3290px;
+background: #FCFCFC;
+border-radius: 2px;
+}
+
+li {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  }
+
+div#loginContainer {
+position: absolute;
+left: 5%;
+top: 4%;
+opacity: 0.94;
+border-radius: 2px;
+}
+
+.nav-link {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.form-control-lg {
+width: 100%;
+height: 55px;
+background: #FFFFFF;
+border-radius: 2px;
+margin-top: 10px;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  color: #1e2125;
+  background-color: #1f5994;
+}
+
+.card {
+  box-shadow: 0px 14px 24px rgba(14, 31, 53, 0.16);
 }
