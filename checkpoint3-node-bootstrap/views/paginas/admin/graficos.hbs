@@ -1,0 +1,72 @@
+{{>adminMenu}}
+<div class="container-xl  mt-6">
+    <div class="row justify-content-around">
+        <div class="d-grid col-xl-4">
+            <button class="btn btn-outline-primary border-2 border-primary active" id="idadeButton">Idade</button>
+        </div>
+        <div class="d-grid col-xl-4">
+            <button class="btn btn-outline-primary border-2 border-primary" id="generoButton">Gênero</button>
+        </div>
+        <div class="d-grid col-xl-4">
+            <button class="btn btn-outline-primary border-2  border-primary" id="bairroButton">Bairro</button>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="idadeContainer">
+{{>graficoIdade}}
+</div>
+
+<div class="container d-none" id="generoContainer">
+{{>graficoGenero}}
+</div>
+
+<div class="container d-none" id="bairroContainer">
+{{>graficoBairro}}
+</div>
+
+
+<script>
+    let idadeButton = document.getElementById('idadeButton');
+    let generoButton = document.getElementById('generoButton');
+    let bairroButton = document.getElementById('bairroButton');
+    let idadeContainer = document.getElementById('idadeContainer');
+    let generoContainer = document.getElementById('generoContainer');
+    let bairroContainer = document.getElementById('bairroContainer');
+
+    idadeButton.onclick = ()=> {
+        idadeContainer.classList.remove('d-none');
+        idadeButton.classList.add('active');
+
+        generoContainer.classList.add('d-none');
+        generoButton.classList.remove('active');
+
+        bairroContainer.classList.add('d-none');
+        bairroButton.classList.remove('active')
+    };
+
+     generoButton.onclick = ()=> {
+        idadeContainer.classList.add('d-none');
+        idadeButton.classList.remove('active');
+
+        generoContainer.classList.remove('d-none');
+        generoButton.classList.add('active');
+
+        bairroContainer.classList.add('d-none');
+        bairroButton.classList.remove('active')
+    };
+
+    bairroButton.onclick = ()=> {
+        idadeContainer.classList.add('d-none');
+        idadeButton.classList.remove('active');
+
+        generoContainer.classList.add('d-none');
+        generoButton.classList.remove('active');
+
+        bairroContainer.classList.remove('d-none');
+        bairroButton.classList.add('active')
+    };
+
+
+
+</script>

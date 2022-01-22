@@ -1,4 +1,4 @@
-<form class="d-flex" action="/user/perfil/edit" method="post">
+<form class="d-flex" action="/user/perfil/edit" method="post" enctype="multipart/form-data">
     <div class="container">
         <br />
         <br />
@@ -14,55 +14,59 @@
         {{/if}}
         <div class="d-flex gap-4">
             <div class="col d-grid gap-3">
-                <h6 class="strong text-primary">Informações pessoais </h6>
-                <div class="d-flex justify-content-between ">
+                <h6 class="strong text-primary">Informações pessoais</h6>
+                <div class="d-flex justify-content-between">
                     <div>
                         <label for="fotoPerfil" class="foto-upload">
-                            <img src="/img/icons/foto.svg" alt="">
+                            {{#if profileImg}}
+                             <img class="perfil-img" src="{{doc.img_perfil}}" >
+                             {{else}}
+                            <img src="/img/icons/foto.svg" >
+                            {{/if}}
                         </label>
                         <input id="fotoPerfil" type="file" name="fotoPerfil" />
                     </div>
                     <div class="col-md-7">
                         <div class="form-group"><label for="nome_social" class="form-label">Nome Social</label>
-                            <input type="text" class="form-control" id="nome_social" name="nome_social">
+                            <input type="text" class="form-control" id="nome_social" name="nome_social" value="{{doc.Nome_social}}">
                         </div>
 
                         <div class="form-group"><label for="CPF" class="form-label">CPF*</label>
-                            <input type="text" class="form-control" id="CPF" name="CPF" required>
+                            <input type="text" class="form-control" id="CPF" name="CPF" value="{{doc.CPF}}" required>
                         </div>
                     </div>
                 </div>
                 <div class="form-group"><label for="nome_completo" class="form-label">Nome de registro*</label>
-                    <input type="text" class="form-control" id="nome_completo" name="nome_completo" required>
+                    <input type="text" class="form-control" id="nome_completo" name="nome_completo" value="{{doc.Nome_completo}}" required>
                 </div>
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
                         <div>
                             <label for="genero" class="form-label">Gênero*</label>
-                            <select name="genero" class="form-control" id="genero" name="genero" required>
+                            <select class="form-control" id="genero" name="genero" required>
                                 <option value="" disabled selected hidden>Selecione uma opção</option>
-                                <option value="masculino">masculino</option>
-                                <option value="feminino">feminino</option>
-                                <option value="outro">outro</option>
+                                <option value="masculino" {{#when doc.Gênero 'eq' 'masculino'}} selected {{/when}} >Masculino</option>
+                                <option value="feminino" {{#when doc.Gênero 'eq' "feminino"}} selected {{/when}}>Feminino</option>
+                                <option value="outro" {{#when doc.Gênero 'eq' 'outro'}} selected {{/when}}>Outro</option>
                             </select>
                         </div>
                         <div>
                             <label for="data_de_nascimento" class="form-label">Data de nascimento*</label>
-                            <input type="date" class="form-control" id="data_de_nascimento" name="data_de_nascimento"
+                            <input type="date" class="form-control" id="data_de_nascimento" name="data_de_nascimento" value="{{doc.Data_de_nascimento}}"
                                 required>
                         </div>
                     </div>
                 </div>
                 <div class="form-group"><label for="email" class="form-label">Email*</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <input type="email" class="form-control" id="email" name="email" value="{{doc.Email}}" required>
                 </div>
                 <div class="form-group">
                     <label for="fone" class="form-label">Telefone*</label>
-                    <input type="tel" class="form-control" id="fone" name="fone" pattern="[0-9]{9}" required>
+                    <input type="tel" class="form-control" id="fone" name="fone" pattern="[0-9]{9}" value="{{doc.Telefone}}"required>
                 </div>
                 <div class="form-group">
                     <label for="endereco" class="form-label">Endereço</label>
-                    <input type="text" class="form-control" id="endereco" name="endereco">
+                    <input type="text" class="form-control" id="endereco" name="endereco" value="{{doc.Endereço}}">
                 </div>
                 <div class="form-group">
                     <div class="d-flex gap-4">
@@ -77,7 +81,7 @@
                         </div>
                         <div class="form-group">
                             <label for="bairro" class="form-label">Bairro*</label>
-                            <input name="bairro" class="form-control" id="bairro" name="bairro" required />
+                            <input name="bairro" class="form-control" id="bairro" name="bairro" value="{{doc.Bairro}}" required />
                         </div>
                     </div>
                 </div>
@@ -88,30 +92,30 @@
                 <div class="form-group"><label for="grau" class="form-label">Grau</label>
                     <select name="grau" class="form-control" id="grau" name="grau">
                         <option value="" disabled selected hidden>Selecione uma opção</option>
-                        <option value="fundamental">Ensino fundamental completo</option>
-                        <option value="medio">Ensino médio completo</option>
-                        <option value="superior">Ensino superior completo</option>
-                        <option value="fundamental">Ensino fundamental incompleto</option>
-                        <option value="medio">Ensino médio incompleto</option>
-                        <option value="superior">Ensino superior incompleto</option>
+                        <option value="fundamental" {{#when doc.Dados_academicos.Grau 'eq' 'fundamental'}} selected {{/when}}>Ensino fundamental completo</option>
+                        <option value="medio" {{#when doc.Dados_academicos.Grau 'eq' 'medio'}} selected {{/when}}>Ensino médio completo</option>
+                        <option value="superior" {{#when doc.Dados_academicos.Grau 'eq' 'superior'}} selected {{/when}}>Ensino superior completo</option>
+                        <option value="fundamental incompleto" {{#when doc.Dados_academicos.Grau 'eq' 'fundamental incompleto'}} selected {{/when}}>Ensino fundamental incompleto</option>
+                        <option value="medio incompleto" {{#when doc.Dados_academicos.Grau 'eq' 'medio incompleto'}} selected {{/when}}>Ensino médio incompleto</option>
+                        <option value="superior incompleto" {{#when doc.Dados_academicos.Grau 'eq' 'superior incompleto'}} selected {{/when}}>Ensino superior incompleto</option>
                     </select>
                 </div>
                 <div class="form-group"><label for="curso" class="form-label">Curso</label>
-                    <input type="text" class="form-control" id="curso" name="curso">
+                    <input type="text" class="form-control" id="curso" name="curso" value="{{doc.Dados_academicos.Curso}}">
                 </div>
                 <div class="form-group"><label for="instituicao" class="form-label">Instituição</label>
-                    <input type="text" class="form-control" id="instituicao" name="instituicao">
+                    <input type="text" class="form-control" id="instituicao" name="instituicao" value="{{doc.Dados_academicos.Instituição}}">
                 </div>
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
                         <div>
                             <label for="data_inicial_academica" class="form-label">Início</label>
                             <input type="date" class="form-control" id="data_inicial_academica"
-                                name="data_inicial_academica">
+                                name="data_inicial_academica" value="{{doc.Dados_academicos.Data_início}}">
                         </div>
                         <div>
                             <label for="daa_final_academica" class="form-label">Término</label>
-                            <input type="date" class="form-control" id="daa_final_academica" name="daa_final_academica">
+                            <input type="date" class="form-control" id="daa_final_academica" name="data_final_academica" value="{{doc.Dados_academicos.Data_término}}">
                         </div>
                     </div>
                 </div>
@@ -122,28 +126,28 @@
                 <div class="form-group"><label for="modalidade" class="form-label">Modalidade</label>
                     <select name="modalidade" class="form-control" id="modalidade" name="modalidade">
                         <option value="" disabled selected hidden>Selecione uma opção</option>
-                        <option value="Jovem Aprendiz">Jovem Aprendiz</option>
-                        <option value="Estágio">Estágio</option>
-                        <option value="CLt">CLT</option>
+                        <option value="Jovem Aprendiz" {{#when doc.Dados_profissionais.Modalidade 'eq' 'Jovem Aprendiz'}} selected {{/when}}>Jovem Aprendiz</option>
+                        <option value="Estágio" {{#when doc.Dados_profissionais.Modalidade 'eq' 'Estágio'}} selected {{/when}}>Estágio</option>
+                        <option value="CLT" {{#when doc.Dados_profissionais.Modalidade 'eq' 'CLT'}} selected {{/when}}>CLT</option>
                     </select>
                 </div>
                 <div class="form-group"><label for="cargo" class="form-label">Cargo</label>
-                    <input type="text" class="form-control" id="cargo" name="cargo">
+                    <input type="text" class="form-control" id="cargo" name="cargo" value="{{doc.Dados_profissionais.Cargo}}">
                 </div>
                 <div class="form-group"><label for="empresa" class="form-label">Empresa</label>
-                    <input type="text" class="form-control" id="empresa" name="empresa">
+                    <input type="text" class="form-control" id="empresa" name="empresa" value="{{doc.Dados_profissionais.Empresa}}">
                 </div>
                 <div class="form-group">
                     <div class="d-flex justify-content-between">
                         <div>
                             <label for="data_inicial_experiencia" class="form-label">Início</label>
                             <input type="date" class="form-control" id="data_inicial_experiencia"
-                                name="data_inicial_experiencia">
+                                name="data_inicial_experiencia" value="{{doc.Dados_profissionais.Data_início}}">
                         </div>
                         <div>
                             <label for="data_final_experiencia" class="form-label">Término</label>
                             <input type="date" class="form-control" id="data_final_experiencia"
-                                name="data_final_experiencia">
+                                name="data_final_experiencia" value="{{doc.Dados_profissionais.Data_término}}">
                         </div>
                     </div>
                 </div>
@@ -158,7 +162,7 @@
             <div class="d-grid  col-2">
                 <input class="btn btn-warning" type="submit" value="Salvar alterações">
             </div>
-
         </div>
     </div>
 </form>
+

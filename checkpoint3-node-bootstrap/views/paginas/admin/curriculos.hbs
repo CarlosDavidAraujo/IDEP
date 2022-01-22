@@ -1,0 +1,126 @@
+{{>adminMenu}}
+<div class="container-xl container-xs mt-5">
+    <!-- Filtros -->
+    <div class="row align-items-center pe-xl-2">
+        <div class="col-xl-2">
+            <h5>Nome do candidato</h5>
+        </div>
+        <div class="col-xl-2 form-group">
+            <label for="vaga">Vaga</label>
+            <select class="form-control" name="vaga" id="vaga">
+            </select>
+        </div>
+        <div class="col-xl-2 form-group">
+            <div class="d-flex justify-content-end align-items-end gap-1">
+                <div class="col">
+                    <label for="idade" class="form-label">Idade</label>
+                    <input id="idade" type="number" name="min" placeholder="Min" class="form-control">
+                </div>
+                <div class="col">
+                    <input type="number" placeholder="Max" name="max" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-2 form-group">
+            <label for="bairro">Bairro</label>
+            <select class="form-control" name="bairro" id="bairro">
+            </select>
+        </div>
+        <div class="col-xl-2 form-group">
+            <label for="filtroMunicipio">Município</label>
+            <select class="form-control" id="filtroMunicipio" onchange="filtraCandidatos('filtroMunicipio')">
+                <option value="" disabled selected hidden>Selecione uma opção</option>
+                <option value="todos">Todos</option>
+                {{#each municipios}}
+                <option value="{{nome}}">{{nome}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="col-xl-2 form-group">
+            <label for="filtroGenero" class="form-label">Gênero</label>
+            <select class="form-control" id="filtroGenero" onchange="filtraCandidatos('filtroGenero')">
+                <option value="" disabled selected hidden>Selecione uma opção</option>
+                <option value="todos">Todos</option>
+                <option value="masculino" selected>Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="outro">Outros</option>
+            </select>
+        </div>
+    </div>
+    <br>
+    <!-- Candidatos -->
+    <div id="candidatos">
+        {{#each paginator.data}}
+        <div class="row rect-lg mt-3 ps-4 align-items-center">
+            <div class="col">
+                <h5>{{Nome_completo}}</h5>
+            </div>
+            <div class="col text-center">
+                <h5>{{Idade}}</h5>
+            </div>
+            <div class="col text-center">
+                <h5>{{Bairro}}</h5>
+            </div>
+            <div class="col text-center">
+                <h5>{{Município}}</h5>
+            </div>
+            <div class="col text-center">
+                <h5>{{Gênero}}</h5>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <div class="d-flex justify-content-center mt-8">
+        <form action="/admin/curriculos" method="post">
+            <nav aria-label="Page navigation example">
+                <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
+                <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
+                <ul class="pagination" id="meusBotoes">
+                </ul>
+            </nav>
+        </form>
+    </div>
+</div>
+
+
+<script id="filtros">
+    function filtraCandidatos(filtro) {
+        var input, filter, candidatos, i, j, row, col;
+        input = document.getElementById(filtro);
+        filter = input.value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        candidatos = document.getElementById("candidatos");
+        row = candidatos.getElementsByClassName('row');
+        for (i = 0; i < row.length; i++) {
+            if (row[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter) > -1 || filter == 'TODOS') {
+                row[i].style.display = "";
+            }
+            else {
+                row[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+<script id="paginação">
+    let i, j, totalPages, buttonGroup, currentPage, botoes;
+    totalPages = document.getElementById('totalDePaginas').value;
+    buttonGroup = document.getElementById('meusBotoes');
+    currentPage = document.getElementById('paginaAtual').value;
+    //adiciona botoes para cada pagina
+    function drawButtons() {
+        for (let i = 1; i <= totalPages; i++) {
+            buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+        }
+    }
+    drawButtons();
+
+    //altera o estilo do botao da pagina atual
+    botoes = buttonGroup.getElementsByTagName('li');
+    for (j = 0; j < botoes.length; j++) {
+        if (j + 1 == currentPage) {
+            botoes[j].classList.add('active')
+        }
+    }
+</script>

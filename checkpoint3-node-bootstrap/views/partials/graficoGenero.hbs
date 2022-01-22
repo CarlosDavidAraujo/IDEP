@@ -1,0 +1,61 @@
+<div class="col-8 offset-2 my-5">
+    <input type="hidden" id="genero" value="{{resultado}}">
+    <div class="card bg-white">
+        <div class="card-body">
+            <h5>Teste Gráfico Faixa Etária</h5>
+            <hr>
+            <canvas id="idadeChart"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var ctx = document.getElementById('idadeChart').getContext('2d');
+    let resultado = document.getElementById('genero').value;
+    var clean = resultado.replace(/[^0-9]*/g, '')
+    let masculino = clean[0];
+    let feminino = clean[1];
+    let outro = clean[2];
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'doughnut',
+        // The data for our dataset
+        data: {
+            labels: ['Feminino', 'Masculino', 'Outro'],
+            datasets: [{
+                label: 'Gráfico por Idade',
+                padding: 2000,
+                textAlign: 'left',
+                backgroundColor: [
+                    'rgb(93, 95, 239, 100)',
+                    'rgb(249, 186, 0, 1)',  
+                    'rgb(47, 138, 229, 1)',
+                ],
+                borderColor: [
+                    'rgb(93, 95, 239, 1)',
+                    'rgb(249, 186, 0, 1)',
+                    'rgb(47, 138, 229, 1)',
+                ],
+                data: [feminino, masculino, outro]
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            cutoutPercentage: 40,
+            legend: {
+                position: 'chartArea',
+                align: 'end',
+                pointStyle: 'circle',
+                filter: null,
+                boxWidth: 120,
+                boxHeigth: 'font.size'
+            },
+            animation: {
+                animateScale: true
+            }
+        }
+    });
+
+</script>

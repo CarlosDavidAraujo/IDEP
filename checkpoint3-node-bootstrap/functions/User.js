@@ -1,9 +1,12 @@
+const res = require('express/lib/response');
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, } = require('firebase/auth');
 const { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, addDoc, where, collectionGroup, arrayUnion, arrayRemove } = require("firebase/firestore");
-
+const { getStorage, ref, getDownloadURL, uploadBytes } = require('firebase/storage');
+const fireapp = require("./firebaseInitialize");
 
 const auth = getAuth();
 const db = getFirestore();
+const storage = getStorage(fireapp, "projeto-integrado-i-dfb90.appspot.com");
 
 module.exports = {
     auth: auth,
@@ -189,13 +192,13 @@ module.exports = {
         }
     },
 
-    consultaTodosUsuarios:  async function () {
-        let users = {}
+    consultaTodosUsuarios: async function () {
+        let users = []
         const collectionRef = collection(db, "Usuários");
         const q = query(collectionRef)
-        const querySnapshot =  await getDocs(q);
-        querySnapshot.forEach((doc)=>{
-            users[doc.id] = doc.data();
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            users.push(doc.data());
         })
         return users;
     },
@@ -204,30 +207,44 @@ module.exports = {
         return signInWithEmailAndPassword(auth, email, senha)
     },
 
-    cadastraUsuario: function (email, senha, dadosPessoais, dadosAcademicos, dadosProfissionais) {
+    cadastraUsuario: function (email, senha, dados) {
         return createUserWithEmailAndPassword(auth, email, senha)
             .then((userCredential) => {
                 const user_id = auth.currentUser.uid;
                 const user_doc = doc(db, 'Usuários', user_id);
-                setDoc(user_doc, dadosPessoais, { merge: true }).then(() => {
-                    const formacaoDoc = collection(db, 'Usuários', user_id, 'Formações')
-                    const expDoc = collection(db, 'Usuários', user_id, 'Experiências')
-                    addDoc(formacaoDoc, dadosAcademicos);
-                    addDoc(expDoc, dadosProfissionais);
+                setDoc(user_doc, dados, { merge: true }).then(() => {
                 })
-            })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            });
     },
 
     logout: function () {
         return signOut(auth)
     },
 
-    editaPerfil: function (new_email, new_dados) {
-        return updateEmail(auth.currentUser, new_email).then(() => {
-            const user_id = auth.currentUser.uid;
-            const user_doc = doc(db, 'Usuários', user_id);
-            setDoc(user_doc, new_dados, { merge: true })
-        })
+    editaPerfil: async function (new_email, dados, file) {
+        const user_id = auth.currentUser.uid;
+        const user_doc = doc(db, 'Usuários', user_id);
+        if (file == null) {
+            return updateEmail(auth.currentUser, new_email).then(() => {
+                setDoc(user_doc, dados, { merge: true })
+            });
+        } else {
+            const metadata = { contentType: file.mimetype };
+            const nomeImg = file.name + file.md5;
+            const imgRef = ref(storage, "images/" + nomeImg);
+            return updateEmail(auth.currentUser, new_email).then(() => {
+                uploadBytes(imgRef, file.data, metadata).then((snapshot) => {
+                    getDownloadURL(imgRef)
+                        .then((url) => {
+                            dados.img_perfil = url;
+                            setDoc(user_doc, dados, { merge: true })
+                        })
+                });
+            });
+        }
     },
 
     consultaDadosDoUsuario: async function () {
@@ -257,11 +274,11 @@ module.exports = {
     },
 
     mostraCandidatura: async function (user_id) {
-        let candidaturas = {}
+        let candidaturas = []
         const vagaRef = query(collectionGroup(db, 'Vagas'), where('Candidatos', 'array-contains', user_id));
         const querySnapshot = await getDocs(vagaRef);
         querySnapshot.forEach((doc) => {
-            candidaturas[doc.id] = doc.data();
+            candidaturas.push(doc.data());
         });
         return candidaturas
     },
@@ -269,6 +286,31 @@ module.exports = {
     cancelaCandidatura: async function (user_id, vaga_id) {
         const vagaRef = doc(db, "Vagas", vaga_id)
         return setDoc(vagaRef, { Candidatos: arrayRemove(user_id) }, { merge: true });
+    },
+
+    consultaGeneros: async function () {
+        let generos = ["masculino", "feminino", "outro"];
+        let resultado = [];
+        for (let i = 0; i < generos.length; i++) {
+            const q = query(collection(db, "Usuários"), where('Gênero', "==", generos[i]));
+            const querySnapshot = await getDocs(q);
+            resultado.push(querySnapshot.docs.length);
+        }
+        return resultado;
+    },
+
+    consultaIdades: async function () {
+        let idades = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
+        let resultado = [];
+        for (let i = 0; i < idades.length; i++) {
+            const q1 = query(collection(db, "Usuários"), where('Idade', "==", idades[i]));
+            const querySnapshot = await getDocs(q1);
+            resultado.push(querySnapshot.docs.length);
+        }
+        const q2 = query(collection(db, "Usuários"), where('Idade', ">=", 29));
+        const querySnapshot2 = await getDocs(q2);
+        resultado.push(querySnapshot2.docs.length);
+        return resultado;
     }
 }
 

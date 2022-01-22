@@ -1,27 +1,20 @@
-const { render } = require('express/lib/response');
 const { candidataUsuarioParaVaga, auth } = require('../functions/User');
-const { consultaVagasMaisRecentes, consultaTodasVagas, primeiraPagina, proximaPagina } = require('../functions/Vaga');
+const { consultaVagasMaisRecentes, consultaTodasVagas, paginador } = require('../functions/Vaga');
 
-function getKeyByValue(object, value) {
-    return Object.keys(object).find(key => object[key] === value);
-}
 
-let ultimaVaga;
 
 module.exports = {
     getVagas: (req, res) => {
-        primeiraPagina(2).then((vagasVisiveis) => {
-            const vaga = vagasVisiveis[0];
-            ultimaVaga = vagasVisiveis[1]
-            res.render('paginas/vaga/index', { vaga })
+        consultaTodasVagas().then((vaga) => {
+            const paginator = paginador(vaga, 1, 10)
+            res.render('paginas/vaga/index', { paginator });
         });
     },
 
     postVagas: (req, res) => {
-        proximaPagina(ultimaVaga, 2).then((vagasVisiveis) => {
-            const vaga = vagasVisiveis[0];
-            ultimaVaga = vagasVisiveis[1]
-            res.render('paginas/vaga/index', { vaga })
+        consultaTodasVagas().then((vaga) => {
+            const paginator = paginador(vaga, req.body.pagina, 10)
+            res.render('paginas/vaga/index', { paginator });
         });
     },
 

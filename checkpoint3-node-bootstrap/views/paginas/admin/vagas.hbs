@@ -1,4 +1,10 @@
+{{>adminMenu}}
 <div class="container-fluid mt-4 ms-4" id="vagasContainer">
+    <div class="d-flex flex-row-reverse mt-4 me-6">
+        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalAddVaga">
+            Criar nova vaga
+        </button>
+    </div>
     <!-- Filtros -->
     <div class="align-self-end">Filtros</div>
     <div class="d-flex justify-content-between">
@@ -31,72 +37,28 @@
             </div>
         </div>
     </div>
+    <!-- Vagas -->
 
-    <!-- Cards -->
-    <div class="d-flex flex-wrap mt-5" id="meusCards">
+    <div class="d-flex flex-wrap mt-4" id="meusCards">
         {{#each paginator.data}}
         {{>cardVaga}}
+        {{>modalAddVaga}}
+        {{>modalVagaAdmin}}
+        {{>modalEditaVaga}}
         {{/each}}
     </div>
-
-    <div class="d-flex justify-content-center mt-8">
-        <form action="/vaga" method="post">
-            <nav aria-label="Page navigation example">
-                <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
-                <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
-                <ul class="pagination" id="meusBotoes">
-                </ul>
-            </nav>
-        </form>
-    </div>
-
-    <!-- Modals -->
-    {{#each paginator.data}}
-    {{>modalVaga}}
-    {{/each}}
 </div>
 
-<script>
-    function filtraVagas(filtro, hTag) {
-        var input, filter, cards, h, i;
-        input = document.getElementById(filtro);
-        filter = input.value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-        cards = document.getElementById("meusCards");
-        h = cards.getElementsByTagName(hTag);
-        console.log(h)
-        for (i = 0; i < h.length; i++) {
-            console.log(h[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter))
-            if (h[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter) > -1) {
-                h[i].parentElement.parentElement.parentElement.style.display = "";
-            } else {
-                h[i].parentElement.parentElement.parentElement.style.display = "none";
-            }
-        }
-    }
-</script>
-
-<script id="paginação">
-    let i, j, totalPages, buttonGroup, currentPage, botoes;
-    totalPages = document.getElementById('totalDePaginas').value;
-    buttonGroup = document.getElementById('meusBotoes');
-    currentPage = document.getElementById('paginaAtual').value;
-    //adiciona botoes para cada pagina
-    function drawButtons() {
-        for (let i = 1; i <= totalPages; i++) {
-            buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
-        }
-    }
-    drawButtons();
-
-    //altera o estilo do botao da pagina atual
-    botoes = buttonGroup.getElementsByTagName('li');
-    console.log(botoes[2].classList)
-    for (j = 0; j < botoes.length; j++) {
-        if (j + 1 == currentPage) {
-            botoes[j].classList.add('active')
-        }
-    }
-</script>
+<div class="d-flex justify-content-center mt-8">
+    <form action="/admin/vagas" method="post">
+        <nav aria-label="Page navigation example">
+            <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
+            <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
+            <ul class="pagination" id="meusBotoes">
+            </ul>
+        </nav>
+    </form>
+</div>
 
 <script id="filtros">
     function filtraVagas(filtro) {
@@ -111,5 +73,40 @@
                 card[i].parentElement.style.display = "none";
             }
         }
+    }
+</script>
+
+<script id="paginação">
+    //PAGINAÇÃO DAS VAGAS
+    let totalPages, buttonGroup, currentPage, botoes;
+    totalPages = document.getElementById('totalDePaginas').value;
+    buttonGroup = document.getElementById('meusBotoes');
+    currentPage = document.getElementById('paginaAtual').value;
+    //adiciona botoes para cada pagina
+    function drawButtons() {
+        for (var i = 1; i <= totalPages; i++) {
+            buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+        }
+    }
+    drawButtons();
+
+    //altera o estilo do botao da pagina atual
+    botoes = buttonGroup.getElementsByTagName('li');
+    for (var j = 0; j < botoes.length; j++) {
+        if (j + 1 == currentPage) {
+            botoes[j].classList.add('active')
+        }
+    }
+
+    //PAGINAÇÃO DOS CURRICULOS
+
+</script>
+
+<script id="fileLabel">
+    function changeLabel(inputId, labelId) {
+        let fileInput = document.getElementById(inputId);
+        let label = document.getElementById(labelId);
+        let selectedFileName = fileInput.files[0].name;
+        label.innerText = selectedFileName;
     }
 </script>

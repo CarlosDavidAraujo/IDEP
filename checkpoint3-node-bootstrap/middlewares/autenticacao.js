@@ -1,23 +1,52 @@
 const { getAuth } = require("firebase/auth");
 const auth = getAuth();
+const { consultaDadosDoUsuario } = require('../functions/User')
 
 module.exports = {
     requireUser: (req, res, next) => {
         if (auth.currentUser) {
-            return next();
+            next();
         }
         else {
-            return res.redirect('/user/login')
+            res.redirect('/user/login')
         }
     },
 
     requireNoUser: (req, res, next) => {
+        if (!auth.currentUser) {
+            next();
+        }
+        else if (auth.currentUser && auth.currentUser.email == 'admin@gmail.com') {
+            res.redirect('/admin/vagas')
+        }
+        else if (auth.currentUser && auth.currentUser.email != 'admin@gmail.com') {
+            res.redirect('/user/perfil')
+        }
+    },
+
+    requireAdmin: (req, res, next) => {
+        if (auth.currentUser && auth.currentUser.email == 'admin@gmail.com') {
+            next();
+        } else {
+            res.status(403).send('Não autorizado');
+        }
+    },
+
+    requireNoAdmin: (req, res, next) => {
+        if (auth.currentUser && auth.currentUser.email == 'admin@gmail.com') {
+            res.redirect('/admin/vagas');
+        } else if (!auth.currentUser || auth.currentUser && auth.currentUser.email != 'admin@gmail.com') {
+            next();
+        }
+    },
+
+    userProfileImg: (req, res, next) => {
         if (auth.currentUser) {
-            return res.redirect('/user/perfil')
+            consultaDadosDoUsuario().then((doc) => {
+                res.locals.profileImg = doc.img_perfil;
+            });
         }
-        else {
-            return next();
-        }
+        next();
     },
 
     changeButton: (req, res, next) => {
@@ -26,6 +55,16 @@ module.exports = {
         }
         else {
             res.locals.changeButton = false;
+        }
+        next();
+    },
+
+    adminLogoutButton: (req, res, next) => {
+        if (auth.currentUser && auth.currentUser.email == 'admin@gmail.com') {
+            res.locals.adminLogoutButton = true;
+        }
+        else {
+            res.locals.adminLogoutButton = false;
         }
         next();
     }

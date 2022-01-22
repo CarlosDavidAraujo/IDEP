@@ -1,4 +1,4 @@
-const { getFirestore, collection, query, getDocs, setDoc, doc, addDoc, orderBy, limit, deleteDoc, serverTimestamp, where, startAfter } = require("firebase/firestore");
+const { getFirestore, collection, query, getDocs, setDoc, doc, addDoc, orderBy, limit, deleteDoc, serverTimestamp, where, onSnapshot } = require("firebase/firestore");
 const fireapp = require("./firebaseInitialize");
 const { getStorage, ref, getDownloadURL, uploadBytes } = require('firebase/storage');
 
@@ -46,88 +46,78 @@ function verificaErro(errorCode) {
 module.exports = {
 
     consultaTodasVagas: async function () {
-        let vagas = {}
-        const vagas_disponiveis = query(collection(db, "Vagas"), orderBy('Data_de_criação', 'desc'));
-        const querySnapshot = await getDocs(vagas_disponiveis);
-        querySnapshot.forEach((doc) => {
-            vagas[doc.id] = doc.data();;
+        let vagas = []
+        const vagas_disponiveis = query(collection(db, "Vagas"), orderBy("Ultima_modificação", 'desc'));
+        const snapshot = await getDocs(vagas_disponiveis)
+        snapshot.forEach((doc) => {
+            vagas.push(doc.data())
         });
         return vagas;
     },
 
     consultaVagasMaisRecentes: async function (limite) {
-        let vagas = {}
+        let vagas = []
         const collectionRef = collection(db, 'Vagas');
-        const q = query(collectionRef, orderBy("Data_de_criação", "desc"), limit(limite));
+        const q = query(collectionRef, orderBy("Ultima_modificação", "desc"), limit(limite));
         const documentSnapshots = await getDocs(q);
         documentSnapshots.forEach((doc) => {
-            vagas[doc.id] = doc.data();
+            vagas.push(doc.data());
         })
         return vagas
     },
 
-    primeiraPagina: async function (limite) {
-        let vagas = {}
-        const first = query(collection(db, "Vagas"), orderBy("Data_de_criação", 'desc'), limit(limite));
-        const documentSnapshots = await getDocs(first);
-        const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-         documentSnapshots.forEach((doc)=>{
-            vagas[doc.id] = doc.data();
-        })
-        return [vagas ,lastVisible];
-    },
+    paginador: function (items, current_page, per_page_items) {
+        let page = current_page || 1,
+            per_page = per_page_items || 10,
+            offset = (page - 1) * per_page,
 
-    proximaPagina: async function (ultimaVaga, limite) {
-        let vagas = {};
-        const next = query(collection(db, "Vagas"), orderBy("Data_de_criação", 'desc'), startAfter(ultimaVaga), limit(limite));
-        const documentSnapshots = await getDocs(next);
-        const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
-        documentSnapshots.forEach((doc) => {
-            vagas[doc.id] = doc.data();
-        })
-        return vagasVisiveis = [vagas, lastVisible];
+            paginatedItems = items.slice(offset).slice(0, per_page_items),
+            total_pages = Math.ceil(items.length / per_page);
+
+        return {
+            page: page,
+            per_page: per_page,
+            pre_page: page - 1 ? page - 1 : null,
+            next_page: (total_pages > page) ? page + 1 : null,
+            total: items.length,
+            total_pages: total_pages,
+            data: paginatedItems
+        };
     },
 
     filtraVaga: async function (campo, valor) {
-        let vagasFiltradas = {}
+        let vagasFiltradas = [];
         const q = query(collection(db, "Vagas"), where(campo, "==", valor));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
-            vagasFiltradas[doc.id] = doc.data();
+            vagasFiltradas.push(doc.data());
         });
         return vagasFiltradas;
     },
 
-    adicionaVaga: async function (file_buffer, file_name, mimetype, dados_vaga) {
+    adicionaVaga: async function (file, dados_vaga) {
         const collectionRef = collection(db, "Vagas")
-        //se não houver imagem
-        if (file_buffer == null || file_name == null || mimetype == null) {
-            return addDoc(collectionRef, dados_vaga).then((DocumentReference) => {
+        if (file == null) {
+            addDoc(collectionRef, dados_vaga).then((DocumentReference) => {
                 //após adicionar a vaga acrescenta o campo que conterá o ID da vaga
                 const docRef = doc(db, "Vagas", DocumentReference.id)
-                setDoc(docRef, { ID: DocumentReference.id, url_img: null }, { merge: true })
+                setDoc(docRef, { ID: DocumentReference.id, url_logo: null }, { merge: true })
+
             });
-        }
-        //se houver imagem
-        else {
-            const metadata = { contentType: mimetype, };
-            const nomeImg = file_name + data
+        } else {
+            const metadata = { contentType: file.mimetype };
+            const nomeImg = file.name + file.md5;
             const imgRef = ref(storage, "images/" + nomeImg);
-            return uploadBytes(imgRef, file_buffer, metadata).then((snapshot) => {
+            uploadBytes(imgRef, file.data, metadata).then((snapshot) => {
                 //após o upload extrai a url da imagem
                 getDownloadURL(imgRef)
                     .then((url) => {
                         addDoc(collectionRef, dados_vaga).then((DocumentReference) => {
                             //após adicionar a vaga acrescenta os campos que conterãoo ID da vaga e a logo da empresa
                             const docRef = doc(db, "Vagas", DocumentReference.id)
-                            setDoc(docRef, { ID: DocumentReference.id, url_img: url }, { merge: true })
+                            setDoc(docRef, { ID: DocumentReference.id, url_logo: url }, { merge: true })
                         });
                     })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        let mensagemDeErro = verificaErro(errorCode);
-                        console.log(mensagemDeErro)
-                    });
             });
         }
     },
@@ -136,28 +126,26 @@ module.exports = {
         return await deleteDoc(doc(db, "Vagas", vaga_id));
     },
 
-    editaVaga: async function (vaga_id, file_buffer, file_name, mimetype, dados_vaga) {
-        const docRef = doc(db, "Vagas", vaga_id)
-        if (file_buffer == null || file_name == null || mimetype == null) {
+    editaVaga: async function (vaga_id, logoImg, dados_vaga) {
+        const docRef = doc(db, "Vagas", vaga_id);
+        if (logoImg == null) {
             return setDoc(docRef, dados_vaga, { merge: true })
-        } else {
-            const metadata = { contentType: mimetype };
-            const imgRef = ref(storage, "images/" + file_name);
-            return uploadBytes(imgRef, file_buffer, metadata).then((snapshot) => {
-                //após o upload extrai a url da imagem
+        }
+        else {
+            const metadata = { contentType: logoImg.mimetype };
+            const nomeImg = logoImg.name + logoImg.md5;
+            const imgRef = ref(storage, "images/" + nomeImg);
+            return uploadBytes(imgRef, logoImg.data, metadata).then((snapshot) => {
                 getDownloadURL(imgRef)
                     .then((url) => {
-                        setDoc(docRef, dados_vaga + { url_img: url }, { merge: true })
+                        dados_vaga.url_logo = url;
+                        setDoc(docRef, dados_vaga, { merge: true })
                     })
-                    .catch((error) => {
-                        const errorCode = error.code;
-                        let mensagemDeErro = verificaErro(errorCode);
-                        console.log(mensagemDeErro)
-                    });
             });
         }
     }
 }
+
 
 
 
