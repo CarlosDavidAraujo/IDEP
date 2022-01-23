@@ -1,6 +1,6 @@
 const { adicionaVaga, consultaTodasVagas, removeVaga, editaVaga, paginador } = require('../functions/Vaga');
 const { serverTimestamp } = require('firebase/firestore');
-const { consultaTodosUsuarios, consultaGeneros, consultaIdades } = require('../functions/User');
+const { consultaTodosUsuarios, consultaGeneros, consultaIdades, filtraUsuarios } = require('../functions/User');
 const axios = require('axios');
 
 var municipios;
@@ -31,6 +31,7 @@ module.exports = {
             Cargo: req.body.cargo,
             Empresa: req.body.empresa,
             Etapa: req.body.etapa,
+            Localidade: req.body.localidade,
             Ultima_modificação: serverTimestamp(),
             Detalhes: {
                 Sobre_a_empresa: req.body.sobre_empresa,
@@ -64,6 +65,7 @@ module.exports = {
             Cargo: req.body.cargo,
             Empresa: req.body.empresa,
             Etapa: req.body.etapa,
+            Localidade: req.body.localidade || null,
             Ultima_modificação: serverTimestamp(),
             Detalhes: {
                 Sobre_a_empresa: req.body.sobre_empresa,
@@ -87,18 +89,32 @@ module.exports = {
 
     getAdminCurriculos: (req, res) => {
         const url = req.originalUrl;
-        consultaTodosUsuarios().then((users) => {
-            const paginator = paginador(users, 1, 3)
-            res.render('paginas/admin/curriculos', { paginator, url, municipios })
+        consultaTodasVagas().then((vagas) => {
+            consultaTodosUsuarios().then((users) => {
+                const paginator = paginador(users, 1, 10)
+                res.render('paginas/admin/curriculos', { vagas, paginator, url, municipios })
+            });
         });
     },
 
     postAdminCurriculos: (req, res) => {
         const url = req.originalUrl;
-        consultaTodosUsuarios().then((users) => {
-            const paginator = paginador(users, req.body.pagina, 3)
-            res.render('paginas/admin/curriculos', { paginator, url, municipios })
-        });
+        if (!req.body.vaga) {
+            consultaTodasVagas().then((vagas) => {
+                consultaTodosUsuarios().then((users) => {
+                    const paginator = paginador(users, req.body.pagina, 10)
+                    res.render('paginas/admin/curriculos', { vagas, paginator, url, municipios })
+                });
+            });
+        }
+        else {
+            consultaTodasVagas().then((vagas) => {
+                filtraUsuarios('Candidaturas', 'array-contains', req.body.vaga).then((users) => {
+                    const paginator = paginador(users, req.body.pagina, 100)
+                    res.render('paginas/admin/curriculos', { vagas, paginator, url, municipios })
+                });
+            });
+        }
     },
 
     getAdminGraficos: (req, res) => {

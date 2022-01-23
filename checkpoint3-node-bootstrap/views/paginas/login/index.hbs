@@ -1,9 +1,7 @@
-<section>
-  <img src="/img/loginImg.svg" style="width: 100%;">
-</section>
+  <img src="/img/loginImg.png" style="width: 100%;">
 <div class="container-fluid" id="loginContainer">
-  <div class="row justify-content-center" id="loginRow">
-    <div class="col-lg-4 col-sm-6 bg-primary px-8 py-8  text-white">
+  <div class="row justify-content-center">
+    <div class="col-xl-4 col-sm-6 bg-primary px-xxl-8 py-xxl-8 px-xl-5 py-xl-5 text-white">
       <form action="/user/login" method="post">
         {{#if mensagemDeErro}}
         <div class="alert alert-danger" role="alert">
@@ -26,10 +24,6 @@
           <div class="d-flex justify-content-end" style="margin-top: -4%;">
             <a class="nav-link active text-white" href="/user/reauth">Recuperar senha</a>
           </div>
-        </div>
-        <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="manterConectado">
-          <label class="form-check-label" for="manterConectado">Manter conectado</label>
         </div>
         <br>
         <div class="d-flex justify-content-between align-items-center ms-5">

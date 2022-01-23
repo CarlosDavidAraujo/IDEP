@@ -78,27 +78,24 @@
 
 <script id="paginação">
     //PAGINAÇÃO DAS VAGAS
-    let totalPages, buttonGroup, currentPage, botoes;
-    totalPages = document.getElementById('totalDePaginas').value;
+    let totalPages, buttonGroup, currentPage, botoes, limite, inicio, fim;
+    totalPages = parseInt(document.getElementById('totalDePaginas').value);
     buttonGroup = document.getElementById('meusBotoes');
-    currentPage = document.getElementById('paginaAtual').value;
+    currentPage = parseInt(document.getElementById('paginaAtual').value);
+    limite = 10;
+    inicio = (((currentPage - limite) > 1) ? currentPage - limite : 1);
+    fim = (((currentPage + limite) < totalPages) ? currentPage + limite : totalPages);
     //adiciona botoes para cada pagina
-    function drawButtons() {
-        for (var i = 1; i <= totalPages; i++) {
-            buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+    if (totalPages > 1 && currentPage <= totalPages) {
+        for (var i = inicio; i <= fim; i++) {
+            if (i == currentPage) {
+                buttonGroup.innerHTML += `<li class="page-item active"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+            }
+            else {
+                buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+            }
         }
     }
-    drawButtons();
-
-    //altera o estilo do botao da pagina atual
-    botoes = buttonGroup.getElementsByTagName('li');
-    for (var j = 0; j < botoes.length; j++) {
-        if (j + 1 == currentPage) {
-            botoes[j].classList.add('active')
-        }
-    }
-
-    //PAGINAÇÃO DOS CURRICULOS
 
 </script>
 

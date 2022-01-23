@@ -5,11 +5,15 @@
         <div class="col-xl-2">
             <h5>Nome do candidato</h5>
         </div>
-        <div class="col-xl-2 form-group">
+        <form action="/admin/curriculos" method="post" class="col-xl-2 form-group">
             <label for="vaga">Vaga</label>
-            <select class="form-control" name="vaga" id="vaga">
+            <select class="form-control" name="vaga" id="vaga" onchange="this.form.submit()">
+                <option value="" disabled selected hidden>Selecione uma opção</option>
+                {{#each vagas}}
+                <option value="{{ID}}">{{Cargo}}-{{Empresa}}</option>
+                {{/each}}
             </select>
-        </div>
+        </form>
         <div class="col-xl-2 form-group">
             <div class="d-flex justify-content-end align-items-end gap-1">
                 <div class="col">
@@ -22,9 +26,9 @@
             </div>
         </div>
         <div class="col-xl-2 form-group">
-            <label for="bairro">Bairro</label>
-            <select class="form-control" name="bairro" id="bairro">
-            </select>
+            <label for="pesquisa" class="form-label">Bairro</label>
+            <input id="pesquisa" class="form-control mr-sm-2 aling-self-end" type="search" placeholder="Pesquisar"
+                aria-label="Search" onkeyup="filtraCandidatos('pesquisa')">
         </div>
         <div class="col-xl-2 form-group">
             <label for="filtroMunicipio">Município</label>
@@ -51,12 +55,13 @@
     <!-- Candidatos -->
     <div id="candidatos">
         {{#each paginator.data}}
-        <div class="row rect-lg mt-3 ps-4 align-items-center">
+        <div class="row rect-lg mt-3 ps-4 align-items-center" role="button" data-bs-toggle="modal"
+            data-bs-target="#{{ID}}">
             <div class="col">
                 <h5>{{Nome_completo}}</h5>
             </div>
             <div class="col text-center">
-                <h5>{{Idade}}</h5>
+                <h5>{{Idade}} anos</h5>
             </div>
             <div class="col text-center">
                 <h5>{{Bairro}}</h5>
@@ -68,6 +73,7 @@
                 <h5>{{Gênero}}</h5>
             </div>
         </div>
+        {{>modalCurriculo}}
         {{/each}}
     </div>
 
@@ -104,23 +110,22 @@
 
 
 <script id="paginação">
-    let i, j, totalPages, buttonGroup, currentPage, botoes;
-    totalPages = document.getElementById('totalDePaginas').value;
+    let i, j, totalPages, buttonGroup, currentPage, botoes, limite, inicio, fim;
+    totalPages = parseInt(document.getElementById('totalDePaginas').value);
     buttonGroup = document.getElementById('meusBotoes');
-    currentPage = document.getElementById('paginaAtual').value;
+    currentPage = parseInt(document.getElementById('paginaAtual').value);
+    limite = 10;
+    inicio = (((currentPage - limite) > 1) ? currentPage - limite : 1);
+    fim = (((currentPage + limite) < totalPages) ? currentPage + limite : totalPages);
     //adiciona botoes para cada pagina
-    function drawButtons() {
-        for (let i = 1; i <= totalPages; i++) {
-            buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
-        }
-    }
-    drawButtons();
-
-    //altera o estilo do botao da pagina atual
-    botoes = buttonGroup.getElementsByTagName('li');
-    for (j = 0; j < botoes.length; j++) {
-        if (j + 1 == currentPage) {
-            botoes[j].classList.add('active')
+    if (totalPages > 1 && currentPage <= totalPages) {
+        for (var i = inicio; i <= fim; i++) {
+            if (i == currentPage) {
+                buttonGroup.innerHTML += `<li class="page-item active"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+            }
+            else {
+                buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+            }
         }
     }
 </script>

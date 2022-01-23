@@ -5,20 +5,22 @@
         <h3>Confira abaixo as vagas em aberto</h3>
     </div>
 </div>
-<div class="container-lg">
-    <div class="d-flex justify-content-center gap-4" style="margin-top: -5%;">
-        {{#each vaga}}
-        <div class="card text-center text-white bg-primary py-4">
+
+
+<div class="d-flex justify-content-center gap-4" style="margin-top: -7%;">
+    {{#each vaga}}
+    <div class="">
+        <div class="card text-center text-white bg-primary">
             <div class="card-header bg-primary border-0">
                 <div class="d-flex justify-content-between ">
                     <h5 class="card-title">{{Empresa}}</h5>
                     <h6 class="txtRect text-dark">{{Modalidade}}</h6>
                 </div>
             </div>
-            <div class="card-body d-flex  justify-content-center">
+            <div class="card-body d-flex  justify-content-center mt-xl-5">
                 <h3 class="card-text">{{Cargo}}</h3>
             </div>
-            <div class="card-footer border-0 bg-primary ">
+            <div class="card-footer border-0 bg-primary mt-xl-5">
                 <div class="d-grid gap-2 col-8 mx-auto ">
                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#{{ID}}">
                         Ver detalhes
@@ -26,9 +28,9 @@
                 </div>
             </div>
         </div>
-        {{>modalVaga}}
-        {{/each}}
     </div>
+    {{>modalVaga}}
+    {{/each}}
 </div>
 
 <div class="d-grid gap-2 col-3 mt-8 mx-auto">
@@ -44,10 +46,9 @@
     var cards;
     cards = document.getElementsByClassName('card');
     function meusCards() {
-        console.log(cards)
-        cards[0].classList.add('col-xl-3');
-        cards[1].classList.add('col-xl-4');
-        cards[2].classList.add('col-xl-3');
+        cards[0].parentElement.classList.add('col-xl-3', 'col-xxl-2');
+        cards[1].parentElement.classList.add('col-xl-4', 'col-xxl-3');
+        cards[2].parentElement.classList.add('col-xl-3', 'col-xxl-2');
     }
     meusCards();
 </script>

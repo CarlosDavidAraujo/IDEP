@@ -1,5 +1,5 @@
 const express = require('express');
-const {getAdminVaga, postAdminVaga, postAddVaga, postRemoveVaga, postEditaVaga, getAdminCurriculos, postAdminCurriculos, getAdminGraficos } = require('../controllers/admin-controller.js');
+const {getAdminVaga, postAdminVaga, postAddVaga, postRemoveVaga, postEditaVaga, getAdminCurriculos, postAdminCurriculos, getAdminGraficos} = require('../controllers/admin-controller.js');
 const { requireAdmin } = require('../middlewares/autenticacao.js');
 
 const router = express.Router();
@@ -13,6 +13,7 @@ router.post('/admin/editaVaga', postEditaVaga);
 
 router.get('/admin/curriculos', getAdminCurriculos)
 router.post('/admin/curriculos', postAdminCurriculos)
+
 
 router.get('/admin/graficos', getAdminGraficos)
 

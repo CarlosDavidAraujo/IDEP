@@ -166,9 +166,9 @@ module.exports = {
             case 'auth/invalid-provider-data':
                 return 'O provedor de dados não é válido.';
             case 'auth/maximum-user-count-exceeded':
-                return 'O número máximo permitido de usuários a serem importados foi excedido.';
+                return 'O número máximo permitido de users a serem importados foi excedido.';
             case 'auth/missing-hash-algorithm':
-                return 'É necessário fornecer o algoritmo de geração de HASH e seus parâmetros para importar usuários.';
+                return 'É necessário fornecer o algoritmo de geração de HASH e seus parâmetros para importar users.';
             case 'auth/missing-uid':
                 return 'Um identificador é necessário para a operação atual.';
             case 'auth/reserved-claims':
@@ -194,7 +194,7 @@ module.exports = {
 
     consultaTodosUsuarios: async function () {
         let users = []
-        const collectionRef = collection(db, "Usuários");
+        const collectionRef = collection(db, "users");
         const q = query(collectionRef)
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -211,7 +211,8 @@ module.exports = {
         return createUserWithEmailAndPassword(auth, email, senha)
             .then((userCredential) => {
                 const user_id = auth.currentUser.uid;
-                const user_doc = doc(db, 'Usuários', user_id);
+                const user_doc = doc(db, 'users', user_id);
+                dados.ID = user_id;
                 setDoc(user_doc, dados, { merge: true }).then(() => {
                 })
                     .catch((error) => {
@@ -226,7 +227,7 @@ module.exports = {
 
     editaPerfil: async function (new_email, dados, file) {
         const user_id = auth.currentUser.uid;
-        const user_doc = doc(db, 'Usuários', user_id);
+        const user_doc = doc(db, 'users', user_id);
         if (file == null) {
             return updateEmail(auth.currentUser, new_email).then(() => {
                 setDoc(user_doc, dados, { merge: true })
@@ -249,7 +250,7 @@ module.exports = {
 
     consultaDadosDoUsuario: async function () {
         const user_id = auth.currentUser.uid;
-        const user_doc = doc(db, 'Usuários', user_id);
+        const user_doc = doc(db, 'users', user_id);
         const docSnap = await getDoc(user_doc);
         const user_data = docSnap.data();
         return user_data;
@@ -270,6 +271,8 @@ module.exports = {
 
     candidataUsuarioParaVaga: async function (vaga_id, user_id) {
         const vagaRef = doc(db, "Vagas", vaga_id)
+        const userRef = doc(db, "users", user_id)
+        setDoc(userRef, { Candidaturas: arrayUnion(vaga_id) }, { merge: true });
         return setDoc(vagaRef, { Candidatos: arrayUnion(user_id) }, { merge: true });
     },
 
@@ -292,7 +295,7 @@ module.exports = {
         let generos = ["masculino", "feminino", "outro"];
         let resultado = [];
         for (let i = 0; i < generos.length; i++) {
-            const q = query(collection(db, "Usuários"), where('Gênero', "==", generos[i]));
+            const q = query(collection(db, "users"), where('Gênero', "==", generos[i]));
             const querySnapshot = await getDocs(q);
             resultado.push(querySnapshot.docs.length);
         }
@@ -303,15 +306,25 @@ module.exports = {
         let idades = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
         let resultado = [];
         for (let i = 0; i < idades.length; i++) {
-            const q1 = query(collection(db, "Usuários"), where('Idade', "==", idades[i]));
+            const q1 = query(collection(db, "users"), where('Idade', "==", idades[i]));
             const querySnapshot = await getDocs(q1);
             resultado.push(querySnapshot.docs.length);
         }
-        const q2 = query(collection(db, "Usuários"), where('Idade', ">=", 29));
+        const q2 = query(collection(db, "users"), where('Idade', ">=", 29));
         const querySnapshot2 = await getDocs(q2);
         resultado.push(querySnapshot2.docs.length);
         return resultado;
-    }
+    },
+
+    filtraUsuarios: async function (campo, operador, valor) {
+        let resultado = [];
+        const q = query(collection(db, "users"), where(campo, operador, valor));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            resultado.push(doc.data());
+        });
+        return resultado;
+    },
 }
 
 
