@@ -17,14 +17,14 @@
                 <h6 class="strong text-primary">Informações pessoais</h6>
                 <div class="d-flex justify-content-between">
                     <div>
-                        <label for="fotoPerfil" class="foto-upload">
+                        <label for="fotoPerfil" class="foto-upload" id="fotoPerfilLabel">
                             {{#if profileImg}}
                              <img class="perfil-img" src="{{doc.img_perfil}}" >
                              {{else}}
                             <img src="/img/icons/foto.svg" >
                             {{/if}}
                         </label>
-                        <input id="fotoPerfil" type="file" name="fotoPerfil" />
+                        <input id="fotoPerfil" type="file" name="fotoPerfil" onchange="changeLabel('fotoPerfil', 'fotoPerfilLabel' )"/>
                     </div>
                     <div class="col-md-7">
                         <div class="form-group"><label for="nome_social" class="form-label">Nome Social</label>
@@ -166,3 +166,11 @@
     </div>
 </form>
 
+<script id="fileLabel">
+    function changeLabel(inputId, labelId) {
+        let fileInput = document.getElementById(inputId);
+        let label = document.getElementById(labelId);
+        let selectedFileName = fileInput.files[0].name;
+        label.innerText = selectedFileName;
+    }
+</script>

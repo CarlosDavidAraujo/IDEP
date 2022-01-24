@@ -33,17 +33,20 @@
                         </div>
                         <div class="col form-group">
                             <label class="form-label" for="localidade">Localidade*</label>
-                            <select class="form-control" name="localidade" id="localidade" required>
+                            <select class="form-control" name="localidade" id="localidade">
                                 <option value="" disabled selected hidden>Selecione</option>
+                                {{#each localidades}}
+                                <option value="{{name}}">{{name}}</option>
+                                {{/each}}
                             </select>
                         </div>
                         <div class="col form-group align-self-end">
-                            <label for="file-uploadAddVaga"
+                            <label for="file-uploadAddVaga" id="file-uploadAddVagaLabel"
                                 class="custom-file-upload align-items-center text-center px-2">
                                 <img id="icon" src="/img/icons/imgUpload.svg">
                                 Logotipo da empresa
                             </label>
-                            <input id="file-uploadAddVaga" type="file" name="imgLogo" />
+                            <input id="file-uploadAddVaga" type="file" name="imgLogo" onchange="changeLabel('file-uploadAddVaga', 'file-uploadAddVagaLabel')" />
                         </div>
                     </div>
                     <button type="button" class="btn-close align-self-start" data-bs-dismiss="modal"
@@ -107,13 +110,3 @@
         </div>
     </div>
 </form>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#file-uploadAddVaga').change(function () {
-            var i = $(this).prev('label').clone();
-            var file = $('#file-uploadAddVaga')[0].files[0].name;
-            $(this).prev('label').text(file);
-        });
-    });
-</script>
