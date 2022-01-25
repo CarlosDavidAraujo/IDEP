@@ -1,9 +1,12 @@
-const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, } = require('firebase/auth');
-const { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, addDoc, where, collectionGroup, arrayUnion, arrayRemove } = require("firebase/firestore");
-
+const res = require('express/lib/response');
+const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail } = require('firebase/auth');
+const { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, addDoc, where, collectionGroup, arrayUnion, arrayRemove, orderBy } = require("firebase/firestore");
+const { getStorage, ref, getDownloadURL, uploadBytes } = require('firebase/storage');
+const fireapp = require("./firebaseInitialize");
 
 const auth = getAuth();
 const db = getFirestore();
+const storage = getStorage(fireapp, "projeto-integrado-i-dfb90.appspot.com");
 
 module.exports = {
     auth: auth,
@@ -163,9 +166,9 @@ module.exports = {
             case 'auth/invalid-provider-data':
                 return 'O provedor de dados não é válido.';
             case 'auth/maximum-user-count-exceeded':
-                return 'O número máximo permitido de usuários a serem importados foi excedido.';
+                return 'O número máximo permitido de users a serem importados foi excedido.';
             case 'auth/missing-hash-algorithm':
-                return 'É necessário fornecer o algoritmo de geração de HASH e seus parâmetros para importar usuários.';
+                return 'É necessário fornecer o algoritmo de geração de HASH e seus parâmetros para importar users.';
             case 'auth/missing-uid':
                 return 'Um identificador é necessário para a operação atual.';
             case 'auth/reserved-claims':
@@ -189,13 +192,13 @@ module.exports = {
         }
     },
 
-    consultaTodosUsuarios:  async function () {
-        let users = {}
-        const collectionRef = collection(db, "Usuários");
-        const q = query(collectionRef)
-        const querySnapshot =  await getDocs(q);
-        querySnapshot.forEach((doc)=>{
-            users[doc.id] = doc.data();
+    consultaTodosUsuarios: async function () {
+        let users = []
+        const collectionRef = collection(db, "users");
+        const q = query(collectionRef, orderBy("Nome_completo", 'asc'))
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            users.push(doc.data());
         })
         return users;
     },
@@ -204,64 +207,76 @@ module.exports = {
         return signInWithEmailAndPassword(auth, email, senha)
     },
 
-    cadastraUsuario: function (email, senha, dadosPessoais, dadosAcademicos, dadosProfissionais) {
+    cadastraUsuario: function (email, senha, dados) {
         return createUserWithEmailAndPassword(auth, email, senha)
             .then((userCredential) => {
                 const user_id = auth.currentUser.uid;
-                const user_doc = doc(db, 'Usuários', user_id);
-                setDoc(user_doc, dadosPessoais, { merge: true }).then(() => {
-                    const formacaoDoc = collection(db, 'Usuários', user_id, 'Formações')
-                    const expDoc = collection(db, 'Usuários', user_id, 'Experiências')
-                    addDoc(formacaoDoc, dadosAcademicos);
-                    addDoc(expDoc, dadosProfissionais);
+                const user_doc = doc(db, 'users', user_id);
+                dados.ID = user_id;
+                setDoc(user_doc, dados, { merge: true }).then(() => {
                 })
-            })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            });
     },
 
     logout: function () {
         return signOut(auth)
     },
 
-    editaPerfil: function (new_email, new_dados) {
-        return updateEmail(auth.currentUser, new_email).then(() => {
-            const user_id = auth.currentUser.uid;
-            const user_doc = doc(db, 'Usuários', user_id);
-            setDoc(user_doc, new_dados, { merge: true })
-        })
+    editaPerfil: async function (new_email, dados, file) {
+        const user_id = auth.currentUser.uid;
+        const user_doc = doc(db, 'users', user_id);
+        if (file == null) {
+            return updateEmail(auth.currentUser, new_email).then(() => {
+                setDoc(user_doc, dados, { merge: true })
+            });
+        } else {
+            const metadata = { contentType: file.mimetype };
+            const nomeImg = file.name + file.md5;
+            const imgRef = ref(storage, "images/" + nomeImg);
+            return updateEmail(auth.currentUser, new_email).then(() => {
+                uploadBytes(imgRef, file.data, metadata).then((snapshot) => {
+                    getDownloadURL(imgRef)
+                        .then((url) => {
+                            dados.img_perfil = url;
+                            setDoc(user_doc, dados, { merge: true })
+                        })
+                });
+            });
+        }
     },
 
     consultaDadosDoUsuario: async function () {
         const user_id = auth.currentUser.uid;
-        const user_doc = doc(db, 'Usuários', user_id);
+        const user_doc = doc(db, 'users', user_id);
         const docSnap = await getDoc(user_doc);
         const user_data = docSnap.data();
         return user_data;
     },
 
 
-    resetPassword: function (email) {
+    resetPassword: async function (email) {
         return sendPasswordResetEmail(auth, email)
             .then(() => {
                 console.log('Email de recuperação de senha enviado')
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                let mensagemDeErro = verificaErro(errorCode);
-                console.log(mensagemDeErro)
             });
     },
 
     candidataUsuarioParaVaga: async function (vaga_id, user_id) {
         const vagaRef = doc(db, "Vagas", vaga_id)
+        const userRef = doc(db, "users", user_id)
+        setDoc(userRef, { Candidaturas: arrayUnion(vaga_id) }, { merge: true });
         return setDoc(vagaRef, { Candidatos: arrayUnion(user_id) }, { merge: true });
     },
 
     mostraCandidatura: async function (user_id) {
-        let candidaturas = {}
+        let candidaturas = []
         const vagaRef = query(collectionGroup(db, 'Vagas'), where('Candidatos', 'array-contains', user_id));
         const querySnapshot = await getDocs(vagaRef);
         querySnapshot.forEach((doc) => {
-            candidaturas[doc.id] = doc.data();
+            candidaturas.push(doc.data());
         });
         return candidaturas
     },
@@ -269,7 +284,53 @@ module.exports = {
     cancelaCandidatura: async function (user_id, vaga_id) {
         const vagaRef = doc(db, "Vagas", vaga_id)
         return setDoc(vagaRef, { Candidatos: arrayRemove(user_id) }, { merge: true });
-    }
+    },
+
+    consultaGeneros: async function () {
+        let generos = ["masculino", "feminino", "não binário", "não informado"];
+        let resultado = [];
+        for (let i = 0; i < generos.length; i++) {
+            const q = query(collection(db, "users"), where('Gênero', "==", generos[i]));
+            const querySnapshot = await getDocs(q);
+            resultado.push(querySnapshot.docs.length);
+        }
+        return resultado;
+    },
+
+    consultaIdades: async function () {
+        let idades = [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28];
+        let resultado = [];
+        for (let i = 0; i < idades.length; i++) {
+            const q1 = query(collection(db, "users"), where('Idade', "==", idades[i]));
+            const querySnapshot = await getDocs(q1);
+            resultado.push(querySnapshot.docs.length);
+        }
+        const q2 = query(collection(db, "users"), where('Idade', ">=", 29));
+        const querySnapshot2 = await getDocs(q2);
+        resultado.push(querySnapshot2.docs.length);
+        return resultado;
+    },
+
+    consultaEscolaridade: async function () {
+        let escolaridades = ["Ensino fundamental incompleto", "Ensino fundamental completo", "Ensino médio incompleto", "Ensino médio completo", "Ensino superior incompleto", "Ensino superior completo"];
+        let resultado = [];
+        for (let i = 0; i < escolaridades.length; i++) {
+            const q = query(collection(db, "users"), where('Dados_academicos.Grau', "==", escolaridades[i]));
+            const querySnapshot = await getDocs(q);
+            resultado.push(querySnapshot.docs.length);
+        }
+        return resultado;
+    },
+
+    filtraUsuarios: async function (campo, operador, valor) {
+        let resultado = [];
+        const q = query(collection(db, "users"), where(campo, operador, valor));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            resultado.push(doc.data());
+        });
+        return resultado;
+    },
 }
 
 

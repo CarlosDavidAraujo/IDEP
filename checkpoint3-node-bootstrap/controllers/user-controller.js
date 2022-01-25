@@ -11,46 +11,52 @@ axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados/23/munici
         municipios = response.data
     })
 
+function calculaIdade(data) {
+    const anoAtual = new Date().getFullYear();
+    const nascimento = data.substr(0, 4)
+    const nascInt = parseInt(nascimento);
+    const idade = anoAtual - nascInt;
+    return idade;
+}
+
 module.exports = {
     getCadastro: async (req, res) => {
         res.render('paginas/cadastro/index', { municipios });
     },
     postCadastro: async (req, res) => {
-        const anoAtual =  new Date().getFullYear();
-        const nascimento = req.body.data_de_nascimento.substr(0,4)
-        const nascInt = parseInt(nascimento);
-        const idade = anoAtual - nascInt;
-        const dadosPessoais = {
+        const dados = {
             CPF: req.body.CPF,
             Nome_completo: req.body.nome_completo,
             Nome_social: req.body.nome_social,
             Gênero: req.body.genero,
             Data_de_nascimento: req.body.data_de_nascimento,
-            Idade: idade,
+            Idade: calculaIdade(req.body.data_de_nascimento),
             Email: req.body.email,
             Telefone: req.body.fone,
             Município: req.body.municipio,
             Bairro: req.body.bairro,
-            Data_de_cadastramento: dataDeCadastro()
+            Data_de_cadastramento: dataDeCadastro(),
+            img_perfil: null,
+            Dados_academicos: {
+                Grau: req.body.grau || null,
+                Curso: req.body.curso,
+                Instituição: req.body.instituicao,
+                Data_início: req.body.data_inicial_academica,
+                Data_término: req.body.data_final_academica
+            },
+            Dados_profissionais: {
+                Cargo: req.body.cargo,
+                Empresa: req.body.empresa,
+                Modalidade: req.body.modalidade || null,
+                Data_início: req.body.data_inicial_experiencia,
+                Data_término: req.body.data_inicial_experiencia
+            }
         }
-        const dadosAcademicos = {
-            Grau: req.body.grau,
-            Curso: req.body.curso,
-            Instituição: req.body.instituicao,
-            Data_início: req.body.data_inicial_academica,
-            Data_término: req.body.data_final_academica
-        }
-        const dadosProfissionais = {
-            Cargo: req.body.cargo,
-            Empresa: req.body.empresa,
-            Modalidade: req.body.modalidade,
-            Data_início: req.body.data_inicial_experiencia,
-            Data_término: req.body.data_inicial_experiencia
-        }
-        cadastraUsuario(req.body.email, req.body.senha, dadosPessoais, dadosAcademicos, dadosProfissionais).then(() => {
+        cadastraUsuario(req.body.email, req.body.senha, dados).then(() => {
             res.redirect('/user/perfil');
         })
             .catch((error) => {
+                console.log(error)
                 const errorCode = error.code;
                 let mensagemDeErro = verificaErro(errorCode);
                 res.render('paginas/cadastro/index', { municipios, mensagemDeErro });
@@ -75,17 +81,20 @@ module.exports = {
 
     getLogout: (req, res) => {
         logout().then(() => {
-            res.redirect('/')
+            res.redirect('/user/login')
         })
     },
 
-
-    getReauth: (req, res) => {
-        res.render('paginas/login/reautenticacao');
-
-    },
     postReauth: (req, res) => {
-        resetPassword(req.body.email)
+        resetPassword(req.body.emailReauth).then(()=>{
+            let mensagemReauth = "Enviamos um email de recuperação de senha para o email informado."
+            res.render("paginas/login/index", { mensagemReauth })
+        }).catch((error) => {
+            console.log(error)
+            const errorCode = error.code;
+            let reauthError = verificaErro(errorCode);
+            res.render("paginas/login/index", { reauthError })
+        });
     },
 
 
@@ -105,30 +114,65 @@ module.exports = {
 
 
     getEditPerfil: (req, res) => {
-        res.render('paginas/perfil/edit', { municipios });
+        consultaDadosDoUsuario().then((doc) => {
+            res.render('paginas/perfil/edit', { municipios, doc });
+        });
     },
     postEditPerfil: (req, res) => {
-        var dados = {
+        const dados = {
             CPF: req.body.CPF,
             Nome_completo: req.body.nome_completo,
             Nome_social: req.body.nome_social,
             Gênero: req.body.genero,
             Data_de_nascimento: req.body.data_de_nascimento,
+            Idade: calculaIdade(req.body.data_de_nascimento),
             Email: req.body.email,
             Telefone: req.body.fone,
             Município: req.body.municipio,
             Bairro: req.body.bairro,
             Endereço: req.body.endereco,
-            Número: req.body.n,
+            Dados_academicos: {
+                Grau: req.body.grau || null,
+                Curso: req.body.curso,
+                Instituição: req.body.instituicao,
+                Data_início: req.body.data_inicial_academica,
+                Data_término: req.body.data_final_academica
+            },
+            Dados_profissionais: {
+                Cargo: req.body.cargo,
+                Empresa: req.body.empresa,
+                Modalidade: req.body.modalidade || null,
+                Data_início: req.body.data_inicial_experiencia,
+                Data_término: req.body.data_inicial_experiencia
+            }
         }
-        editaPerfil(req.body.email, dados).then(() => {
-            const mensagem = "Dados editados com sucesso"
-            res.render('paginas/perfil/edit', { mensagem })
-        })
-            .catch((error) => {
-                const errorCode = error.code;
-                let mensagemDeErro = verificaErro(errorCode);
-                res.render('paginas/perfil/edit', { municipios, mensagemDeErro });
-            });
+        if (req.files) {
+            editaPerfil(req.body.email, dados, req.files.fotoPerfil).then(() => {
+                const mensagem = "Dados editados com sucesso"
+                consultaDadosDoUsuario().then((doc) => {
+                    res.render('paginas/perfil/edit', { municipios, doc, mensagem })
+                })
+            })
+                .catch((error) => {
+                    console.log(error)
+                    const errorCode = error.code;
+                    let mensagemDeErro = verificaErro(errorCode);
+                    res.render('paginas/perfil/edit', { municipios, mensagemDeErro });
+                });
+        }
+        else {
+            editaPerfil(req.body.email, dados, null).then(() => {
+                const mensagem = "Dados editados com sucesso"
+                consultaDadosDoUsuario().then((doc) => {
+                    res.render('paginas/perfil/edit', { municipios, doc, mensagem })
+                })
+            })
+                .catch((error) => {
+                    console.log(error)
+                    const errorCode = error.code;
+                    let mensagemDeErro = verificaErro(errorCode);
+                    res.render('paginas/perfil/edit', { municipios, mensagemDeErro });
+                });
+        }
     }
 }

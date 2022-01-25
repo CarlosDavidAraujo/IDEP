@@ -2,16 +2,10 @@
 
 
 body {
-    width:75%;
-    margin:0 auto;
-    background: #FCFCFC;
-    position: relative;
+  margin: auto;
+  margin-top: 77.58px;
+  background: #FCFCFC;
  }
-
-#loginRow{
-    margin-top: 18%;
-    margin-bottom: 18%;
-}
 
 img#parcImg {
   width: fit-content;
@@ -30,6 +24,10 @@ img#icon {
   height: fit-content;
 }
 
+.line {
+height: 0px;
+border: 1px solid #2F8AE6;
+}
 
 .form-check-input:checked {
     background-color: #F9BA00;
@@ -60,14 +58,12 @@ input[type="file"] {
 }
 
 .custom-file-upload{
-  width: 230px;
-  height: 65px;
+  width: 100%;
+  padding: auto;
   background: #f7f7f7; 
-  padding: 8px;
   border:  3px solid #2F8AE6;
   border-radius: 0.25rem;
   display: flex;
-  padding: 6px 12px;
   cursor: pointer;
 }
 
@@ -107,19 +103,11 @@ legend {
  width: 2px; 
 }
 
-.card {
-  width: 308px;
-height: 349px;
-}
-
 .rect-lg {
 width: 100%;
-height: 60px;
-left: 50px;
-top: 374px;
+height: calc(7vh);
 background: #F4F4F4;
 border: 2px solid #2F8AE6;
-box-sizing: border-box;
 border-radius: 2px;
 }
 
@@ -153,11 +141,10 @@ line-height: normal;
 color: #FFFFFF;
 }
 
-.cardVagaHome {
-margin-top:-13%;
-width: 308px;
-height: 318px;
-max-height: 318;
+.card{
+height: 100%;
+width: 100%;
+min-height: 25vh;
 background: #2F8AE6;
 box-shadow: 0px 14px 24px rgba(14, 31, 53, 0.16);
 border-radius: 2px;
@@ -190,14 +177,14 @@ h4 {
 font-family: 'Montserrat';
 font-style: normal;
 font-weight: 600;
-font-size: 24px;
+font-size: 1.5rem;
 line-height:normal;
 }
 h3 {
   font-family: 'Montserrat';
   font-style: normal;
   font-weight: 600;
-  font-size: 30px;
+  font-size: 2em;
   line-height:normal;
   }
 
@@ -219,12 +206,11 @@ padding-bottom: 10px;
 }
 
 .largeBox {
-width: 424px;
-height: 533px;
-left: 508px;
-top: 3290px;
+width: 30%;
+height: 100%;
 background: #FCFCFC;
 border-radius: 2px;
+padding: 2%;
 }
 
 li {
@@ -236,17 +222,23 @@ li {
   }
 
 div#loginContainer {
-position: absolute;
-left: 5%;
-top: 4%;
 opacity: 0.94;
 border-radius: 2px;
+position: absolute;
+left: 50%;
+top: 55%;
+transform: translate(-50%, -50%);
 }
+
+
+  
 
 .nav-link {
   padding-right: 0;
   padding-left: 0;
 }
+
+
 
 .form-control-lg {
 width: 100%;
@@ -261,6 +253,88 @@ margin-top: 10px;
   background-color: #1f5994;
 }
 
-.card {
-  box-shadow: 0px 14px 24px rgba(14, 31, 53, 0.16);
+
+.btn-outline-primary {
+  color: black;
+  background-color: #FCFCFC;;
+  border-color: #FCFCFC;
+  border-radius: 2px 2px 0px 0px; 
+}
+
+.btn-outline-primary:hover {
+  color: #FCFCFC;
+  background-color: #2F8AE6;
+  border-color: #2F8AE6;
+}
+
+.btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
+  color: #FCFCFC;
+  background-color: #2F8AE6;
+  border-color: #2F8AE6;
+}
+
+.btn-check:checked + .btn-outline-primary, .btn-check:active + .btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary.active, .btn-outline-primary.dropdown-toggle.show {
+  color: #FCFCFC;
+  background-color: #2F8AE6;
+  border-color: #2F8AE6;
+}
+
+.btn-check:focus + .btn-outline-primary, .btn-outline-primary:focus {
+  box-shadow:none
+}
+
+.btn-danger {
+  color: #FCFCFC;
+}
+
+img.card-img{
+object-fit: cover;
+width: 100%;
+height: 15vh;
+}
+
+img.modal-img{
+  object-fit: cover;
+  max-width: 50%;
+  max-height: 10vh;
+  }
+  
+
+img.perfil-img{
+  object-fit: cover;
+  width: 100%;
+  height: 14vh;
+  border-radius: 50%;
+  border: 2px solid #2F8AE6
+  }
+
+  img.nav-perfil-img{
+    object-fit: cover;
+    width: 100%;
+    height: 7vh;
+    border-radius: 50%; 
+    border: 2px solid #2F8AE6
+    }
+
+#footer {
+
+  padding: 10px 10px 0px 10px;
+  bottom: 0;
+  width: 100%;
+}
+
+#header {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  background: #FCFCFC;
+}
+
+#todosParceiros img {
+  width: 20vh;
+  max-height: 20vh;
+  border: 2px solid #2F8AE6;
+  margin-right: 1%;
+  margin-top: 1%;
 }

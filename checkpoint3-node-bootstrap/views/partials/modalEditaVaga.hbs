@@ -1,46 +1,57 @@
-<form method="post" action="/admin/editaVaga">
-    <div class="modal fade" id="modalEditarVaga{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<form method="post" action="/admin/editaVaga" enctype="multipart/form-data">
+    <div class="modal fade" id="modalEditarVaga{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-xl">
             <div class="modal-content text-primary">
                 <!-- cabeçalho -->
                 <div class="modal-header">
-                    <div class="d-flex gap-4">
-                      <input type="hidden" name="vaga_id" value="{{ID}}">            
-                        <div class="form-group">
-                            <label class="form-label" for="cargo">Nome da vaga</label>
-                            <input class="form-control" type="text" id="cargo" name="cargo" value="{{Cargo}}">
+                    <div class="d-flex gap-4 align-items-start">
+                        <input type="hidden" name="vaga_id" value="{{ID}}">
+                        <div class="col form-group">
+                            <label class="form-label" for="cargo">Nome da vaga*</label>
+                            <input class="form-control" type="text" id="cargo" name="cargo" value="{{Cargo}}" required>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="modalidade">Modalidade</label>
-                            <select class="form-control" name="modalidade" id="modalidade">
-                                <option value="Jovem Aprendiz">Jovem Aprendiz</option>
-                                <option value="Estágio">Estágio</option>
-                                <option value="CLT">CLT</option>
+                        <div class="col form-group">
+                            <label class="form-label" for="empresa">Empresa*</label>
+                            <input class="form-control" type="text" id="empresa" name="empresa" value="{{Empresa}}"
+                                required>
+                        </div>
+                        <div class="col form-group">
+                            <label class="form-label" for="modalidade">Modalidade*</label>
+                            <select class="form-control" name="modalidade" id="modalidade" required>
+                                <option value="" disabled selected hidden>Selecione</option>
+                                <option value="Jovem Aprendiz" {{#when Modalidade 'eq' 'Jovem Aprendiz' }} selected
+                                    {{/when}}>Jovem Aprendiz</option>
+                                <option value="Estágio" {{#when Modalidade 'eq' 'Estágio' }} selected {{/when}}>Estágio
+                                </option>
+                                <option value="CLT" {{#when Modalidade 'eq' 'CLT' }} selected {{/when}}>CLT</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="etapa">Etapa</label>
-                            <select class="form-control" name="etapa" id="etapa">
-                                <option value="Envio de currículos">Envio de currículos</option>
-                                <option value="Entrevista">Entrevista</option>
-                                <option value="Finalizado">Finalizado</option>
+                        <div class="col form-group">
+                            <label class="form-label" for="etapa">Etapa*</label>
+                            <select class="form-control" name="etapa" id="etapa" required>
+                                <option value="" disabled selected hidden>Selecione</option>
+                                <option value="Envio de currículos" {{#when Etapa 'eq' 'Envio de currículos' }} selected
+                                    {{/when}}>Envio de currículos</option>
+                                <option value="Entrevista" {{#when Etapa 'eq' 'Entrevista' }} selected {{/when}}>
+                                    Entrevista</option>
+                                <option value="Finalizado" {{#when Etapa 'eq' 'Finalizado' }} selected {{/when}}>
+                                    Finalizado</option>
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="empresa">Empresa</label>
-                            <input class="form-control" type="text" id="empresa" name="empresa" value="{{Empresa}}">
-                        </div>
-                        <div class="form-group align-self-end">
-                            <label for="file-uploadEditaVaga"
-                                class="custom-file-upload align-items-center justify-content-around">
+                        <div class="col form-group align-self-end">
+                            <label for="file-uploadEditaVaga{{ID}}" id="label-uploadEditaVaga{{ID}}"
+                                class="custom-file-upload align-items-center text-center px-2">
                                 <img id="icon" src="/img/icons/imgUpload.svg">
                                 Logotipo da empresa
                             </label>
-                            <input id="file-uploadEditaVaga" type="file" name="imgLogo"/>
+                            <input id="file-uploadEditaVaga{{ID}}" type="file" name="changedLogo"
+                                onchange="changeLabel('file-uploadEditaVaga{{ID}}', 'label-uploadEditaVaga{{ID}}')" />
                         </div>
+
                     </div>
                     <button type="button" class="btn-close align-self-start" data-bs-dismiss="modal"
-                      aria-label="Close"></button>
+                        aria-label="Close"></button>
                 </div>
                 <!-- Conteudo -->
                 <div class="modal-body">
@@ -49,7 +60,8 @@
                             <h3>1. Essa vaga é para você?</h3>
                             <div class="form-group">
                                 <label class="form-label" for="sobre_vaga">Sobre a vaga</label>
-                                <textarea type="text" class="form-control" id="sobre_vaga" name="sobre_vaga">{{Detalhes.Sobre_a_vaga}}</textarea>
+                                <textarea type="text" class="form-control" id="sobre_vaga"
+                                    name="sobre_vaga">{{Detalhes.Sobre_a_vaga}}</textarea>
                             </div>
                             <br>
                             <div class="form-group">
@@ -61,7 +73,8 @@
                             <br>
                             <div class="form-group">
                                 <label class="form-label" for="requisitos">Requisitos e qualificações</label>
-                                <textarea type="text" class="form-control" id="requisitos" name="requisitos">{{Detalhes.Requisitos}}</textarea>
+                                <textarea type="text" class="form-control" id="requisitos"
+                                    name="requisitos">{{Detalhes.Requisitos}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -100,13 +113,3 @@
         </div>
     </div>
 </form>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#file-uploadEditaVaga').change(function () {
-            var i = $(this).prev('label').clone();
-            var file = $('#file-uploadEditaVaga')[0].files[0].name;
-            $(this).prev('label').text(file);
-        });
-    });
-</script>
