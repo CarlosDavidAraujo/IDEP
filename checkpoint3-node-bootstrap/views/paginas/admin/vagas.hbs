@@ -18,12 +18,27 @@
                     <option value="Estágio">Estágio</option>
                     <option value="CLT">CLT</option>
                 </select>
+<<<<<<< HEAD
                 <select class="form-control" name="filtroEmpresa" id="filtroEmpresa"
                     onchange="filtraVagas('filtroEmpresa','h5')">
                     <option value="" disabled selected hidden>Empresa</option>
                     {{#each paginator.data}}
                     <option value="{{Empresa}}">{{Empresa}}</option>
                     {{/each}}
+=======
+                <select class="form-control" name="filtroLocalidade" id="filtroLocalidade" onchange="filtraVagas()">
+                    <option value="" disabled selected hidden>Localidade</option>
+                     {{#each localidades}}
+                    <option value="{{name}}">{{name}}</option>
+                    {{/each}}
+                </select>
+                <select class="form-control" name="filtroEmpresa" id="filtroEmpresa"
+                    onchange="filtraVagas('filtroEmpresa','h5')">
+                    <option value="" disabled selected hidden>Empresa</option>
+                    <option value="GlobalSYS">GlobalSYS</option>
+                    <option value="Assaí">Assaí</option>
+                    <option value="Delfa">Delfa</option>
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
                 </select>
             </div>
         </div>
@@ -51,8 +66,11 @@
         <nav aria-label="Page navigation example">
             <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
             <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
+<<<<<<< HEAD
             <input type="hidden" name="prevPage" id="prevPage" value="{{paginator.pre_page}}">
             <input type="hidden" name="nextPage" id="nextPage" value="{{paginator.next_page}}">
+=======
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
             <ul class="pagination" id="meusBotoes">
             </ul>
         </nav>
@@ -75,6 +93,32 @@
     }
 </script>
 
+<<<<<<< HEAD
+=======
+<script id="paginação">
+    //PAGINAÇÃO DAS VAGAS
+    let totalPages, buttonGroup, currentPage, botoes, limite, inicio, fim;
+    totalPages = parseInt(document.getElementById('totalDePaginas').value);
+    buttonGroup = document.getElementById('meusBotoes');
+    currentPage = parseInt(document.getElementById('paginaAtual').value);
+    limite = 10;
+    inicio = (((currentPage - limite) > 1) ? currentPage - limite : 1);
+    fim = (((currentPage + limite) < totalPages) ? currentPage + limite : totalPages);
+    //adiciona botoes para cada pagina
+    if (totalPages > 1 && currentPage <= totalPages) {
+        for (var i = inicio; i <= fim; i++) {
+            if (i == currentPage) {
+                buttonGroup.innerHTML += `<li class="page-item active"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+            }
+            else {
+                buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+            }
+        }
+    }
+
+</script>
+
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
 <script id="fileLabel">
     function changeLabel(inputId, labelId) {
         let fileInput = document.getElementById(inputId);

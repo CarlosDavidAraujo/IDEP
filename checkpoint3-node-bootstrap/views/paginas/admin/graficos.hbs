@@ -8,7 +8,11 @@
             <button class="btn btn-outline-primary border-2 border-primary" id="generoButton">Gênero</button>
         </div>
         <div class="d-grid col-xl-4">
+<<<<<<< HEAD
             <button class="btn btn-outline-primary border-2  border-primary" id="escolaridadeButton">Bairro</button>
+=======
+            <button class="btn btn-outline-primary border-2  border-primary" id="bairroButton">Bairro</button>
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
         </div>
     </div>
 </div>
@@ -21,18 +25,30 @@
 {{>graficoGenero}}
 </div>
 
+<<<<<<< HEAD
 <div class="container d-none" id="escolaridadeContainer">
 {{>graficoEscolaridade}}
+=======
+<div class="container d-none" id="bairroContainer">
+{{>graficoBairro}}
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
 </div>
 
 
 <script>
     let idadeButton = document.getElementById('idadeButton');
     let generoButton = document.getElementById('generoButton');
+<<<<<<< HEAD
     let escolaridadeButton = document.getElementById('escolaridadeButton');
     let idadeContainer = document.getElementById('idadeContainer');
     let generoContainer = document.getElementById('generoContainer');
     let escolaridadeContainer = document.getElementById('escolaridadeContainer');
+=======
+    let bairroButton = document.getElementById('bairroButton');
+    let idadeContainer = document.getElementById('idadeContainer');
+    let generoContainer = document.getElementById('generoContainer');
+    let bairroContainer = document.getElementById('bairroContainer');
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
 
     idadeButton.onclick = ()=> {
         idadeContainer.classList.remove('d-none');
@@ -41,8 +57,13 @@
         generoContainer.classList.add('d-none');
         generoButton.classList.remove('active');
 
+<<<<<<< HEAD
         escolaridadeContainer.classList.add('d-none');
         escolaridadeButton.classList.remove('active')
+=======
+        bairroContainer.classList.add('d-none');
+        bairroButton.classList.remove('active')
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
     };
 
      generoButton.onclick = ()=> {
@@ -52,19 +73,32 @@
         generoContainer.classList.remove('d-none');
         generoButton.classList.add('active');
 
+<<<<<<< HEAD
         escolaridadeContainer.classList.add('d-none');
         escolaridadeButton.classList.remove('active')
     };
 
     escolaridadeButton.onclick = ()=> {
+=======
+        bairroContainer.classList.add('d-none');
+        bairroButton.classList.remove('active')
+    };
+
+    bairroButton.onclick = ()=> {
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
         idadeContainer.classList.add('d-none');
         idadeButton.classList.remove('active');
 
         generoContainer.classList.add('d-none');
         generoButton.classList.remove('active');
 
+<<<<<<< HEAD
         escolaridadeContainer.classList.remove('d-none');
         escolaridadeButton.classList.add('active')
+=======
+        bairroContainer.classList.remove('d-none');
+        bairroButton.classList.add('active')
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
     };
 
 

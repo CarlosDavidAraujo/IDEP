@@ -17,11 +17,19 @@
         <div class="col-xl-2 form-group">
             <div class="d-flex justify-content-end align-items-end gap-1">
                 <div class="col">
+<<<<<<< HEAD
                     <label for="min" class="form-label">Idade</label>
                     <input id="min" type="number" placeholder="Min" class="form-control" onchange="filtraIdade()">
                 </div>
                 <div class="col">
                     <input id="max" type="number" placeholder="Max" class="form-control" onchange="filtraIdade()">
+=======
+                    <label for="idade" class="form-label">Idade</label>
+                    <input id="idade" type="number" name="min" placeholder="Min" class="form-control">
+                </div>
+                <div class="col">
+                    <input type="number" placeholder="Max" name="max" class="form-control">
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
                 </div>
             </div>
         </div>
@@ -45,10 +53,16 @@
             <select class="form-control" id="filtroGenero" onchange="filtraCandidatos('filtroGenero')">
                 <option value="" disabled selected hidden>Selecione uma opção</option>
                 <option value="todos">Todos</option>
+<<<<<<< HEAD
                 <option value="masculino">Masculino</option>
                 <option value="feminino">Feminino</option>
                 <option value="não binário">Não binário</option>
                 <option value="não informado">Não informado</option>
+=======
+                <option value="masculino" selected>Masculino</option>
+                <option value="feminino">Feminino</option>
+                <option value="outro">Outros</option>
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
             </select>
         </div>
     </div>
@@ -57,12 +71,20 @@
     <div id="candidatos">
         {{#each paginator.data}}
         <div class="row rect-lg mt-3 ps-4 align-items-center" role="button" data-bs-toggle="modal"
+<<<<<<< HEAD
             data-bs-target="#id{{ID}}">
+=======
+            data-bs-target="#{{ID}}">
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
             <div class="col">
                 <h5>{{Nome_completo}}</h5>
             </div>
             <div class="col text-center">
+<<<<<<< HEAD
                 <h5>{{Idade}}</h5>
+=======
+                <h5>{{Idade}} anos</h5>
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
             </div>
             <div class="col text-center">
                 <h5>{{Bairro}}</h5>
@@ -80,6 +102,7 @@
 
     <div class="d-flex justify-content-center mt-8">
         <form action="/admin/curriculos" method="post">
+<<<<<<< HEAD
              <nav aria-label="Page navigation example">
             <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
             <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
@@ -88,6 +111,14 @@
             <ul class="pagination" id="meusBotoes">
             </ul>
         </nav>
+=======
+            <nav aria-label="Page navigation example">
+                <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
+                <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
+                <ul class="pagination" id="meusBotoes">
+                </ul>
+            </nav>
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
         </form>
     </div>
 </div>
@@ -95,12 +126,21 @@
 
 <script id="filtros">
     function filtraCandidatos(filtro) {
+<<<<<<< HEAD
         let input, filter, candidatos, row;
         candidatos = document.getElementById("candidatos");
         row = candidatos.getElementsByClassName('row');
         input = document.getElementById(filtro);
         filter = input.value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
         for (let i = 0; i < row.length; i++) {
+=======
+        var input, filter, candidatos, i, j, row, col;
+        input = document.getElementById(filtro);
+        filter = input.value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+        candidatos = document.getElementById("candidatos");
+        row = candidatos.getElementsByClassName('row');
+        for (i = 0; i < row.length; i++) {
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
             if (row[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter) > -1 || filter == 'TODOS') {
                 row[i].style.display = "";
             }
@@ -109,6 +149,7 @@
             }
         }
     }
+<<<<<<< HEAD
 
 
     function filtraIdade() {
@@ -128,11 +169,17 @@
         }
     }
 
+=======
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
 </script>
 
 
 <script id="paginação">
+<<<<<<< HEAD
     let totalPages, buttonGroup, currentPage, botoes, limite, inicio, fim;
+=======
+    let i, j, totalPages, buttonGroup, currentPage, botoes, limite, inicio, fim;
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
     totalPages = parseInt(document.getElementById('totalDePaginas').value);
     buttonGroup = document.getElementById('meusBotoes');
     currentPage = parseInt(document.getElementById('paginaAtual').value);

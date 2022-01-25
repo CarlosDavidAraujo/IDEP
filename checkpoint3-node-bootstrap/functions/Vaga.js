@@ -67,7 +67,11 @@ module.exports = {
     },
 
     paginador: function (items, current_page, per_page_items) {
+<<<<<<< HEAD
         let page = parseInt(current_page) || 1,
+=======
+        let page = current_page || 1,
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
             per_page = per_page_items || 10,
             offset = (page - 1) * per_page,
 
@@ -98,16 +102,24 @@ module.exports = {
     adicionaVaga: async function (file, dados_vaga) {
         const collectionRef = collection(db, "Vagas")
         if (file == null) {
+<<<<<<< HEAD
             await addDoc(collectionRef, dados_vaga).then(async (DocumentReference) => {
                 //após adicionar a vaga acrescenta o campo que conterá o ID da vaga
                 const docRef = doc(db, "Vagas", DocumentReference.id)
                 await setDoc(docRef, { ID: DocumentReference.id, url_logo: null }, { merge: true })
+=======
+            addDoc(collectionRef, dados_vaga).then((DocumentReference) => {
+                //após adicionar a vaga acrescenta o campo que conterá o ID da vaga
+                const docRef = doc(db, "Vagas", DocumentReference.id)
+                setDoc(docRef, { ID: DocumentReference.id, url_logo: null }, { merge: true })
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
 
             });
         } else {
             const metadata = { contentType: file.mimetype };
             const nomeImg = file.name + file.md5;
             const imgRef = ref(storage, "images/" + nomeImg);
+<<<<<<< HEAD
             await uploadBytes(imgRef, file.data, metadata).then(async (snapshot) => {
                 await getDownloadURL(imgRef)
                     .then(async (url) => {
@@ -115,6 +127,16 @@ module.exports = {
                             //após adicionar a vaga acrescenta os campos que conterãoo ID da vaga e a logo da empresa
                             const docRef = doc(db, "Vagas", DocumentReference.id)
                             await setDoc(docRef, { ID: DocumentReference.id, url_logo: url }, { merge: true })
+=======
+            uploadBytes(imgRef, file.data, metadata).then((snapshot) => {
+                //após o upload extrai a url da imagem
+                getDownloadURL(imgRef)
+                    .then((url) => {
+                        addDoc(collectionRef, dados_vaga).then((DocumentReference) => {
+                            //após adicionar a vaga acrescenta os campos que conterãoo ID da vaga e a logo da empresa
+                            const docRef = doc(db, "Vagas", DocumentReference.id)
+                            setDoc(docRef, { ID: DocumentReference.id, url_logo: url }, { merge: true })
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
                         });
                     })
             });
@@ -128,17 +150,29 @@ module.exports = {
     editaVaga: async function (vaga_id, logoImg, dados_vaga) {
         const docRef = doc(db, "Vagas", vaga_id);
         if (logoImg == null) {
+<<<<<<< HEAD
             await setDoc(docRef, dados_vaga, { merge: true })
+=======
+            return setDoc(docRef, dados_vaga, { merge: true })
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
         }
         else {
             const metadata = { contentType: logoImg.mimetype };
             const nomeImg = logoImg.name + logoImg.md5;
             const imgRef = ref(storage, "images/" + nomeImg);
+<<<<<<< HEAD
             await uploadBytes(imgRef, logoImg.data, metadata).then(async (snapshot) => {
                 await getDownloadURL(imgRef)
                     .then(async (url) => {
                         dados_vaga.url_logo = url;
                        await setDoc(docRef, dados_vaga, { merge: true })
+=======
+            return uploadBytes(imgRef, logoImg.data, metadata).then((snapshot) => {
+                getDownloadURL(imgRef)
+                    .then((url) => {
+                        dados_vaga.url_logo = url;
+                        setDoc(docRef, dados_vaga, { merge: true })
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
                     })
             });
         }

@@ -15,6 +15,7 @@
                             <label class="form-label" for="empresa">Empresa*</label>
                             <input class="form-control" type="text" id="empresa" name="empresa" value="{{Empresa}}"
                                 required>
+<<<<<<< HEAD
                         </div>
                         <div class="col form-group">
                             <label class="form-label" for="modalidade">Modalidade*</label>
@@ -37,6 +38,39 @@
                                     Entrevista</option>
                                 <option value="Finalizado" {{#when Etapa 'eq' 'Finalizado' }} selected {{/when}}>
                                     Finalizado</option>
+=======
+                        </div>
+                        <div class="col form-group">
+                            <label class="form-label" for="modalidade">Modalidade*</label>
+                            <select class="form-control" name="modalidade" id="modalidade" required>
+                                <option value="" disabled selected hidden>Selecione</option>
+                                <option value="Jovem Aprendiz" {{#when Modalidade 'eq' 'Jovem Aprendiz' }} selected
+                                    {{/when}}>Jovem Aprendiz</option>
+                                <option value="Estágio" {{#when Modalidade 'eq' 'Estágio' }} selected {{/when}}>Estágio
+                                </option>
+                                <option value="CLT" {{#when Modalidade 'eq' 'CLT' }} selected {{/when}}>CLT</option>
+                            </select>
+                        </div>
+                        <div class="col form-group">
+                            <label class="form-label" for="etapa">Etapa*</label>
+                            <select class="form-control" name="etapa" id="etapa" required>
+                                <option value="" disabled selected hidden>Selecione</option>
+                                <option value="Envio de currículos" {{#when Etapa 'eq' 'Envio de currículos' }} selected
+                                    {{/when}}>Envio de currículos</option>
+                                <option value="Entrevista" {{#when Etapa 'eq' 'Entrevista' }} selected {{/when}}>
+                                    Entrevista</option>
+                                <option value="Finalizado" {{#when Etapa 'eq' 'Finalizado' }} selected {{/when}}>
+                                    Finalizado</option>
+                            </select>
+                        </div>
+                        <div class="col form-group">
+                            <label class="form-label" for="localidade">Localidade*</label>
+                            <select class="form-control" name="localidade" id="localidade">
+                                <option value="" disabled selected hidden>Selecione</option>
+                                {{#each localidades}}
+                                <option value="{{name}}">{{name}}</option>
+                                {{/each}}
+>>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
                             </select>
                         </div>
                         <div class="col form-group align-self-end">
