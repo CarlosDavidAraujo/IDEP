@@ -35,7 +35,6 @@
         {{>cardVaga}}
         {{/each}}
     </div>
-<<<<<<< HEAD
 
     <div class="d-flex justify-content-center mt-8">
         <form action="/vaga" method="post">
@@ -50,20 +49,6 @@
         </form>
     </div>
 
-=======
-
-    <div class="d-flex justify-content-center mt-8">
-        <form action="/vaga" method="post">
-            <nav aria-label="Page navigation example">
-                <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
-                <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
-                <ul class="pagination" id="meusBotoes">
-                </ul>
-            </nav>
-        </form>
-    </div>
-
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
     <!-- Modals -->
     {{#each paginator.data}}
     {{>modalVaga}}
@@ -89,31 +74,6 @@
     }
 </script>
 
-<<<<<<< HEAD
-=======
-<script id="paginação">
-    let i, j, totalPages, buttonGroup, currentPage, botoes, limite, inicio, fim;
-    totalPages = parseInt(document.getElementById('totalDePaginas').value);
-    buttonGroup = document.getElementById('meusBotoes');
-    currentPage =parseInt(document.getElementById('paginaAtual').value);
-    //adiciona botoes para cada pagina
-    limite = 10;
-    inicio = (((currentPage - limite) > 1) ? currentPage - limite : 1);
-    fim = (((currentPage + limite) < totalPages) ? currentPage + limite : totalPages);
-    //adiciona botoes para cada pagina
-    if (totalPages > 1 && currentPage <= totalPages) {
-        for (var i = inicio; i <= fim; i++) {
-            if (i == currentPage) {
-                buttonGroup.innerHTML += `<li class="page-item active"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
-            }
-            else {
-                buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
-            }
-        }
-    }
-</script>
-
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
 <script id="filtros">
     function filtraVagas(filtro) {
         var input, filter, i, j, card, div;
