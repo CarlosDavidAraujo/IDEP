@@ -1,11 +1,6 @@
 const res = require('express/lib/response');
-<<<<<<< HEAD
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail } = require('firebase/auth');
 const { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, addDoc, where, collectionGroup, arrayUnion, arrayRemove, orderBy } = require("firebase/firestore");
-=======
-const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, } = require('firebase/auth');
-const { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, addDoc, where, collectionGroup, arrayUnion, arrayRemove } = require("firebase/firestore");
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
 const { getStorage, ref, getDownloadURL, uploadBytes } = require('firebase/storage');
 const fireapp = require("./firebaseInitialize");
 
@@ -200,11 +195,7 @@ module.exports = {
     consultaTodosUsuarios: async function () {
         let users = []
         const collectionRef = collection(db, "users");
-<<<<<<< HEAD
         const q = query(collectionRef, orderBy("Nome_completo", 'asc'))
-=======
-        const q = query(collectionRef)
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             users.push(doc.data());
@@ -296,11 +287,7 @@ module.exports = {
     },
 
     consultaGeneros: async function () {
-<<<<<<< HEAD
         let generos = ["masculino", "feminino", "não binário", "não informado"];
-=======
-        let generos = ["masculino", "feminino", "outro"];
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
         let resultado = [];
         for (let i = 0; i < generos.length; i++) {
             const q = query(collection(db, "users"), where('Gênero', "==", generos[i]));
@@ -324,7 +311,6 @@ module.exports = {
         return resultado;
     },
 
-<<<<<<< HEAD
     consultaEscolaridade: async function () {
         let escolaridades = ["Ensino fundamental incompleto", "Ensino fundamental completo", "Ensino médio incompleto", "Ensino médio completo", "Ensino superior incompleto", "Ensino superior completo"];
         let resultado = [];
@@ -336,8 +322,6 @@ module.exports = {
         return resultado;
     },
 
-=======
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
     filtraUsuarios: async function (campo, operador, valor) {
         let resultado = [];
         const q = query(collection(db, "users"), where(campo, operador, valor));

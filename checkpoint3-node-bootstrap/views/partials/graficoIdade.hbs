@@ -2,26 +2,16 @@
     <div class="card">
         <div class="card-body">
             <input type="hidden" id="idade" value="{{valorPorIdade}}">
-<<<<<<< HEAD
             <h5>Candidatos por Idade</h5>
             <hr>
             <canvas id="idadeChart"></canvas>
-=======
-            <h5>Gráfico por Idade</h5>
-            <hr>
-            <canvas id="generoChart"></canvas>
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
         </div>
     </div>
 </div>
 
 <script>
     //pegando valores do db
-<<<<<<< HEAD
     var ctx = document.getElementById('idadeChart').getContext('2d');
-=======
-    var ctx = document.getElementById('generoChart').getContext('2d');
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
     let input = document.getElementById('idade').value.replace(/[^0-9]*/g, '')
     let valores = [];
     for (var i = 0; i < input.length; i++) {

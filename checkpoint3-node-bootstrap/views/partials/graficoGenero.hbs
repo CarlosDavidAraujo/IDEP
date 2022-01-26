@@ -2,73 +2,44 @@
     <input type="hidden" id="genero" value="{{resultado}}">
     <div class="card bg-white">
         <div class="card-body">
-<<<<<<< HEAD
             <h5>Candidatos por gênero</h5>
             <hr>
             <canvas id="generoChart"></canvas>
-=======
-            <h5>Teste Gráfico Faixa Etária</h5>
-            <hr>
-            <canvas id="idadeChart"></canvas>
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
         </div>
     </div>
 </div>
 
 
 <script>
-<<<<<<< HEAD
     var ctx = document.getElementById('generoChart').getContext('2d');
     let resultado = document.getElementById('genero').value.replace(/[^0-9]*/g, '');
     let masculino = resultado[0];
     let feminino = resultado[1];
     let naoBinario = resultado[2];
     let naoInformado = resultado[3];
-=======
-    var ctx = document.getElementById('idadeChart').getContext('2d');
-    let resultado = document.getElementById('genero').value;
-    var clean = resultado.replace(/[^0-9]*/g, '')
-    let masculino = clean[0];
-    let feminino = clean[1];
-    let outro = clean[2];
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
     var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'doughnut',
         // The data for our dataset
         data: {
-<<<<<<< HEAD
             labels: ['Feminino', 'Masculino', 'Não binário', 'Não informado'],
             datasets: [{
                 label: '',
-=======
-            labels: ['Feminino', 'Masculino', 'Outro'],
-            datasets: [{
-                label: 'Gráfico por Idade',
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
                 padding: 2000,
                 textAlign: 'left',
                 backgroundColor: [
                     'rgb(93, 95, 239, 100)',
                     'rgb(249, 186, 0, 1)',  
                     'rgb(47, 138, 229, 1)',
-<<<<<<< HEAD
                     'rgb(50, 168, 82)'
-=======
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
                 ],
                 borderColor: [
                     'rgb(93, 95, 239, 1)',
                     'rgb(249, 186, 0, 1)',
                     'rgb(47, 138, 229, 1)',
-<<<<<<< HEAD
                     'rgb(50, 168, 82)'
                 ],
                 data: [feminino, masculino, naoBinario, naoInformado]
-=======
-                ],
-                data: [feminino, masculino, outro]
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
             }]
         },
 

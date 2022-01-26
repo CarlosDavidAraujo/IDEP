@@ -85,13 +85,6 @@ module.exports = {
         })
     },
 
-<<<<<<< HEAD
-=======
-
-    getReauth: (req, res) => {
-        res.render('paginas/login/reautenticacao');
-    },
->>>>>>> d16c26e6b794b52aff23fa9839e96814ff619baf
     postReauth: (req, res) => {
         resetPassword(req.body.emailReauth).then(()=>{
             let mensagemReauth = "Enviamos um email de recuperação de senha para o email informado."
