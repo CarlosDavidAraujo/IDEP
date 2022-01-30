@@ -1,5 +1,5 @@
 <div class="col-8 offset-2 my-5">
-    <div class="card">
+    <div class="card bg-white">
         <div class="card-body">
             <input type="hidden" id="escolaridade" value="{{escolaridade}}">
             <h5>Candidatos por escolaridade</h5>
@@ -11,7 +11,7 @@
 
 <script>
     var ctx = document.getElementById('escolaridadeChart').getContext('2d');
-    let escolaridade= document.getElementById('escolaridade').value.replace(/[^0-9]*/g, '');
+    let escolaridade = document.getElementById('escolaridade').value.replace(/[^0-9]*/g, '');
     console.log(escolaridade)
     let fundInc = escolaridade[0];
     let fundComp = escolaridade[1];
@@ -30,8 +30,8 @@
             labels: ['Fundamental', 'Médio', 'Superior'],
             datasets: [{
                 label: 'Incompleto',
-                backgroundColor: 'rgb(137, 89, 168)',
-                borderColor: 'rgb(137, 89, 168)',
+                backgroundColor: 'rgb(47, 138, 229, 1)',
+                borderColor: 'rgb(47, 138, 229, 1)',
                 data: [fundInc, medioInc, superInc]
             },
             {
@@ -58,11 +58,14 @@
                 yAxes: [{
                     ticks: {
                         beginAtZero: true
+                    },
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Quantidade'
                     }
-                }]
+                }],
             }
         }
-
     });
 
 </script>

@@ -118,9 +118,9 @@ module.exports = {
     getAdminGraficos: (req, res) => {
         const url = req.originalUrl;
         consultaIdades().then((valorPorIdade) => {
-            consultaGeneros().then((resultado) => {
+            consultaGeneros().then((generos) => {
                 consultaEscolaridade().then((escolaridade) => {
-                    res.render('paginas/admin/graficos', { resultado, url, valorPorIdade, escolaridade })
+                    res.render('paginas/admin/graficos', { generos, url, valorPorIdade, escolaridade })
                 });
             });
         });
