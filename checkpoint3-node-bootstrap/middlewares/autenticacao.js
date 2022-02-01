@@ -40,18 +40,12 @@ module.exports = {
         }
     },
 
-    userProfileImg: (req, res, next) => {
-        if (auth.currentUser) {
-            consultaDadosDoUsuario().then((doc) => {
-                res.locals.profileImg = doc.img_perfil;
-            });
-        }
-        next();
-    },
-
     changeButton: (req, res, next) => {
         if (auth.currentUser) {
             res.locals.changeButton = true;
+            consultaDadosDoUsuario().then((doc) => {
+                res.locals.profileImg = doc.img_perfil;
+            });
         }
         else {
             res.locals.changeButton = false;

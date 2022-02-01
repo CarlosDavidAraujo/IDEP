@@ -1,11 +1,40 @@
 
-
-
+html,
 body {
-  margin: auto;
-  margin-top: 77.58px;
+  margin:0;
+  padding:0;
+  height: 100%;
+  width: 100%;
   background: #FCFCFC;
+  font-family: 'Montserrat';
  }
+
+#main {
+  min-height:100%;
+  position:relative;
+}
+
+#header {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  background: #FCFCFC;
+  box-shadow: 0px 7px 10px rgba(14, 31, 53, 0.16);
+}
+
+#body {
+  margin-top: 65px;
+  padding-bottom:200px;
+}
+
+ #footer {
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:60px;            /* Height of the footer */
+  background:#FCFCFC;
+}
 
 img#parcImg {
   width: fit-content;
@@ -44,7 +73,6 @@ border: 1px solid #2F8AE6;
    }
 
 p {
-font-family: 'Montserrat';
 font-size: 20px;
 font-style: normal;
 font-weight: 400;
@@ -124,7 +152,7 @@ top: 175px;
 }
 
 div#homeMainImgTxt h1{
-  font-family: 'Montserrat';
+
   font-style: normal;
   font-weight: bold;
   font-size: 48px;
@@ -133,7 +161,6 @@ div#homeMainImgTxt h1{
 }
 
 div#homeMainImgTxt h3{
-font-family: 'Montserrat';
 font-style: normal;
 font-weight: 600;
 font-size: 24px;
@@ -151,7 +178,6 @@ border-radius: 2px;
 }
 
 h6 {
-font-family: 'Montserrat';
 font-style: normal;
 font-weight: 400;
 font-size: 13px;
@@ -159,14 +185,12 @@ line-height: normal;
 }
 
 h6.strong {
-font-family: 'Montserrat';
 font-style: normal;
 font-weight: 600;
 font-size: 18px;
 }
 
 h5 {
-font-family: 'Montserrat';
 font-style: normal;
 font-weight: 500;
 font-size: 18px;
@@ -174,14 +198,13 @@ line-height: normal;
 }
 
 h4 {
-font-family: 'Montserrat';
 font-style: normal;
 font-weight: 600;
 font-size: 1.5rem;
 line-height:normal;
 }
 h3 {
-  font-family: 'Montserrat';
+
   font-style: normal;
   font-weight: 600;
   font-size: 2em;
@@ -189,14 +212,13 @@ h3 {
   }
 
 h1.display-2 {
-  font-family: Montserrat;
+
   font-style: normal;
   font-weight: 600;
   font-size: 72px;
 }
 
 .btn  {
-font-family: 'Montserrat';
 font-style: normal;
 font-weight: 600;
 font-size: 16px;
@@ -221,17 +243,12 @@ li {
   line-height: 24px;
   }
 
-div#loginContainer {
+#loginContainer {
 opacity: 0.94;
 border-radius: 2px;
 position: absolute;
-left: 50%;
-top: 55%;
-transform: translate(-50%, -50%);
+top: 15%;
 }
-
-
-  
 
 .nav-link {
   padding-right: 0;
@@ -310,8 +327,8 @@ img.perfil-img{
 
   img.nav-perfil-img{
     object-fit: cover;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%; 
     border: 2px solid #2F8AE6
     }
@@ -321,14 +338,6 @@ img.perfil-img{
   padding: 10px 10px 0px 10px;
   bottom: 0;
   width: 100%;
-}
-
-#header {
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  width: 100%;
-  background: #FCFCFC;
 }
 
 #todosParceiros img {

@@ -4,9 +4,9 @@ const app = require("./config");
 const vagaRoute = require("./routes/vaga-route");
 const userRoute = require("./routes/user-route");
 const adminRoute = require("./routes/admin-route");
-const { changeButton, requireAdmin, adminLogoutButton, userProfileImg} = require("./middlewares/autenticacao");
+const { changeButton, requireAdmin, adminLogoutButton} = require("./middlewares/autenticacao");
 
-app.use(changeButton, adminLogoutButton, userProfileImg);
+app.use(changeButton, adminLogoutButton);
 app.use('/user', userRoute);
 app.use('/', vagaRoute, requireAdmin, adminRoute);
 

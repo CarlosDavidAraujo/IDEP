@@ -21,9 +21,13 @@
 </head>
 
 <body>
-    {{>_navbar}}
-    {{{body}}}
-    {{>footer}}
+    <div id="main">
+        {{>_navbar}}
+        <div id='body'>
+            {{{body}}}
+        </div>
+        {{>footer}}
+    </div>
 </body>
 
 <script id="patterns">
@@ -38,7 +42,7 @@
                 return argumento1 + '.' + argumento2 + '.' + argumento3 + '-' + argumento4;
             })
         elementoAlvo.value = cpfAtualizado;
-    }  
+    }
 
     function formataFone(fone) {
         const elementoAlvo = fone;
@@ -66,22 +70,23 @@
     inicio = (((currentPage - limite) > 1) ? currentPage - limite : 1);
     fim = (((currentPage + limite) < totalPages) ? currentPage + limite : totalPages);
 
-    if(totalPages > 1) {
-    //adiciona botoes para cada pagina
-    buttonGroup.innerHTML += `<li class="page-item"><button type="submit" class="page-link" name="pagina" id="primeira" value="1">Primeira</button></li>`
-    buttonGroup.innerHTML += `<li class="page-item"><button type="submit" class="page-link" aria-label="Previous" name="pagina" id="prev" value=${prevPage}><span aria-hidden="true">&laquo;</span></button></li>`
-    if (totalPages > 1 && currentPage <= totalPages) {
-        for (var i = inicio; i <= fim; i++) {
-            if (i == currentPage) {
-                buttonGroup.innerHTML += `<li class="page-item active"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
-            }
-            else {
-                buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+    if (totalPages > 1) {
+        //adiciona botoes para cada pagina
+        buttonGroup.innerHTML += `<li class="page-item"><button type="submit" class="page-link" name="pagina" id="primeira" value="1">Primeira</button></li>`
+        buttonGroup.innerHTML += `<li class="page-item"><button type="submit" class="page-link" aria-label="Previous" name="pagina" id="prev" value=${prevPage}><span aria-hidden="true">&laquo;</span></button></li>`
+        if (totalPages > 1 && currentPage <= totalPages) {
+            for (var i = inicio; i <= fim; i++) {
+                if (i == currentPage) {
+                    buttonGroup.innerHTML += `<li class="page-item active"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+                }
+                else {
+                    buttonGroup.innerHTML += `<li class="page-item"><button type="submit" name="pagina" class="page-link" id="pagina${i}" value=${i}>${i}</button></li>`
+                }
             }
         }
-    }
-    buttonGroup.innerHTML += `<li class="page-item"><button type="submit" class="page-link" name="pagina" id="next" value=${nextPage}><span aria-hidden="true">&raquo;</span></button></li>`
-    buttonGroup.innerHTML += `<li class="page-item"><button type="submit" class="page-link" name="pagina" id="ultima" value=${totalPages}>Última</button></li>`
+        buttonGroup.innerHTML += `<li class="page-item"><button type="submit" class="page-link" name="pagina" id="next" value=${nextPage}><span aria-hidden="true">&raquo;</span></button></li>`
+        buttonGroup.innerHTML += `<li class="page-item"><button type="submit" class="page-link" name="pagina" id="ultima" value=${totalPages}>Última</button></li>`
     }
 </script>
+
 </html>
