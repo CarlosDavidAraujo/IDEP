@@ -146,9 +146,11 @@ module.exports = {
                 Data_término: req.body.data_inicial_experiencia
             }
         }
+        console.log(req.files)
         if (req.files) {
             editaPerfil(req.body.email, dados, req.files.fotoPerfil).then(() => {
                 const mensagem = "Dados editados com sucesso"
+                console.log('img enviada')
                 consultaDadosDoUsuario().then((doc) => {
                     res.render('paginas/perfil/edit', { municipios, doc, mensagem })
                 })

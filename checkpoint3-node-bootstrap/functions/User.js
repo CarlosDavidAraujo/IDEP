@@ -236,13 +236,12 @@ module.exports = {
             const metadata = { contentType: file.mimetype };
             const nomeImg = file.name + file.md5;
             const imgRef = ref(storage, "images/" + nomeImg);
-            return updateEmail(auth.currentUser, new_email).then(() => {
-                uploadBytes(imgRef, file.data, metadata).then((snapshot) => {
-                    getDownloadURL(imgRef)
-                        .then((url) => {
-                            dados.img_perfil = url;
-                            setDoc(user_doc, dados, { merge: true })
-                        })
+            updateEmail(auth.currentUser, new_email).then(async () => {
+                await uploadBytes(imgRef, file.data, metadata).then(async (snapshot) => {
+                    await getDownloadURL(imgRef).then(async (url) => {
+                        dados.img_perfil = url;
+                        await setDoc(user_doc, dados, { merge: true })
+                    })
                 });
             });
         }
