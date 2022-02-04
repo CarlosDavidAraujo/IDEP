@@ -42,10 +42,10 @@ module.exports = {
 
     changeButton: (req, res, next) => {
         if (auth.currentUser) {
-            res.locals.changeButton = true;
             consultaDadosDoUsuario().then((doc) => {
                 res.locals.profileImg = doc.img_perfil;
             });
+            res.locals.changeButton = true;
         }
         else {
             res.locals.changeButton = false;

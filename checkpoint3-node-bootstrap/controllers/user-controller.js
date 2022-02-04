@@ -1,5 +1,4 @@
 const axios = require('axios');
-const sharp = require('sharp');
 const {
     cadastraUsuario, dataDeCadastro, verificaErro, fazLogin, logout, resetPassword,
     editaPerfil, consultaDadosDoUsuario, mostraCandidatura, auth, cancelaCandidatura
