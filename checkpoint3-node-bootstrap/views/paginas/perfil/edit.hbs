@@ -1,4 +1,4 @@
-<form action="/user/perfil/edit" method="post" enctype="multipart/form-data" class="container-xl mt-10">
+<form action="/user/perfil/edit" method="post" enctype="multipart/form-data" class="container-custom px-sm-4 px-xxl-0 mt-10">
     {{#if mensagemDeErro}}
     <div class="alert alert-danger" role="alert">
         {{mensagemDeErro}}
@@ -9,10 +9,10 @@
         {{mensagem}}
     </div>
     {{/if}}
-    <div class="d-flex flex-wrap justify-content-center gap-4">
-        <div class="col d-grid gap-2">
+    <div class="d-flex flex-wrap gap-3">
+        <div class="col-12 col-md-12 col-lg col-xxl d-grid gap-3">
             <h6 class="strong text-primary">Informações pessoais</h6>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-sart flex-wrap gap-3">
                 <div>
                     <label for="fotoPerfil" class="foto-upload" id="fotoPerfilLabel">
                         {{#if profileImg}}
@@ -21,15 +21,14 @@
                         <img src="/img/icons/foto.svg">
                         {{/if}}
                     </label>
-                    <input id="fotoPerfil" type="file" name="fotoPerfil"
-                        onchange="changeLabel('fotoPerfil', 'fotoPerfilLabel' )" />
+                    <input id="fotoPerfil" type="file" accept="image/jpeg, image/png" name="fotoPerfil"
+                        onchange="changeLabel('fotoPerfil', 'fotoPerfilLabel' ), resize('fotoPerfil')" />
                 </div>
-                <div class="col-md-7">
+                <div class="col-12 col-sm d-grid gap-3">
                     <div class="form-group"><label for="nome_social" class="form-label">Nome Social</label>
                         <input type="text" class="form-control" id="nome_social" name="nome_social"
                             value="{{doc.Nome_social}}">
                     </div>
-
                     <div class="form-group"><label for="CPF" class="form-label">CPF*</label>
                         <input type="text" class="form-control" id="CPF" name="CPF" value="{{doc.CPF}}"
                             placeholder="Somente números" pattern="(\d{3}).(\d{3}).(\d{3})-(\d{2})" maxlength="11"
@@ -42,8 +41,8 @@
                     value="{{doc.Nome_completo}}" required>
             </div>
             <div class="form-group">
-                <div class="d-flex justify-content-between">
-                    <div>
+                <div class="d-flex flex-wrap justify-content-between gap-3">
+                    <div class="col-12 col-sm col-lg-12 col-xxl">
                         <label for="genero" class="form-label">Gênero*</label>
                         <select class="form-control" id="genero" name="genero" required>
                             <option value="" disabled selected hidden>Selecione</option>
@@ -59,7 +58,7 @@
                             </option>
                         </select>
                     </div>
-                    <div>
+                    <div class="col-12 col-sm col-lg-12 col-xxl">
                         <label for="data_de_nascimento" class="form-label">Data de nascimento*</label>
                         <input type="date" class="form-control" id="data_de_nascimento" name="data_de_nascimento"
                             value="{{doc.Data_de_nascimento}}" required>
@@ -79,17 +78,17 @@
                 <input type="text" class="form-control" id="endereco" name="endereco" value="{{doc.Endereço}}">
             </div>
             <div class="form-group">
-                <div class="d-flex justify-content-between gap-4">
-                    <div class="form-group">
+                <div class="d-flex flex-wrap justify-content-between gap-3">
+                    <div class="col-12 col-sm col-lg-12 col-xxl">
                         <label for="municipio" class="form-label">Município*</label>
                         <select name="municipio" class="form-control" id="municipio" name="municipio" required>
-                            <option value="" disabled selected hidden>Selecione uma opção</option>
+                            <option value="" disabled selected hidden>Selecione</option>
                             {{#each municipios}}
                             <option value="{{nome}}">{{nome}}</option>
                             {{/each}}
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="col-12 col-sm col-lg-12 col-xxl">
                         <label for="bairro" class="form-label">Bairro*</label>
                         <input name="bairro" class="form-control" id="bairro" name="bairro" value="{{doc.Bairro}}"
                             required />
@@ -97,102 +96,111 @@
                 </div>
             </div>
         </div>
-        <div class="vr"></div>
-        <div class="col d-grid gap-2" style="height: 50%;">
-            <h6 class="strong text-primary">Informações acadêmicas</h6>
-            <div class="form-group"><label for="grau" class="form-label">Grau</label>
-                <select name="grau" class="form-control" id="grau" name="grau">
-                    <option value="" disabled selected hidden>Selecione uma opção</option>
-                    <option value="Ensino fundamental completo" {{#when
-                        doc.Dados_academicos.Grau 'eq' 'Ensino fundamental completo' }} selected {{/when}}>
-                        Ensino
-                        Ensino fundamental completo</option>
-                    <option value="Ensino médio completo" {{#when doc.Dados_academicos.Grau 'eq' 'Ensino médio completo'
-                        }} selected {{/when}}>Ensino
-                        médio
-                        completo</option>
-                    <option value="Ensino superior completo" {{#when
-                        doc.Dados_academicos.Grau 'eq' 'Ensino superior completo' }} selected {{/when}}>Ensino
-                        Ensino superior completo</option>
-                    <option value="Ensino fundamental incompleto" {{#when
-                        doc.Dados_academicos.Grau 'eq' 'Ensino fundamental incompleto' }} selected {{/when}}>
-                        Ensino
-                        Ensino fundamental incompleto</option>
-                    <option value="Ensino médio incompleto" {{#when
-                        doc.Dados_academicos.Grau 'eq' 'Ensino médio incompleto' }} selected {{/when}}>Ensino
-                        médio
-                        incompleto</option>
-                    <option value="Ensino superior incompleto" {{#when
-                        doc.Dados_academicos.Grau 'eq' 'Ensino superior incompleto' }} selected {{/when}}>Ensino
-                        Ensino superior incompleto</option>
-                </select>
-            </div>
-            <div class="form-group"><label for="curso" class="form-label">Curso</label>
-                <input type="text" class="form-control" id="curso" name="curso" value="{{doc.Dados_academicos.Curso}}">
-            </div>
-            <div class="form-group"><label for="instituicao" class="form-label">Instituição</label>
-                <input type="text" class="form-control" id="instituicao" name="instituicao"
-                    value="{{doc.Dados_academicos.Instituição}}">
-            </div>
-            <div class="form-group">
-                <div class="d-flex justify-content-between">
-                    <div>
-                        <label for="data_inicial_academica" class="form-label">Início</label>
-                        <input type="date" class="form-control" id="data_inicial_academica"
-                            name="data_inicial_academica" value="{{doc.Dados_academicos.Data_início}}">
+        <div class="vr d-none d-lg-block text-primary"></div>
+        <div class="col col-xxl-8 mt-3 mt-lg-0">
+            <div class="d-flex flex-wrap gap-3">
+                <div class="col-12 col-sm col-lg-12 col-xxl d-grid gap-3">
+                    <h6 class="strong text-primary">Informações acadêmicas</h6>
+                    <div class="form-group">
+                        <label for="grau" class="form-label">Grau</label>
+                        <select name="grau" class="form-control" id="grau" name="grau">
+                            <option value="" disabled selected hidden>Selecione uma opção</option>
+                            <option value="Ensino fundamental completo" {{#when
+                                doc.Dados_academicos.Grau 'eq' 'Ensino fundamental completo' }} selected {{/when}}>
+                                Ensino
+                                Ensino fundamental completo</option>
+                            <option value="Ensino médio completo" {{#when
+                                doc.Dados_academicos.Grau 'eq' 'Ensino médio completo' }} selected {{/when}}>Ensino
+                                médio
+                                completo</option>
+                            <option value="Ensino superior completo" {{#when
+                                doc.Dados_academicos.Grau 'eq' 'Ensino superior completo' }} selected {{/when}}>Ensino
+                                Ensino superior completo</option>
+                            <option value="Ensino fundamental incompleto" {{#when
+                                doc.Dados_academicos.Grau 'eq' 'Ensino fundamental incompleto' }} selected {{/when}}>
+                                Ensino
+                                Ensino fundamental incompleto</option>
+                            <option value="Ensino médio incompleto" {{#when
+                                doc.Dados_academicos.Grau 'eq' 'Ensino médio incompleto' }} selected {{/when}}>Ensino
+                                médio
+                                incompleto</option>
+                            <option value="Ensino superior incompleto" {{#when
+                                doc.Dados_academicos.Grau 'eq' 'Ensino superior incompleto' }} selected {{/when}}>Ensino
+                                Ensino superior incompleto</option>
+                        </select>
                     </div>
-                    <div>
-                        <label for="daa_final_academica" class="form-label">Término</label>
-                        <input type="date" class="form-control" id="daa_final_academica" name="data_final_academica"
-                            value="{{doc.Dados_academicos.Data_término}}">
+                    <div class="form-group">
+                        <label for="curso" class="form-label">Curso</label>
+                        <input type="text" class="form-control" id="curso" name="curso"
+                            value="{{doc.Dados_academicos.Curso}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="instituicao" class="form-label">Instituição</label>
+                        <input type="text" class="form-control" id="instituicao" name="instituicao"
+                            value="{{doc.Dados_academicos.Instituição}}">
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex flex-wrap justify-content-between gap-3">
+                            <div class="col-12 col-sm">
+                                <label for="data_inicial_academica" class="form-label">Início</label>
+                                <input type="date" class="form-control" id="data_inicial_academica"
+                                    name="data_inicial_academica" value="{{doc.Dados_academicos.Data_início}}">
+                            </div>
+                            <div class="col-12 col-sm">
+                                <label for="daa_final_academica" class="form-label">Término</label>
+                                <input type="date" class="form-control" id="daa_final_academica"
+                                    name="data_final_academica" value="{{doc.Dados_academicos.Data_término}}">
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="vr"></div>
-        <div class="col d-grid gap-2" style="height: 50%;">
-            <h6 class="strong text-primary">Experiência profissionais</h6>
-            <div class="form-group"><label for="modalidade" class="form-label">Modalidade</label>
-                <select name="modalidade" class="form-control" id="modalidade" name="modalidade">
-                    <option value="" disabled selected hidden>Selecione uma opção</option>
-                    <option value="Jovem Aprendiz" {{#when doc.Dados_profissionais.Modalidade 'eq' 'Jovem Aprendiz' }}
-                        selected {{/when}}>Jovem
-                        Aprendiz</option>
-                    <option value="Estágio" {{#when doc.Dados_profissionais.Modalidade 'eq' 'Estágio' }} selected
-                        {{/when}}>Estágio</option>
-                    <option value="CLT" {{#when doc.Dados_profissionais.Modalidade 'eq' 'CLT' }} selected {{/when}}>
-                        CLT</option>
-                </select>
-            </div>
-            <div class="form-group"><label for="cargo" class="form-label">Cargo</label>
-                <input type="text" class="form-control" id="cargo" name="cargo"
-                    value="{{doc.Dados_profissionais.Cargo}}">
-            </div>
-            <div class="form-group"><label for="empresa" class="form-label">Empresa</label>
-                <input type="text" class="form-control" id="empresa" name="empresa"
-                    value="{{doc.Dados_profissionais.Empresa}}">
-            </div>
-            <div class="form-group">
-                <div class="d-flex justify-content-between justify-content-xl-start gap-xl-4">
-                    <div>
-                        <label for="data_inicial_experiencia" class="form-label">Início</label>
-                        <input type="date" class="form-control" id="data_inicial_experiencia"
-                            name="data_inicial_experiencia" value="{{doc.Dados_profissionais.Data_início}}">
+                <div class="vr d-none d-sm-block d-lg-none d-xxl-block text-primary "></div>
+                <div class="col-12 col-sm col-lg-12 col-xxl d-grid gap-3 mt-3 mt-sm-0 mt-lg-3 mt-xxl-0">
+                    <h6 class="strong text-primary">Experiência profissionais</h6>
+                    <div class="form-group"><label for="modalidade" class="form-label">Modalidade</label>
+                        <select name="modalidade" class="form-control" id="modalidade" name="modalidade">
+                            <option value="" disabled selected hidden>Selecione uma opção</option>
+                            <option value="Jovem Aprendiz" {{#when
+                                doc.Dados_profissionais.Modalidade 'eq' 'Jovem Aprendiz' }} selected {{/when}}>Jovem
+                                Aprendiz</option>
+                            <option value="Estágio" {{#when doc.Dados_profissionais.Modalidade 'eq' 'Estágio' }}
+                                selected {{/when}}>Estágio</option>
+                            <option value="CLT" {{#when doc.Dados_profissionais.Modalidade 'eq' 'CLT' }} selected
+                                {{/when}}>
+                                CLT</option>
+                        </select>
                     </div>
-                    <div>
-                        <label for="data_final_experiencia" class="form-label">Término</label>
-                        <input type="date" class="form-control" id="data_final_experiencia"
-                            name="data_final_experiencia" value="{{doc.Dados_profissionais.Data_término}}">
+                    <div class="form-group"><label for="cargo" class="form-label">Cargo</label>
+                        <input type="text" class="form-control" id="cargo" name="cargo"
+                            value="{{doc.Dados_profissionais.Cargo}}">
+                    </div>
+                    <div class="form-group"><label for="empresa" class="form-label">Empresa</label>
+                        <input type="text" class="form-control" id="empresa" name="empresa"
+                            value="{{doc.Dados_profissionais.Empresa}}">
+                    </div>
+                    <div class="form-group">
+                        <div class="d-flex flex-wrap justify-content-between gap-3">
+                            <div class="col-12 col-sm">
+                                <label for="data_inicial_experiencia" class="form-label">Início</label>
+                                <input type="date" class="form-control" id="data_inicial_experiencia"
+                                    name="data_inicial_experiencia" value="{{doc.Dados_profissionais.Data_início}}">
+                            </div>
+                            <div class="col-12 col-sm">
+                                <label for="data_final_experiencia" class="form-label">Término</label>
+                                <input type="date" class="form-control" id="data_final_experiencia"
+                                    name="data_final_experiencia" value="{{doc.Dados_profissionais.Data_término}}">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-end">
-        <div class="d-grid col-2">
-            <a class="me-5 btn btn-outline-danger" href="/">Cancelar</a>
+    <div class="d-flex justify-content-between justify-content-md-end mt-5 gap-3 px-xxl-5">
+        <div class="d-grid col col-md-3 col-lg-2 col-xxl-1">
+            <a class="btn btn-outline-danger" href="/">Cancelar</a>
         </div>
-        <div class="d-grid  col-2">
+        <div class="d-grid col col-md-3 col-lg-2 col-xxl-1">
             <input class="btn btn-warning" type="submit" value="Salvar alterações">
         </div>
     </div>

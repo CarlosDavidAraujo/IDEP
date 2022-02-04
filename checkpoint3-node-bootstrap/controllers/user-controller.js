@@ -1,8 +1,10 @@
 const axios = require('axios');
+const sharp = require('sharp');
 const {
     cadastraUsuario, dataDeCadastro, verificaErro, fazLogin, logout, resetPassword,
     editaPerfil, consultaDadosDoUsuario, mostraCandidatura, auth, cancelaCandidatura
 } = require('../functions/User');
+
 
 //esta função carrega os municípios do Ceará fornecidos pela api do IBGE 
 var municipios;
@@ -86,7 +88,7 @@ module.exports = {
     },
 
     postReauth: (req, res) => {
-        resetPassword(req.body.emailReauth).then(()=>{
+        resetPassword(req.body.emailReauth).then(() => {
             let mensagemReauth = "Enviamos um email de recuperação de senha para o email informado."
             res.render("paginas/login/index", { mensagemReauth })
         }).catch((error) => {
@@ -118,7 +120,7 @@ module.exports = {
             res.render('paginas/perfil/edit', { municipios, doc });
         });
     },
-    postEditPerfil: (req, res) => {
+    postEditPerfil: async (req, res) => {
         const dados = {
             CPF: req.body.CPF,
             Nome_completo: req.body.nome_completo,
@@ -146,7 +148,7 @@ module.exports = {
                 Data_término: req.body.data_inicial_experiencia
             }
         }
-        if (req.files) {
+        if (req.files) {            
             editaPerfil(req.body.email, dados, req.files.fotoPerfil).then(() => {
                 const mensagem = "Dados editados com sucesso"
                 console.log('img enviada')

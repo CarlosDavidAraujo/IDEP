@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div class="modal fade" id="id{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-h5dden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-xl-down modal-xl aling-self-center">
         <div class="modal-content px-4">
             <!-- cabeçalh5 -->
             <div class="modal-header">
@@ -9,17 +9,17 @@
             </div>
             <!-- Conteudo -->
             <div class="modal-body">
-                <div class="d-flex justify-content-evenly">
-                    <div class="col-xl-6">
-                        <div class="d-flex justify-content-between">
-                            <div class="col-xl-3">
+                <div class="row">
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-12 col-md-auto">
                                 {{#if img_perfil}}
                                 <img class="perfil-img" src="{{img_perfil}}">
                                 {{else}}
                                 <img src="/img/icons/foto.svg">
                                 {{/if}}
                             </div>
-                            <div class="col-xl-8">
+                            <div class="col-12 col-md">
                                 <h3 class="text-primary"><strong>{{Nome_completo}}</strong></h3>
                                 <h5>{{Idade}} anos, Gênero {{Gênero}}</h5>
                                 <h4 class="text-primary">Data de nascimento</h4>
@@ -27,20 +27,20 @@
                                 <h4 class="text-primary">CPF</h4>
                                 <h5>{{CPF}}</h5>
                             </div>
+                            <div class="col-auto text-md-end">
+                                <h4 class="text-primary">Contato</h4>
+                                <h5>{{Telefone}}</h5>
+                                <h5>{{Email}}</h5>
+                                <h4 class="text-primary">Endereço</h4>
+                                <h5>{{Endereço}}</h5>
+                                <h5>{{Bairro}}, {{Município}}</h5>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-xl-5 text-end">
-                        <h4 class="text-primary">Contato</h4>
-                        <h5>{{Telefone}}</h5>
-                        <h5>{{Email}}</h5>
-                        <h4 class="text-primary">Endereço</h4>
-                        <h5>{{Endereço}}</h5>
-                        <h5>{{Bairro}}, {{Município}}</h5>
                     </div>
                 </div>
                 <br>
-                <div class="d-flex justify-content-evenly">
-                    <div class="col-xl-5 d-grid gap-2">
+                <div class="d-flex flex-wrap justify-content-around">
+                    <div class="col-12 col-md-auto d-grid gap-2">
                         <h4 class="text-primary"><strong>Informações Acadêmicas</strong></h4>
                         <h4 class="text-primary">Grau</h4>
                         <h5>{{Dados_academicos.Grau}}</h5>
@@ -59,8 +59,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="vr text-primary"></div>
-                    <div class="col-xl-5 d-grid">
+                    <div class="vr d-none d-md-block text-primary mx-4"></div>
+                    <div class="col-12 col-md-auto d-grid mt-4 mt-md-0 gap-2">
                         <h4 class="text-primary"><strong>Informações Profissionais</strong></h4>
                         <h4 class="text-primary">Modalidade</h4>
                         <h5>{{Dados_profissionais.Modalidade}}</h5>

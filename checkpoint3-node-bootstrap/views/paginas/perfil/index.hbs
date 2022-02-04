@@ -1,6 +1,6 @@
-<div class="container-fluid ms-4 mt-10">
+<div class="container-fluid px-4 mt-10">
     <h4 class="text-left text-primary">Meus processos seletivos</h4>
-    <div class="d-flex flex-wrap mt-5">
+    <div class="d-flex flex-wrap gap-3 mt-5 justify-content-center justify-content-sm-start">
         {{#each candidatura}}
         {{>cardVaga}}
         {{/each}}
@@ -10,44 +10,43 @@
 {{#each candidatura}}
 <!-- Modal -->
 <div class="modal fade" id="vaga{{ID}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-dialog modal-dialog-centered modal-fullscreen-xl-down modal-xl aling-self-center">
         <div class="modal-content px-4">
             <!-- cabeçalho -->
             <div class="modal-header">
                 <div class="col">
-                    <div class="row align-items-center">
+                    <div class="row row-cols-1 row-cols-sm-2">
                         <div class="col">
                             <h3 class="modal-title text-primary" id="exampleModalLabel">{{Cargo}}</h3>
                             <p class="modal-title" id="exampleModalLabel">Contratação {{Modalidade}}</p>
                         </div>
-                        <div class="col text-end">
+                        <div class="col order-first order-sm-last text-sm-end">
                             <img class="modal-img" src="{{url_logo}}">
                         </div>
-                        <button type="button" class="btn-close align-self-start" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="col text-center">
-                        <label for="progressBar" class="text-primary">
-                            <h6 class="strong">Progresso do processo seletivo</h6>
-                        </label>
-                        <div class="progress">
-                            <input class="minhaEtapa" type="hidden" value="{{Etapa}}">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0"
-                                aria-valuemax="100" style="">
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <!--fração do processo-->
-                        </div>
-                        <h6>{{Etapa}}</h6>
-
                     </div>
                 </div>
+                <button type="button" class="btn-close align-self-start" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
             </div>
             <!-- Conteudo -->
             <div class="modal-body">
-                <div class="d-flex justify-content-between">
-                    <div class="col-md-7 d-grid gap-4" style="height: max-content;">
+                <div class="col text-center">
+                    <label for="progressBar" class="text-primary">
+                        <h6 class="strong">Progresso do processo seletivo</h6>
+                    </label>
+                    <div class="progress">
+                        <input class="minhaEtapa" type="hidden" value="{{Etapa}}">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0"
+                            aria-valuemax="100" style="">
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <!--fração do processo-->
+                    </div>
+                    <h6>{{Etapa}}</h6>
+                </div>
+                <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+                    <div class="col-12 col-md-6 d-grid gap-4" style="height: max-content;">
                         <h4 class="text-primary">1. Essa vaga é para você?</h4>
                         <div>
                             <legend>
@@ -73,7 +72,7 @@
                         </div>
                     </div>
                     <div class="vr text-primary"></div>
-                    <div class="col-md-4 d-grid gap-4" style="height: max-content;">
+                    <div class="col-12 col-md-5 d-grid gap-4    " style="height: max-content;">
                         <h4 class="text-primary">2. Confira a nossa oferta!</h4>
                         <div>
                             <legend>

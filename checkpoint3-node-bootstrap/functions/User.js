@@ -1,4 +1,4 @@
-const res = require('express/lib/response');
+const sharp = require('sharp')
 const { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail } = require('firebase/auth');
 const { getDoc, setDoc, doc, getDocs, getFirestore, serverTimestamp, collection, query, addDoc, where, collectionGroup, arrayUnion, arrayRemove, orderBy } = require("firebase/firestore");
 const { getStorage, ref, getDownloadURL, uploadBytes } = require('firebase/storage');
@@ -229,7 +229,7 @@ module.exports = {
         const user_id = auth.currentUser.uid;
         const user_doc = doc(db, 'users', user_id);
         if (file == null) {
-            return updateEmail(auth.currentUser, new_email).then(() => {
+            await updateEmail(auth.currentUser, new_email).then(() => {
                 setDoc(user_doc, dados, { merge: true })
             });
         } else {
@@ -237,12 +237,14 @@ module.exports = {
             const nomeImg = file.name + file.md5;
             const imgRef = ref(storage, "images/" + nomeImg);
             await updateEmail(auth.currentUser, new_email).then(async () => {
-                await uploadBytes(imgRef, file.data, metadata).then(async (snapshot) => {
-                    await getDownloadURL(imgRef).then(async (url) => {
-                        dados.img_perfil = url;
-                        await setDoc(user_doc, dados, { merge: true })
-                    })
-                });
+                sharp(file.data).resize(200, 200).toBuffer(async (err, data, info) => {
+                        await uploadBytes(imgRef, data, metadata).then(async() => {
+                            await getDownloadURL(imgRef).then(async (url) => {
+                                dados.img_perfil = url;
+                                await setDoc(user_doc, dados, { merge: true })
+                            })
+                        });
+                    });
             });
         }
     },

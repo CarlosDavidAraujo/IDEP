@@ -1,19 +1,19 @@
 <form method="post" action="/admin/addVaga" enctype="multipart/form-data">
     <div class="modal fade" id="modalAddVaga" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-lg-down modal-xl aling-self-center">
             <div class="modal-content text-primary">
-                <!-- cabeçalho -->
-                <div class="modal-header">
-                    <div class="d-flex gap-4">
-                        <div class="col form-group">
+                <!-- Conteudo -->
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl form-group">
                             <label class="form-label" for="cargo">Nome da vaga*</label>
                             <input class="form-control" type="text" id="cargo" name="cargo" required>
                         </div>
-                        <div class="col form-group">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl mt-3 mt-sm-0 form-group">
                             <label class="form-label" for="empresa">Empresa*</label>
                             <input class="form-control" type="text" id="empresa" name="empresa" required>
                         </div>
-                        <div class="col form-group">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl mt-3 mt-md-0 form-group">
                             <label class="form-label" for="modalidade">Modalidade*</label>
                             <select class="form-control" name="modalidade" id="modalidade" required>
                                 <option value="" disabled selected hidden>Selecione</option>
@@ -22,7 +22,7 @@
                                 <option value="CLT">CLT</option>
                             </select>
                         </div>
-                        <div class="col form-group">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl mt-3 mt-xl-0 form-group">
                             <label class="form-label" for="etapa">Etapa*</label>
                             <select class="form-control" name="etapa" id="etapa" required>
                                 <option value="" disabled selected hidden>Selecione</option>
@@ -31,22 +31,18 @@
                                 <option value="Finalizado">Finalizado</option>
                             </select>
                         </div>
-                        <div class="col form-group align-self-end">
+                        <div class="col-12 col-sm-6 col-md-4 col-xl mt-3 mt-xl-0 form-group align-self-end">
                             <label for="file-uploadAddVaga" id="file-uploadAddVagaLabel"
                                 class="custom-file-upload align-items-center text-center px-2">
                                 <img id="icon" src="/img/icons/imgUpload.svg">
                                 Logotipo da empresa
                             </label>
-                            <input id="file-uploadAddVaga" type="file" name="imgLogo" onchange="changeLabel('file-uploadAddVaga', 'file-uploadAddVagaLabel')" />
+                            <input id="file-uploadAddVaga" type="file" name="imgLogo"
+                                onchange="changeLabel('file-uploadAddVaga', 'file-uploadAddVagaLabel')" />
                         </div>
                     </div>
-                    <button type="button" class="btn-close align-self-start" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div>
-                <!-- Conteudo -->
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between">
-                        <div class="col-md-6">
+                    <div class="d-flex flex-wrap flex-md-nowrap mt-4 justify-content-between">
+                        <div class="col-12 col-md-6">
                             <h3>1. Essa vaga é para você?</h3>
                             <div class="form-group">
                                 <label class="form-label" for="sobre_vaga">Sobre a vaga</label>
@@ -65,7 +61,7 @@
                                 <textarea type="text" class="form-control" id="requisitos" name="requisitos"></textarea>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-12 col-md-5">
                             <h3>2. Confira a nossa oferta!</h3>
                             <div class="form-group">
                                 <label class="form-label" for="vantagens">Benefícios e vantagens</label>
@@ -88,12 +84,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <div class="d-grid col-2 mx-4">
+                <div class="modal-footer justify-content-around justify-content-sm-end pe-sm-4">
+                    <div class="d-grid col-5 col-sm-4 col-md-3 col-xl-2">
                         <button type="button" class="btn  btn-outline-danger" data-bs-dismiss="modal"
                             aria-label="Close">Cancelar</button>
                     </div>
-                    <div class="d-grid col-2">
+                    <div class="d-grid col-5 col-sm-4 col-md-3 col-xl-2">
                         <button type="submit" name="action" class="btn btn-warning">Salvar</button>
                     </div>
                 </div>

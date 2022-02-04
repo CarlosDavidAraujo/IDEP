@@ -16,7 +16,8 @@
     "express-fileupload": "^1.2.1",
     "express-handlebars": "^6.0.2",
     "firebase": "^9.6.2",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "sharp": "^0.30.0"
   },
   "bin": "server.js",
   "pkg": {

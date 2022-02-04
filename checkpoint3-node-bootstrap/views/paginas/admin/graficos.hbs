@@ -1,28 +1,36 @@
 {{>adminMenu}}
-<div class="container-xl  mt-6">
+<div class="container-xl mt-6 px-sm-4">
     <div class="row justify-content-around">
-        <div class="d-grid col-xl-4">
+        <div class="d-grid col-sm-4">
             <button class="btn btn-outline-primary border-2 border-primary active" id="idadeButton">Idade</button>
         </div>
-        <div class="d-grid col-xl-4">
+        <div class="d-grid col-sm-4 mt-sm-0 mt-2">
             <button class="btn btn-outline-primary border-2 border-primary" id="generoButton">Gênero</button>
         </div>
-        <div class="d-grid col-xl-4">
-            <button class="btn btn-outline-primary border-2  border-primary" id="escolaridadeButton">Escolaridade</button>
+        <div class="d-grid col-sm-4 mt-sm-0 mt-2">
+            <button class="btn btn-outline-primary border-2  border-primary"
+                id="escolaridadeButton">Escolaridade</button>
         </div>
     </div>
 </div>
 
-<div class="container" id="idadeContainer">
-{{>graficoIdade}}
+
+<div class="container-fluid" id="idadeContainer">
+    <div class="row justify-content-center">
+        {{>graficoIdade}}
+    </div>
 </div>
 
-<div class="container d-none" id="generoContainer">
-{{>graficoGenero}}
+<div class="container-fluid d-none" id="generoContainer">
+    <div class="row justify-content-center">
+        {{>graficoGenero}}
+    </div>
 </div>
 
-<div class="container d-none" id="escolaridadeContainer">
-{{>graficoEscolaridade}}
+<div class="container-fluid d-none" id="escolaridadeContainer">
+    <div class="row justify-content-center">
+        {{>graficoEscolaridade}}
+    </div>
 </div>
 
 
@@ -34,7 +42,7 @@
     let generoContainer = document.getElementById('generoContainer');
     let escolaridadeContainer = document.getElementById('escolaridadeContainer');
 
-    idadeButton.onclick = ()=> {
+    idadeButton.onclick = () => {
         idadeContainer.classList.remove('d-none');
         idadeButton.classList.add('active');
 
@@ -45,7 +53,7 @@
         escolaridadeButton.classList.remove('active')
     };
 
-     generoButton.onclick = ()=> {
+    generoButton.onclick = () => {
         idadeContainer.classList.add('d-none');
         idadeButton.classList.remove('active');
 
@@ -56,7 +64,7 @@
         escolaridadeButton.classList.remove('active')
     };
 
-    escolaridadeButton.onclick = ()=> {
+    escolaridadeButton.onclick = () => {
         idadeContainer.classList.add('d-none');
         idadeButton.classList.remove('active');
 

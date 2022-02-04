@@ -1,11 +1,11 @@
-<div class="container-fluid mt-10 ms-4" id="vagasContainer">
+<div class="container-fluid px-4 mt-10" id="vagasContainer">
     <!-- Filtros -->
     <div class="align-self-end">Filtros</div>
-    <div class="d-flex justify-content-between">
-        <div class="col-md-4">
-            <div class="d-flex justify-content-between gap-4">
+    <div class="row justify-content-between">
+        <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-7 col-12">
+            <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between gap-4">
                 <select class="form-control" name="filtroModalidade" id="filtroModalidade"
-                    onchange="filtraVagas('filtroModalidade', 'h6')">
+                    onchange="filtraVagas('filtroModalidade')">
                     <option value="" disabled selected hidden>Modalidade</option>
                     <option value="todas">Todas</option>
                     <option value="Jovem Aprendiz">Jovem Aprendiz</option>
@@ -13,24 +13,23 @@
                     <option value="CLT">CLT</option>
                 </select>
                 <select class="form-control" name="filtroEmpresa" id="filtroEmpresa"
-                    onchange="filtraVagas('filtroEmpresa','h5')">
+                    onchange="filtraVagas('filtroEmpresa')">
                     <option value="" disabled selected hidden>Empresa</option>
+                    <option value="todas">Todas</option>
                     <option value="GlobalSYS">GlobalSYS</option>
                     <option value="Assaí">Assaí</option>
                     <option value="Delfa">Delfa</option>
                 </select>
             </div>
         </div>
-        <div class="col-md-3 me-6">
-            <div class="d-flex">
-                <input id="pesquisa" class="form-control mr-sm-2" type="search" placeholder="Pesquisar vagas"
-                    aria-label="Search" onkeyup="filtraVagas('pesquisa')">
-            </div>
+        <div class="col-12 col-sm-6 col-md-5 col-xl-4 col-xxl-3 mt-4 mt-md-0">
+            <input id="pesquisa" class="form-control" type="search" placeholder="Pesquisar vagas" aria-label="Search"
+                onkeyup="filtraVagas('pesquisa')">
         </div>
     </div>
 
     <!-- Cards -->
-    <div class="d-flex flex-wrap mt-5" id="meusCards">
+    <div class="d-flex flex-wrap gap-3 mt-5 justify-content-center justify-content-sm-start" id="meusCards">
         {{#each paginator.data}}
         {{>cardVaga}}
         {{/each}}
@@ -38,14 +37,14 @@
 
     <div class="d-flex justify-content-center mt-8">
         <form action="/vaga" method="post">
-             <nav aria-label="Page navigation example">
-            <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
-            <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
-            <input type="hidden" name="prevPage" id="prevPage" value="{{paginator.pre_page}}">
-            <input type="hidden" name="nextPage" id="nextPage" value="{{paginator.next_page}}">
-            <ul class="pagination" id="meusBotoes">
-            </ul>
-        </nav>
+            <nav aria-label="Page navigation example">
+                <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
+                <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
+                <input type="hidden" name="prevPage" id="prevPage" value="{{paginator.pre_page}}">
+                <input type="hidden" name="nextPage" id="nextPage" value="{{paginator.next_page}}">
+                <ul class="pagination" id="meusBotoes">
+                </ul>
+            </nav>
         </form>
     </div>
 
@@ -55,25 +54,6 @@
     {{/each}}
 </div>
 
-<script>
-    function filtraVagas(filtro, hTag) {
-        var input, filter, cards, h, i;
-        input = document.getElementById(filtro);
-        filter = input.value.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
-        cards = document.getElementById("meusCards");
-        h = cards.getElementsByTagName(hTag);
-        console.log(h)
-        for (i = 0; i < h.length; i++) {
-            console.log(h[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter))
-            if (h[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter) > -1) {
-                h[i].parentElement.parentElement.parentElement.style.display = "";
-            } else {
-                h[i].parentElement.parentElement.parentElement.style.display = "none";
-            }
-        }
-    }
-</script>
-
 <script id="filtros">
     function filtraVagas(filtro) {
         var input, filter, i, j, card, div;
@@ -82,9 +62,9 @@
         card = document.getElementsByClassName('card');
         for (i = 0; i < card.length; i++) {
             if (card[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter) > -1 || filter == 'TODAS') {
-                card[i].parentElement.style.display = "";
+                card[i].style.display = "";
             } else {
-                card[i].parentElement.style.display = "none";
+                card[i].style.display = "none";
             }
         }
     }

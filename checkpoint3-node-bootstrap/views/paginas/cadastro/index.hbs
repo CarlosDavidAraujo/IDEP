@@ -1,11 +1,11 @@
-<form action="/user/cadastro" method="post" class="container-xl mt-10   ">
+<form action="/user/cadastro" method="post" class="container-custom px-sm-4 px-xxl-3 mt-10">
     {{#if mensagemDeErro}}
     <div class="alert alert-danger" role="alert">
         {{mensagemDeErro}}
     </div>
     {{/if}}
-    <div class="d-flex flex-wrap justify-content-center gap-4">
-        <div class="col d-grid gap-2">
+    <div class="d-flex flex-wrap gap-3">
+        <div class="col-12 col-md-12 col-lg col-xxl d-grid gap-3">
             <h6 class="strong text-primary">Informações de login</h6 class="strong text-primary">
             <div class="form-group">
                 <label for="CPF" class="form-label">CPF*</label>
@@ -25,8 +25,8 @@
                 <label for="nome_social" class="form-label">Nome Social</label>
                 <input type="text" class="form-control" id="nome_social" name="nome_social">
             </div>
-            <div class="d-flex justify-content-between">
-                <div class="form-group">
+            <div class="d-flex flex-wrap justify-content-between gap-3">
+                <div class="col-12 col-sm col-lg-12 col-xxl">
                     <label for="genero" class="form-label">Gênero*</label>
                     <select name="genero" class="form-control" id="genero" required>
                         <option value="" disabled selected hidden>Selecione</option>
@@ -36,7 +36,7 @@
                         <option value="não informado">Prefiro não informar</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="col-12 col-sm col-lg-12 col-xxl">
                     <label for="data_de_nascimento" class="form-label">Data de nascimento*</label>
                     <input type="date" class="form-control" id="data_de_nascimento" name="data_de_nascimento" required>
                 </div>
@@ -50,8 +50,8 @@
                 <input type="tel" class="form-control" id="fone" name="fone" placeholder="Ex:(88)99898-8989"
                     pattern="\((\d{2})\)(\d{5})-(\d{4})" maxlength="11" onblur="formataFone(this)" required>
             </div>
-            <div class="d-flex justify-content-between gap-4">
-                <div class="form-group">
+            <div class="d-flex flex-wrap justify-content-between gap-3">
+                <div class="col-12 col-sm col-lg-12 col-xxl">
                     <label for="municipio" class="form-label">Município*</label>
                     <select name="municipio" class="form-control" id="municipio" name="municipio" required>
                         <option value="" disabled selected hidden>Selecione uma opção</option>
@@ -60,84 +60,91 @@
                         {{/each}}
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="col-12 col-sm col-lg-12 col-xxl">
                     <label for="bairro" class="form-label">Bairro*</label>
                     <input type="text" class="form-control" id="bairro" name="bairro" required>
                 </div>
             </div>
         </div>
-        <div class="vr text-primary"></div>
-        <div class="col d-grid gap-2" style="height: 50%;">
-            <h6 class="strong text-primary">Informações acadêmicas</h6 class="strong text-primary">
-            <div class="form-group">
-                <label for="grau" class="form-label">Grau</label>
-                <select name="grau" class="form-control" id="grau" name="grau">
-                    <option value="" disabled selected hidden>Selecione uma opção</option>
-                    <option value="Ensino fundamental completo">Ensino fundamental completo</option>
-                    <option value="Ensino médio completo">Ensino médio completo</option>
-                    <option value="Ensino superior completo">Ensino superior completo</option>
-                    <option value="Ensino fundamental incompleto">Ensino fundamental incompleto</option>
-                    <option value="Ensino médio incompleto">Ensino médio incompleto</option>
-                    <option value="Ensino superior incompleto">Ensino superior incompleto</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="curso" class="form-label">Curso</label>
-                <input type="text" class="form-control" id="curso" name="curso">
-            </div>
-            <div class="form-group">
-                <label for="instituicao" class="form-label">Instituição</label>
-                <input type="text" class="form-control" id="instituicao" name="instituicao">
-            </div>
-            <div class="d-flex justify-content-between">
-                <div class="form-group">
-                    <label for="data_inicial_academica" class="form-label">Início</label>
-                    <input type="date" class="form-control" id="data_inicial_academica" name="data_inicial_academica">
+        <div class="vr d-none d-lg-block text-primary"></div>
+        <div class="col col-xxl-8 mt-3 mt-lg-0">
+            <div class="d-flex flex-wrap gap-3">
+                <div class="col-12 col-sm col-lg-12 col-xxl d-grid gap-3">
+                    <h6 class="strong text-primary">Informações acadêmicas</h6 class="strong text-primary">
+                    <div class="form-group">
+                        <label for="grau" class="form-label">Grau</label>
+                        <select name="grau" class="form-control" id="grau" name="grau">
+                            <option value="" disabled selected hidden>Selecione uma opção</option>
+                            <option value="Ensino fundamental completo">Ensino fundamental completo</option>
+                            <option value="Ensino médio completo">Ensino médio completo</option>
+                            <option value="Ensino superior completo">Ensino superior completo</option>
+                            <option value="Ensino fundamental incompleto">Ensino fundamental incompleto</option>
+                            <option value="Ensino médio incompleto">Ensino médio incompleto</option>
+                            <option value="Ensino superior incompleto">Ensino superior incompleto</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="curso" class="form-label">Curso</label>
+                        <input type="text" class="form-control" id="curso" name="curso">
+                    </div>
+                    <div class="form-group">
+                        <label for="instituicao" class="form-label">Instituição</label>
+                        <input type="text" class="form-control" id="instituicao" name="instituicao">
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between gap-3">
+                        <div class="col-12 col-sm">
+                            <label for="data_inicial_academica" class="form-label">Início</label>
+                            <input type="date" class="form-control" id="data_inicial_academica"
+                                name="data_inicial_academica">
+                        </div>
+                        <div class="col-12 col-sm">
+                            <label for="data_final_academica" class="form-label">Término</label>
+                            <input type="date" class="form-control" id="data_final_academica"
+                                name="data_final_academica">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="data_final_academica" class="form-label">Término</label>
-                    <input type="date" class="form-control" id="data_final_academica" name="data_final_academica">
-                </div>
-            </div>
-        </div>
-        <div class="vr text-primary"></div>
-        <div class="col d-grid gap-2" style="height: 50%;">
-            <h6 class="strong text-primary">Experiências profissionais</h6 class="strong text-primary">
-            <div class="form-group">
-                <label for="modalidade" class="form-label">Modalidade</label>
-                <select name="modalidade" class="form-control" id="modalidade" name="modalidade">
-                    <option value="" disabled selected hidden>Selecione uma opção</option>
-                    <option value="Jovem Aprendiz">Jovem Aprendiz</option>
-                    <option value="Estágio">Estágio</option>
-                    <option value="CLT">CLT</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="cargo" class="form-label">Cargo</label>
-                <input type="text" class="form-control" id="cargo" name="cargo">
-            </div>
-            <div class="form-group">
-                <label for="empresa" class="form-label">Empresa</label>
-                <input type="text" class="form-control" id="empresa" name="empresa">
-            </div>
-            <div class="d-flex justify-content-between">
-                <div class="form-group">
-                    <label for="data_inicial_experiencia" class="form-label">Início</label>
-                    <input type="date" class="form-control" id="data_inicial_experiencia"
-                        name="data_inicial_experiencia">
-                </div>
-                <div class="form-group">
-                    <label for="data_final_experiencia" class="form-label">Término</label>
-                    <input type="date" class="form-control" id="data_final_experiencia" name="data_final_experiencia">
+                <div class="vr d-none d-sm-block d-lg-none d-xxl-block text-primary "></div>
+                <div class="col-12 col-sm col-lg-12 col-xxl d-grid gap-3 mt-3 mt-sm-0 mt-lg-3 mt-xxl-0">
+                    <h6 class="strong text-primary">Experiências profissionais</h6 class="strong text-primary">
+                    <div class="form-group">
+                        <label for="modalidade" class="form-label">Modalidade</label>
+                        <select name="modalidade" class="form-control" id="modalidade" name="modalidade">
+                            <option value="" disabled selected hidden>Selecione uma opção</option>
+                            <option value="Jovem Aprendiz">Jovem Aprendiz</option>
+                            <option value="Estágio">Estágio</option>
+                            <option value="CLT">CLT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="cargo" class="form-label">Cargo</label>
+                        <input type="text" class="form-control" id="cargo" name="cargo">
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa" class="form-label">Empresa</label>
+                        <input type="text" class="form-control" id="empresa" name="empresa">
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-between gap-3">
+                        <div class="col-12 col-sm">
+                            <label for="data_inicial_experiencia" class="form-label">Início</label>
+                            <input type="date" class="form-control" id="data_inicial_experiencia"
+                                name="data_inicial_experiencia">
+                        </div>
+                        <div class="col-12 col-sm">
+                            <label for="data_final_experiencia" class="form-label">Término</label>
+                            <input type="date" class="form-control" id="data_final_experiencia"
+                                name="data_final_experiencia">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-end mt-3">
-        <div class="col-2 d-grid">
-            <a class="me-5 btn btn-outline-danger" href="/">Cancelar</a>
+    <div class="d-flex justify-content-between justify-content-md-end mt-5 gap-3 px-xxl-5">
+        <div class="d-grid col col-md-3 col-lg-2 col-xxl-1">
+            <a class="btn btn-outline-danger" href="/">Cancelar</a>
         </div>
-        <div class="col-2 d-grid">
+        <div class="d-grid col col-md-3 col-lg-2 col-xxl-1">
             <input class="btn btn-warning" type="submit" value="Finalizar cadastro">
         </div>
     </div>

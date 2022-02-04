@@ -1,15 +1,15 @@
 {{>adminMenu}}
-<div class="container-fluid mt-4 ms-4" id="vagasContainer">
-    <div class="d-flex flex-row-reverse mt-4 me-6">
+<div class="container-fluid mt-4 px-sm-4" id="vagasContainer">
+    <div class="d-flex flex-row-reverse mt-4">
         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalAddVaga">
             Criar nova vaga
         </button>
     </div>
     <!-- Filtros -->
     <div class="align-self-end">Filtros</div>
-    <div class="d-flex justify-content-between">
-        <div class="col-md-4">
-            <div class="d-flex justify-content-between gap-4">
+    <div class="row justify-content-between">
+        <div class="col-xxl-4 col-xl-5 col-lg-6 col-md-7 col-12">
+            <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between gap-4">
                 <select class="form-control" name="filtroModalidade" id="filtroModalidade"
                     onchange="filtraVagas('filtroModalidade', 'h6')">
                     <option value="" disabled selected hidden>Modalidade</option>
@@ -27,37 +27,40 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-3 me-6">
-            <div class="d-flex">
-                <input id="pesquisa" class="form-control mr-sm-2" type="search" placeholder="Pesquisar vagas"
-                    aria-label="Search" onkeyup="filtraVagas('pesquisa')">
-            </div>
+        <div class="col-12 col-sm-6 col-md-5 col-xl-4 col-xxl-3 mt-4 mt-md-0">
+            <input id="pesquisa" class="form-control " type="search" placeholder="Pesquisar vagas" aria-label="Search"
+                onkeyup="filtraVagas('pesquisa')">
         </div>
     </div>
     <!-- Vagas -->
 
-    <div class="d-flex flex-wrap mt-4" id="meusCards">
+    <div class="d-flex flex-wrap gap-3 mt-5 justify-content-center justify-content-sm-start" id="meusCards">
         {{#each paginator.data}}
         {{>cardVaga}}
-        {{>modalAddVaga}}
-        {{>modalVagaAdmin}}
-        {{>modalEditaVaga}}
         {{/each}}
+    </div>
+    
+    {{>modalAddVaga}}
+    {{#each paginator.data}}
+    {{>modalVagaAdmin}}
+    {{>modalEditaVaga}}
+    {{/each}}
+
+    <div class="d-flex justify-content-center mt-8">
+        <form action="/admin/vagas" method="post">
+            <nav aria-label="Page navigation example">
+                <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
+                <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
+                <input type="hidden" name="prevPage" id="prevPage" value="{{paginator.pre_page}}">
+                <input type="hidden" name="nextPage" id="nextPage" value="{{paginator.next_page}}">
+                <ul class="pagination" id="meusBotoes">
+                </ul>
+            </nav>
+        </form>
     </div>
 </div>
 
-<div class="d-flex justify-content-center mt-8">
-    <form action="/admin/vagas" method="post">
-        <nav aria-label="Page navigation example">
-            <input type="hidden" id="totalDePaginas" name="totalDePaginas" value="{{paginator.total_pages}}">
-            <input type="hidden" id="paginaAtual" name="paginaAtual" value="{{paginator.page}}">
-            <input type="hidden" name="prevPage" id="prevPage" value="{{paginator.pre_page}}">
-            <input type="hidden" name="nextPage" id="nextPage" value="{{paginator.next_page}}">
-            <ul class="pagination" id="meusBotoes">
-            </ul>
-        </nav>
-    </form>
-</div>
+
 
 <script id="filtros">
     function filtraVagas(filtro) {
@@ -67,9 +70,9 @@
         card = document.getElementsByClassName('card');
         for (i = 0; i < card.length; i++) {
             if (card[i].innerText.toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(filter) > -1 || filter == 'TODAS') {
-                card[i].parentElement.style.display = "";
+                card[i].style.display = "";
             } else {
-                card[i].parentElement.style.display = "none";
+                card[i].style.display = "none";
             }
         }
     }
