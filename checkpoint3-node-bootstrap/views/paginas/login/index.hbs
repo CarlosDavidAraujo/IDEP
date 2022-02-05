@@ -1,7 +1,7 @@
-<img src="/img/loginImg.png" style="width: 100%;">
-<div class="container-fluid" id="loginContainer">
-  <div class="row justify-content-center">
-    <div class="col-xl-4 col-sm-6 bg-primary px-xxl-8 py-xxl-8 px-xl-5 py-xl-5 text-white">
+<img src="/img/loginImg.png" style="width: 100%;" class="d-none d-sm-block">
+<div class="container-fluid px-0 aling-items-center" id="loginContainer">
+  <div class="row justify-content-center aling-items-center">
+    <div class="col-12 col-sm-8 col-md-6 col-xl-6 col-xxl-4 p-4 p-md-5 p-xl-6 py-xxl-8 bg-primary text-white">
       <form action="/user/login" method="post">
         {{#if mensagemDeErro}}
         <div class="alert alert-danger" role="alert">
@@ -49,4 +49,4 @@
     </div>
   </div>
 </div>
-  {{>reauth}}
+{{>reauth}}

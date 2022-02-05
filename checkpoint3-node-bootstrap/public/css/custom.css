@@ -7,7 +7,9 @@ body {
   width: 100%;
   background: #FCFCFC;
   font-family: 'Montserrat';
+  font-size: 1rem;
  }
+
 
 #main {
   min-height:100%;
@@ -32,12 +34,8 @@ body {
   position:absolute;
   bottom:0;
   width:100%;
-  height:60px;            /* Height of the footer */
+  height:60px;           
   background:#FCFCFC;
-}
-
-img#parcImg {
-  width: fit-content;
 }
 
 img#icon {
@@ -76,7 +74,7 @@ p {
 font-size: 20px;
 font-style: normal;
 font-weight: 400;
-line-height: normal;
+line-height: 29px;
 letter-spacing: 0em;
 text-align: left;
 }
@@ -152,10 +150,6 @@ height: 60px;
   }
 }
 
-.container#homeMainImg {
-  position: relative;
-}
-
 .container-custom {
   width: 100%;
   padding-right: var(--bs-gutter-x, 0.75rem);
@@ -170,29 +164,42 @@ height: 60px;
   }  
 }
 
-div#homeMainImgTxt{
-position: absolute;
-width: 863px;
-height: 96px;
-left: 146px;
-top: 175px;
+#homeTitle{
+  position: relative;
+  top: -36vw;
 }
 
-div#homeMainImgTxt h1{
-
+#homeTitle h1{
   font-style: normal;
   font-weight: bold;
-  font-size: 48px;
-  line-height: 48px;
-  color: #FCFCFC;
-}
-
-div#homeMainImgTxt h3{
-  font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
   line-height: normal;
   color: #FFFFFF;
+}
+
+#homeTitle h3{
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: #FFFFFF;
+}
+
+
+@media (max-width: 576px) {
+  #homeTitle{
+    position: relative;
+    top: 7vw;
+  }
+
+  #homeTitle h1,
+  #homeTitle h3{
+    color: #2F8AE6;
+  }
+}
+
+@media (min-width: 1200px) {
+  #homeTitle h1{
+    width: 863px;
+  }
 }
 
 .card {
@@ -202,9 +209,13 @@ div#homeMainImgTxt h3{
   border-radius: 2px;
 }
 
+#cards-home {
+  position: relative;
+  margin-top: -20vw;
+}
+
 .card-custom {
-  width: 400px;
-  height: 300px;
+  height: 262px;
   padding: 15px 0;
   box-shadow: 0px 14px 24px rgba(14, 31, 53, 0.16);
   border-radius: 2px;
@@ -215,6 +226,42 @@ div#homeMainImgTxt h3{
   word-wrap: break-word;
 }
 
+@media (max-width: 576px) {
+  .card-custom {
+    width: 300px;
+  }
+  #cards-home {
+    margin-top: 50px;
+  }
+}
+
+@media (min-width: 576px) {
+  .card-custom {
+    width: 350px;
+  }
+}
+
+
+@media (min-width: 992px) {
+  .card-custom {
+    width: 300px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card-custom {
+    width: 350px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .card-custom {
+    width: 400px;
+    height: 300px;
+  }
+}
+
+
 .grafico{
   width: 100%;
   box-shadow: 0px 14px 24px rgba(14, 31, 53, 0.16);
@@ -224,42 +271,34 @@ div#homeMainImgTxt h3{
 h6 {
 font-style: normal;
 font-weight: 400;
-font-size: 13px;
 line-height: normal;
 }
 
 h6.strong {
 font-style: normal;
 font-weight: 600;
-font-size: 18px;
 }
 
 h5 {
 font-style: normal;
 font-weight: 500;
-font-size: 18px;
 line-height: normal;
 }
 
 h4 {
 font-style: normal;
-font-weight: 600;
-font-size: 1.5rem;
+font-weight: 500;
 line-height:normal;
 }
 h3 {
-
   font-style: normal;
   font-weight: 600;
-  font-size: 2em;
   line-height:normal;
   }
 
 h1.display-2 {
-
   font-style: normal;
   font-weight: 600;
-  font-size: 72px;
 }
 
 .btn  {
@@ -273,11 +312,14 @@ border-radius: 2px;
 }
 
 .largeBox {
-width: 30%;
-height: 100%;
+width: 100%;
 background: #FCFCFC;
 border-radius: 2px;
-padding: 2%;
+}
+
+div.largeBox img {
+  left: 50%; bottom: 0;
+  margin-top: -70px;
 }
 
 .nav-link {
@@ -353,10 +395,14 @@ padding: 2%;
 }
 
 #loginContainer {
-opacity: 0.94;
-border-radius: 2px;
-position: absolute;
-top: 15%;
+  opacity: 0.94;
+}
+
+@media (min-width: 576px) {
+  #loginContainer  {
+    position: absolute;
+    top: 14vw;
+  }
 }
 
 .nav-link {
@@ -441,14 +487,15 @@ img.perfil-img{
     border: 2px solid #2F8AE6
     }
 
-#footer {
-  padding: 10px 10px 0px 10px;
-  bottom: 0;
-  width: 100%;
-}
 
 #todosParceiros img {
   width: 250px;
   height: 250px;
-  border: 2px solid #2F8AE6;
+  border: 3px solid #2F8AE6;
+}
+
+#parceiros img {
+  width: 250px;
+  height: 250px;
+  border: 3px solid #2F8AE6;
 }
