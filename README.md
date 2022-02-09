@@ -25,6 +25,10 @@ https://www.youtube.com/watch?v=4fRAGZ2T4TQ
 Link para download do executável: </br>
 https://drive.google.com/file/d/1ezy2aV1wUBz9qsz_wIoNDVpOAxVqkF0O/view?usp=sharing
 
+Login para teste de requisitos do admin: </br>
+email: admin@gmail.com </br>
+senha: 123456 </br>
+
 |                                            |   Tabela de requisitos e suas respectivas funções/classes    |                                           |  
 |--------------------------------------------|--------------------------------------------------------------|-------------------------------------------|
 | Código                                     | Funcionalidade                                               | Local                                     |
