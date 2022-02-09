@@ -71,9 +71,12 @@
                 <h5>{{Gênero}}</h5>
             </div>
         </div>
-        {{>modalCurriculo}}
         {{/each}}
     </div>
+
+    {{#each paginator.data}}
+    {{>modalCurriculo}}
+    {{/each}}
 
 
 
@@ -121,7 +124,6 @@
             if (min <= idade && idade <= max) {
                 row[i].classList.remove('d-none')
             } else {
-                console.log('add')
                 row[i].classList.add('d-none')
             }
         }

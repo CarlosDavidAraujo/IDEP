@@ -7,10 +7,9 @@
     <div class="d-flex flex-wrap gap-3">
         <div class="col-12 col-md-12 col-lg col-xxl d-grid gap-3">
             <h5 class="strong text-primary">Informações de login</h5>
-            <div class="form-group">
-                <label for="CPF" class="form-label">CPF*</label>
-                <input type="text" class="form-control" id="CPF" name="CPF" onblur="formataCPF(this)"
-                    placeholder="Somente números" pattern="(\d{3}).(\d{3}).(\d{3})-(\d{2})" maxlength="11" required>
+             <div class="form-group">
+                <label for="email" class="form-label">Email*</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="senha" class="form-label">Senha*</label>
@@ -42,8 +41,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="email" class="form-label">Email*</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <label for="CPF" class="form-label">CPF*</label>
+                <input type="text" class="form-control" id="CPF" name="CPF" onblur="formataCPF(this)"
+                    placeholder="Somente números" pattern="(\d{3}).(\d{3}).(\d{3})-(\d{2})" maxlength="11" required>
             </div>
             <div class="form-gruop">
                 <label for="fone" class="form-label">Telefone*</label>
