@@ -22,6 +22,9 @@ visualizar essas oportunidades e se inscreverem nas quais mais se identificam.
 Apresentação do projeto: </br>
 https://www.youtube.com/watch?v=4fRAGZ2T4TQ
 
+Link para download do executável: </br>
+https://drive.google.com/file/d/1ezy2aV1wUBz9qsz_wIoNDVpOAxVqkF0O/view?usp=sharing
+
 |                                            |   Tabela de requisitos e suas respectivas funções/classes    |                                           |  
 |--------------------------------------------|--------------------------------------------------------------|-------------------------------------------|
 | Código                                     | Funcionalidade                                               | Local                                     |
