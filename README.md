@@ -19,6 +19,9 @@ desses jovens para a entrada no mercado de trabalho, criando uma plataforma onde
 instituição possa divulgar as vagas em aberto naquele momento e os jovens possam
 visualizar essas oportunidades e se inscreverem nas quais mais se identificam.
 
+Apresentação do projeto: </br>
+https://www.youtube.com/watch?v=4fRAGZ2T4TQ
+
 |                                            |   Tabela de requisitos e suas respectivas funções/classes    |                                           |  
 |--------------------------------------------|--------------------------------------------------------------|-------------------------------------------|
 | Código                                     | Funcionalidade                                               | Local                                     |
